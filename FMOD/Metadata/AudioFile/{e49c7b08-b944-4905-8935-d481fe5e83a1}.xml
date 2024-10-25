@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e49c7b08-b944-4905-8935-d481fe5e83a1}">
+		<property name="assetPath">
+			<value>rocket_launcher_shoot_Rypák_Matúš.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.7167346938775512</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{40913624-2249-420f-ae29-318554c22436}</destination>
+		</relationship>
+	</object>
+</objects>
