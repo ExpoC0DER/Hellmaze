@@ -62,6 +62,9 @@
 		<relationship name="modules">
 			<destination>{215a7ef5-e21b-4269-9917-de7135ffb04d}</destination>
 		</relationship>
+		<relationship name="markers">
+			<destination>{7c7c60ad-4a3d-476c-bf4c-cae316e2672f}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{14771fa1-d22f-4267-9325-dc9c680aa223}">
 		<relationship name="effectChain">
@@ -76,7 +79,10 @@
 	</object>
 	<object class="SingleSound" id="{215a7ef5-e21b-4269-9917-de7135ffb04d}">
 		<property name="length">
-			<value>0.88816326530612244</value>
+			<value>0.57927155591300561</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.053668978921617906</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{3ee5ca90-29a4-4ebe-ae9d-35edb7e7ceb4}</destination>
@@ -88,6 +94,23 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{c7efa194-592d-4f6b-8057-f4c489f6dbb8}" />
+	<object class="LoopRegion" id="{7c7c60ad-4a3d-476c-bf4c-cae316e2672f}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="length">
+			<value>0.57927155591300561</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{87295427-c119-459a-b8ab-e380699240d4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{ef740053-74d9-4cf4-8be0-4b7b3ce90cd7}</destination>
+		</relationship>
+		<relationship name="triggerConditions">
+			<destination>{fab7861c-c977-4214-be4f-864777d2ede1}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{6b3ec294-1df1-4458-8a68-8297758070cb}">
 		<relationship name="effects">
 			<destination>{2555fcd1-42bf-43c2-be34-0690acb82afe}</destination>
@@ -95,5 +118,16 @@
 	</object>
 	<object class="MixerBusPanner" id="{b1c9c94b-1fde-4e5b-a076-b616492d9dd0}" />
 	<object class="MixerBusFader" id="{c7057abf-8083-47c7-81e5-49a971eb2426}" />
+	<object class="ParameterCondition" id="{fab7861c-c977-4214-be4f-864777d2ede1}">
+		<property name="minimum">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>1</value>
+		</property>
+		<relationship name="parameter">
+			<destination>{63f89920-483c-4cff-8a16-3d6bab8330d8}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{2555fcd1-42bf-43c2-be34-0690acb82afe}" />
 </objects>
