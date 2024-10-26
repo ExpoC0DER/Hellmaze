@@ -110,7 +110,7 @@ namespace _game.Scripts
         }
 
         private void HandleRotation() { transform.rotation = Quaternion.Euler(0, _camera.rotation.eulerAngles.y, 0); }
-
+        
         private void HandleShooting() { _gun.Value.Shoot(Input.GetMouseButton(0)); }
         
         private Vector3 originalCenter;

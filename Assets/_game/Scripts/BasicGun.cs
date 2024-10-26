@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 namespace _game.Scripts
@@ -14,6 +16,8 @@ namespace _game.Scripts
 
         private bool _fired;
         private float _fireDelay;
+
+        private EventInstance _automaticSound;
 
         private Vector3 _originalPosition;
         private Quaternion _originalRotation;
@@ -62,16 +66,31 @@ namespace _game.Scripts
                 if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
                 {
                     _fired = true;
+                    FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
                     FireRaycast();
                 }
-                else if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
+                if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
                 {
                     FireRaycast();
+
+                    if (!_fired)
+                    {
+                        _fired = true;
+                        _automaticSound = FMODHelper.CreateNewInstance(_gunSettings.AutomaticSound);
+                        _automaticSound.setParameterByName("Parameter 1", 1);
+                        _automaticSound.start();
+                    }
+                    
                     _fireDelay = _gunSettings.FiringSpeed;
                 }
             }
             else
             {
+                if (FMODHelper.InstanceIsPlaying(_automaticSound))
+                {
+                    _automaticSound.setParameterByName("Parameter 1", 0);
+                    _automaticSound.release();
+                }
                 _fired = false;
             }
         }
