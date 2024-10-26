@@ -15,3 +15,26 @@ MonoBehaviour:
   <Damage>k__BackingField: 1
   <FiringSpeed>k__BackingField: 1
   <Spread>k__BackingField: 0
+  <FiringMode>k__BackingField: 0
+  <ManualSound>k__BackingField:
+    Guid:
+      Data1: -1202842815
+      Data2: 1086773430
+      Data3: -1486765901
+      Data4: -1793374549
+    Path: event:/Pistol
+  <AutomaticSound>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.2}
+  <RecoilDuration>k__BackingField: 0.1
+  <RecoilReturnDuration>k__BackingField: 0.15
+  <RecoilEase>k__BackingField: 6
+  <ReturnEase>k__BackingField: 5
+  <RecoilRotation>k__BackingField: {x: -5, y: 2, z: 0}
+  <RotationDuration>k__BackingField: 0.1
+  <RotationReturnDuration>k__BackingField: 0.15

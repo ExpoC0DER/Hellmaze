@@ -13,7 +13,7 @@ namespace _game.Scripts
 
         [SerializeField] private Transform _camera;
         [SerializeField] private Transform _model;
-        [SerializeField] private InterfaceReference<IGun> _gun;
+        [SerializeField] private InterfaceReference<IGun,MonoBehaviour> _gun;
 
         private Vector3 _moveDirection = Vector3.zero;
         private bool _canMove = true;

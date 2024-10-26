@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using UnityEngine;
 
 namespace _game.Scripts
@@ -16,6 +17,8 @@ namespace _game.Scripts
         [field: SerializeField] public float FiringSpeed { get; private set; }
         [field: SerializeField] public float Spread { get; private set; }
         [field: SerializeField] public FiringModeSetting FiringMode { get; private set; }
+        [field: SerializeField] public EventReference ManualSound { get;  private set; }
+        [field: SerializeField] public EventReference AutomaticSound { get;  private set; }
 
         [Header("Position Recoil Settings")]
         [field: SerializeField] public Vector3 RecoilKickback { get; private set; } = new Vector3(0, 0, -0.2f); // backward direction
