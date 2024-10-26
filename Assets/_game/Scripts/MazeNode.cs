@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using EditorAttributes;
 using UnityEngine;
 
@@ -23,6 +24,10 @@ namespace _game.Scripts
             }
         }
 
+        [SerializeField] private Vector2Int _fullWallRange;
+        [SerializeField] private Vector2Int _bottomHoleRange;
+        [SerializeField] private Vector2Int _topHoleRange;
+
         public List<GameObject> _wallsUp;
         public List<GameObject> _wallsDown;
         public List<GameObject> _wallsRight;
@@ -34,6 +39,7 @@ namespace _game.Scripts
         private float timer = 0.0f;
         private MNState _lastState = MNState.Empty;
         private bool _lastStateUp = true, _lastStateDown = true, _lastStateRight = true, _lastStateLeft = true;
+        private static readonly int Dissolve1 = Shader.PropertyToID("_Dissolve");
 
         void Update()
         {
@@ -141,14 +147,93 @@ namespace _game.Scripts
             if (wallList == null)
                 return;
 
-            foreach (GameObject wall in wallList)
-            {
-                wall.SetActive(false);
-            }
+
+
             if (value)
             {
-                int randomWallId = Random.Range(0, wallList.Count);
-                wallList[randomWallId].SetActive(true);
+                int randomWallId = RandomWall();
+                for(int i = 0; i < wallList.Count; i++)
+                {
+                    if (i == randomWallId)
+                    {
+                        Dissolve(wallList[i], true);
+                    }
+                    else
+                    {
+                        if (wallList[i].GetComponent<Collider>().enabled || DOTween.IsTweening(wallList[i].GetComponent<Renderer>().material))
+                            Dissolve(wallList[i], false);
+                        else
+                            Dissolve(wallList[i], false, true);
+                    }
+                }
+            }
+            else
+            {
+                foreach (GameObject t in wallList)
+                {
+                    Dissolve(t, false, true);
+                }
+            }
+
+            // foreach (GameObject wall in wallList)
+            // {
+            //     //wall.SetActive(false);
+            //     if (wall.GetComponent<Collider>().enabled || DOTween.IsTweening(wall.GetComponent<Renderer>().material))
+            //         Dissolve(wall, false);
+            //     else
+            //         Dissolve(wall, false, true);
+            // }
+            // if (value)
+            // {
+            //     
+            //     //wallList[randomWallId].SetActive(true);
+            //     Dissolve(wallList[randomWallId], true);
+            // }
+        }
+
+        private int RandomWall()
+        {
+            int x = Random.Range(0, 100);
+
+            if (x >= _fullWallRange.x && x < _fullWallRange.y)
+                return 0;
+            if (x >= _bottomHoleRange.x && x < _bottomHoleRange.y)
+                return 1;
+            if (x >= _topHoleRange.x && x < _topHoleRange.y)
+                return 2;
+
+            return -1;
+        }
+
+        private static void Dissolve(GameObject wall, bool value, bool instant = false)
+        {
+            if (value)
+            {
+                Material mat = wall.GetComponent<Renderer>().material;
+                mat.DOKill();
+                if (instant)
+                {
+                    mat.SetFloat(Dissolve1, 0f);
+                    wall.GetComponent<Collider>().enabled = true;
+                }
+                else
+                {
+                    mat.DOFloat(0f, Dissolve1, 1f).SetEase(Ease.OutCirc).OnComplete(() => wall.GetComponent<Collider>().enabled = true);
+                }
+            }
+            else
+            {
+                Material mat = wall.GetComponent<Renderer>().material;
+                mat.DOKill();
+                if (instant)
+                {
+                    mat.SetFloat(Dissolve1, 1f);
+                    wall.GetComponent<Collider>().enabled = false;
+                }
+                else
+                {
+                    mat.DOFloat(1f, Dissolve1, 1f).SetEase(Ease.InCirc).OnStart(() => wall.GetComponent<Collider>().enabled = false);
+                }
             }
         }
     }

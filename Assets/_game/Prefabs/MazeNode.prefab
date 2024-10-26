@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
+  _fullWallRange: {x: 0, y: 80}
+  _bottomHoleRange: {x: 80, y: 90}
+  _topHoleRange: {x: 90, y: 100}
   _wallsUp: []
   _wallsDown: []
   _wallsRight: []
@@ -120,7 +123,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e4cdcc48a00229f4e9c30264121fcc87, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
