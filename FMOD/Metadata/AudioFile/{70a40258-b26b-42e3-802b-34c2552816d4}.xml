@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{70a40258-b26b-42e3-802b-34c2552816d4}">
+		<property name="assetPath">
+			<value>Please wait while your daily fight in hell is prepared.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>33.175510204081633</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{40913624-2249-420f-ae29-318554c22436}</destination>
+		</relationship>
+	</object>
+</objects>
