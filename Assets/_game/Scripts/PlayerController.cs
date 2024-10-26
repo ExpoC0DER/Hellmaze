@@ -13,6 +13,7 @@ namespace _game.Scripts
         [SerializeField] private float _walkSpeed = 6f;
         [SerializeField] private float _runSpeed = 12f;
         [SerializeField] private float _acceleration;
+        [SerializeField] private Animator _animator;
 
         [SerializeField] private Transform _camera;
         [SerializeField] private Transform _model;
@@ -47,7 +48,7 @@ namespace _game.Scripts
 
         private Vector3 velocity;
 
-        [Button]
+        [Button("Take Damage")]
         private void TakeDmg() { Health -= 10; }
 
 
@@ -106,6 +107,8 @@ namespace _game.Scripts
 
             // Press Left Shift to run
             bool isRunning = Input.GetKey(KeyCode.LeftShift);
+            _animator.SetBool(IsRunning, isRunning);
+
             if (_canMove)
             {
                 if (isCrouching)
@@ -130,7 +133,13 @@ namespace _game.Scripts
                 _targetSpeed = 0;
             }
 
-            _moveDirection = forward * (Input.GetAxis("Vertical") * _speed) + right * (Input.GetAxis("Horizontal") * _speed);
+            float speedX = Input.GetAxis("Vertical");
+            float speedY = Input.GetAxis("Horizontal");
+            _animator.SetFloat(SpeedX, speedY);
+            _animator.SetFloat(SpeedY, speedX);
+            _animator.SetBool(IsWalking, Mathf.Abs(speedX) > 0.1f || Mathf.Abs(speedY) > 0.1f);
+
+            _moveDirection = forward * (speedX * _speed) + right * (speedY * _speed);
             _characterController.Move(_moveDirection * Time.deltaTime);
 
             // Apply gravity
@@ -174,6 +183,11 @@ namespace _game.Scripts
         private bool isCrouching = false;
         private bool isSliding = false;
         private float slideTimer;
+        private static readonly int IsCrouching = Animator.StringToHash("IsCrouching");
+        private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+        private static readonly int SpeedX = Animator.StringToHash("SpeedX");
+        private static readonly int SpeedY = Animator.StringToHash("SpeedY");
+        private static readonly int IsRunning = Animator.StringToHash("IsRunning");
 
         private void HandleCrouchAndSlide()
         {
@@ -212,14 +226,16 @@ namespace _game.Scripts
                 ResetHeight();
             }
 
-            if (isCrouching || isSliding)
-            {
-                _model.localPosition = new Vector3(0, -0.8f, 0);
-            }
-            else
-            {
-                _model.localPosition = Vector3.zero;
-            }
+            _animator.SetBool(IsCrouching, isCrouching);
+
+            // if (isCrouching || isSliding)
+            // {
+            //     _model.localPosition = new Vector3(0, -0.8f, 0);
+            // }
+            // else
+            // {
+            //     _model.localPosition = Vector3.zero;
+            // }
         }
 
         private void ResetHeight()
