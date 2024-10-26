@@ -1,4 +1,6 @@
+using System;
 using AYellowpaper;
+using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,14 +9,31 @@ namespace _game.Scripts
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] private float _health;
         [SerializeField] private float _walkSpeed = 6f;
         [SerializeField] private float _runSpeed = 12f;
         [SerializeField] private float _acceleration;
 
         [SerializeField] private Transform _camera;
         [SerializeField] private Transform _model;
-        [SerializeField] private InterfaceReference<IGun,MonoBehaviour> _gun;
+        [SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun1;
+        [SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun2;
+        [SerializeField] private GameObject[] _guns;
 
+        private float Health
+        {
+            get { return _health; }
+            set
+            {
+                _health = value;
+                OnHealthChange?.Invoke(_health);
+            }
+        }
+
+        public event Action<float> OnHealthChange;
+        public event Action<int> OnAmmoChange;
+
+        private InterfaceReference<IGun, MonoBehaviour> _gun;
         private Vector3 _moveDirection = Vector3.zero;
         private bool _canMove = true;
         private CharacterController _characterController;
@@ -28,6 +47,9 @@ namespace _game.Scripts
 
         private Vector3 velocity;
 
+        [Button]
+        private void TakeDmg() { Health -= 10; }
+
 
         private void Start()
         {
@@ -35,12 +57,29 @@ namespace _game.Scripts
             originalHeight = _characterController.height;
             originalCenter = _characterController.center;
 
+            _gun = _gun1;
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _guns[0].SetActive(true);
+                _guns[1].SetActive(false);
+                _gun = _gun1;
+                OnAmmoChange?.Invoke(_gun.Value.Ammo);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                _guns[0].SetActive(false);
+                _guns[1].SetActive(true);
+                _gun = _gun2;
+                OnAmmoChange?.Invoke(_gun.Value.Ammo);
+            }
+
             CheckGrounded();
             HandleMovement();
             HandleCrouchAndSlide();
@@ -110,9 +149,15 @@ namespace _game.Scripts
         }
 
         private void HandleRotation() { transform.rotation = Quaternion.Euler(0, _camera.rotation.eulerAngles.y, 0); }
-        
-        private void HandleShooting() { _gun.Value.Shoot(Input.GetMouseButton(0)); }
-        
+
+        private void HandleShooting()
+        {
+            bool mouseDown = Input.GetMouseButton(0);
+            _gun.Value.Shoot(mouseDown);
+            if (mouseDown)
+                OnAmmoChange?.Invoke(_gun.Value.Ammo);
+        }
+
         private Vector3 originalCenter;
         private float originalHeight;
 

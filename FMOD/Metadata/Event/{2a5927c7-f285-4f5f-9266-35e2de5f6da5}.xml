@@ -99,6 +99,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{5f2dc05b-3003-4854-bfa4-12855cd6661f}">
+		<relationship name="modulators">
+			<destination>{a591fc55-b9b7-477d-84fc-ef1c413bf92b}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{30f733fa-67bf-4a7b-a182-17b7b5a1adc2}</destination>
 		</relationship>
@@ -362,6 +365,17 @@
 			<destination>{40c88205-88fe-4fb7-96d1-2d0f33d41ea7}</destination>
 		</relationship>
 	</object>
+	<object class="ADSRModulator" id="{a591fc55-b9b7-477d-84fc-ef1c413bf92b}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{30f733fa-67bf-4a7b-a182-17b7b5a1adc2}">
 		<relationship name="effects">
 			<destination>{1524e088-12a2-411e-80d9-e124870d12b7}</destination>
@@ -377,10 +391,10 @@
 	<object class="MixerBusPanner" id="{7b9d18f1-9cd0-40aa-b39b-dd3a823ef3c4}" />
 	<object class="ParameterCondition" id="{30f423c5-0325-4722-9ffc-df0040c3c97b}">
 		<property name="minimum">
-			<value>0.5</value>
+			<value>0</value>
 		</property>
 		<property name="maximum">
-			<value>0.5</value>
+			<value>0.98999994993209839</value>
 		</property>
 		<relationship name="parameter">
 			<destination>{63f89920-483c-4cff-8a16-3d6bab8330d8}</destination>
@@ -432,10 +446,10 @@
 	</object>
 	<object class="ParameterCondition" id="{0352a196-172b-461f-a0eb-aaf9db4cf6bd}">
 		<property name="minimum">
-			<value>0.50999999046325684</value>
+			<value>0.98999994993209839</value>
 		</property>
 		<property name="maximum">
-			<value>1.5</value>
+			<value>2</value>
 		</property>
 		<relationship name="parameter">
 			<destination>{63f89920-483c-4cff-8a16-3d6bab8330d8}</destination>

@@ -11,8 +11,8 @@ namespace _game.Scripts
     public class BasicGun : MonoBehaviour, IGun
     {
         [SerializeField] private GunSettings _gunSettings;
-        [SerializeField] private Transform _shootPoint;
         [SerializeField] private Transform _hitPoint;
+        [field: SerializeField] public int Ammo { get; set; } = 30;
 
         private bool _fired;
         private float _fireDelay;
@@ -21,9 +21,11 @@ namespace _game.Scripts
 
         private Vector3 _originalPosition;
         private Quaternion _originalRotation;
+        private Transform _camera;
 
         private void Start()
         {
+            _camera = Camera.main!.transform;
             // Store the initial position and rotation
             _originalPosition = transform.localPosition;
             _originalRotation = transform.localRotation;
@@ -80,7 +82,7 @@ namespace _game.Scripts
                         _automaticSound.setParameterByName("Parameter 1", 1);
                         _automaticSound.start();
                     }
-                    
+
                     _fireDelay = _gunSettings.FiringSpeed;
                 }
             }
@@ -97,7 +99,9 @@ namespace _game.Scripts
 
         private void FireRaycast()
         {
-            if (Physics.Raycast(_shootPoint.position, _shootPoint.forward, out RaycastHit hit))
+            if (Ammo > 0)
+                Ammo--;
+            if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
             {
                 Instantiate(_hitPoint.gameObject, hit.point, Quaternion.identity);
             }
