@@ -103,7 +103,8 @@ namespace _game.Scripts
                 Ammo--;
             if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
             {
-                //Instantiate(_hitPoint.gameObject, hit.point, Quaternion.identity);
+                GameObject t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.identity);
+                t.transform.SetParent(hit.transform);
                 //print(hit.transform.name);
                 if (hit.transform.TryGetComponent(out EnemyAI ai))
                 {
