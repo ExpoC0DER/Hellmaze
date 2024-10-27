@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using _game.Scripts;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class EnemyAI : MonoBehaviour
     private bool _dead = false;
 
     bool seePlayer = false;
+    
+    public static event Action OnDeath;
 
     private void Start()
     {
@@ -100,6 +104,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Respawn()
     {
+        OnDeath?.Invoke();
         health = 100;
         int side = Random.Range(0, 4);
         int cell = Random.Range(-5, 6);

@@ -7,8 +7,13 @@ namespace _game.Scripts
     public class HUDController : MonoBehaviour
     {
         [SerializeField] private PlayerController _player;
+        [SerializeField] private GameManager _gameManager;
         [SerializeField] private TMP_Text _healthText;
         [SerializeField] private TMP_Text _ammoText;
+        [SerializeField] private TMP_Text _timerText;
+        [SerializeField] private TMP_Text _killCountText;
+
+        private int _seconds = 0;
 
         private void SetHealthText(float health) { _healthText.text = Mathf.RoundToInt(health).ToString(); }
 
@@ -25,16 +30,41 @@ namespace _game.Scripts
             }
         }
 
+        private void SetTimerText(float timer)
+        {
+            int newSeconds = Mathf.CeilToInt(timer);
+            if (newSeconds == _seconds)
+                return;
+
+            _seconds = newSeconds;
+            int minutes = newSeconds / 60;
+            int seconds = newSeconds % 60;
+
+            _timerText.text = $"{minutes:00}:{seconds:00}";
+        }
+
+        private int _killCount = 0;
+
+        private void UpdateKillCount()
+        {
+            _killCount++;
+            _killCountText.text = $"Kills: {_killCount}";
+        }
+
         private void OnEnable()
         {
             _player.OnHealthChange += SetHealthText;
             _player.OnAmmoChange += SetAmmoText;
+            _gameManager.OnTimerChange += SetTimerText;
+            EnemyAI.OnDeath += UpdateKillCount;
         }
 
         private void OnDisable()
         {
             _player.OnHealthChange -= SetHealthText;
             _player.OnAmmoChange -= SetAmmoText;
+            _gameManager.OnTimerChange -= SetTimerText;
+            EnemyAI.OnDeath -= UpdateKillCount;
         }
     }
 }
