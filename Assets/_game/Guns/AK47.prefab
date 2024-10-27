@@ -158,15 +158,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed24a22cd0eec447a315103bd134af6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed24a22cd0eec447a315103bd134af6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.28985202
+      value: 0.133
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed24a22cd0eec447a315103bd134af6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.09421259
+      value: -0.088
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed24a22cd0eec447a315103bd134af6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -207,6 +207,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9ed24a22cd0eec447a315103bd134af6, type: 3}
       propertyPath: m_Name
       value: Ak-47final
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9ed24a22cd0eec447a315103bd134af6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
