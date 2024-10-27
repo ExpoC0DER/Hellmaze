@@ -12,6 +12,7 @@ namespace _game.Scripts
         [SerializeField] private float _health;
         [SerializeField] private float _walkSpeed = 6f;
         [SerializeField] private float _runSpeed = 12f;
+        [SerializeField] private float _grappleSpeed = 20f;
         [SerializeField] private float _acceleration;
         [SerializeField] private Animator _animator;
 
@@ -41,6 +42,7 @@ namespace _game.Scripts
         private float _targetSpeed;
         private float _speed;
         private bool _isGrounded;
+        private bool _isGrappling;
 
         [Header("Jump Settings")]
         public float jumpHeight = 2.0f;
@@ -82,11 +84,45 @@ namespace _game.Scripts
             }
 
             CheckGrounded();
-            HandleMovement();
-            HandleCrouchAndSlide();
-            HandleJump();
-            HandleRotation();
+            HandleGrapple();
+            if (!_isGrappling)
+            {
+                HandleMovement();
+                HandleCrouchAndSlide();
+                HandleJump();
+                HandleRotation();
+            }
             HandleShooting();
+        }
+
+        private Vector3 _hitPos;
+
+        private void HandleGrapple()
+        {
+            if (!_isGrappling && Input.GetMouseButtonDown(1))
+            {
+                if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
+                {
+                    if (hit.transform.TryGetComponent(out GrapplePoint grapplePoint))
+                    {
+                        _hitPos = grapplePoint.ArrivalPos;
+                        _isGrappling = true;
+                    }
+                }
+            }
+
+            if (_isGrappling)
+            {
+                isCrouching = false;
+                isSliding = false;
+                isRunning = false;
+                _characterController.Move((_hitPos - transform.position).normalized * (20 * Time.deltaTime));
+                if (Vector3.Distance(transform.position, _hitPos) < 0.4f)
+                {
+                    _isGrappling = false;
+                    _speed = _grappleSpeed;
+                }
+            }
         }
 
         private void CheckGrounded() { _isGrounded = Physics.Raycast(transform.position, -transform.up, 0.1f); }
@@ -106,7 +142,7 @@ namespace _game.Scripts
             Vector3 right = transform.TransformDirection(Vector3.right);
 
             // Press Left Shift to run
-            bool isRunning = Input.GetKey(KeyCode.LeftShift);
+            isRunning = Input.GetKey(KeyCode.LeftShift);
             _animator.SetBool(IsRunning, isRunning);
 
             if (_canMove)
@@ -143,7 +179,11 @@ namespace _game.Scripts
             _characterController.Move(_moveDirection * Time.deltaTime);
 
             // Apply gravity
-            velocity.y += gravity * Time.deltaTime;
+            if (!_isGrounded)
+                velocity.y += gravity * Time.deltaTime;
+            else
+                velocity = Vector3.zero;
+
             _characterController.Move(velocity * Time.deltaTime);
         }
 
@@ -153,8 +193,8 @@ namespace _game.Scripts
             if (_isGrounded && Input.GetButtonDown("Jump"))
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                _characterController.Move(velocity * Time.deltaTime);
             }
-
         }
 
         private void HandleRotation() { transform.rotation = Quaternion.Euler(0, _camera.rotation.eulerAngles.y, 0); }
@@ -183,6 +223,7 @@ namespace _game.Scripts
         private bool isCrouching = false;
         private bool isSliding = false;
         private float slideTimer;
+        private bool isRunning;
         private static readonly int IsCrouching = Animator.StringToHash("IsCrouching");
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
         private static readonly int SpeedX = Animator.StringToHash("SpeedX");

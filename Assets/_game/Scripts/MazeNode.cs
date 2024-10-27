@@ -111,29 +111,29 @@ namespace _game.Scripts
             _dot.gameObject.SetActive(value);
         }
 
-        public void SetWalls(bool wallUp = false, bool wallDown = false, bool wallRight = false, bool wallLeft = false)
+        public void SetWalls(bool wallUp = false, bool wallDown = false, bool wallRight = false, bool wallLeft = false, bool force = false)
         {
-            if (_lastStateUp != wallUp)
+            if (_lastStateUp != wallUp || force)
             {
-                PickWall(_wallsUp, wallUp);
+                PickWall(_wallsUp, wallUp, force);
                 _lastStateUp = wallUp;
             }
 
-            if (_lastStateDown != wallDown)
+            if (_lastStateDown != wallDown || force)
             {
-                PickWall(_wallsDown, wallDown);
+                PickWall(_wallsDown, wallDown, force);
                 _lastStateDown = wallDown;
             }
 
-            if (_lastStateRight != wallRight)
+            if (_lastStateRight != wallRight || force)
             {
-                PickWall(_wallsRight, wallRight);
+                PickWall(_wallsRight, wallRight, force);
                 _lastStateRight = wallRight;
             }
 
-            if (_lastStateLeft != wallLeft)
+            if (_lastStateLeft != wallLeft || force)
             {
-                PickWall(_wallsLeft, wallLeft);
+                PickWall(_wallsLeft, wallLeft, force);
                 _lastStateLeft = wallLeft;
             }
             // _wallUp.SetActive(wallUp);
@@ -142,16 +142,16 @@ namespace _game.Scripts
             // _wallLeft.SetActive(wallLeft);
         }
 
-        private void PickWall(List<GameObject> wallList, bool value)
+        private void PickWall(List<GameObject> wallList, bool value, bool force = false)
         {
             if (wallList == null)
                 return;
 
-
-
             if (value)
             {
                 int randomWallId = RandomWall();
+                if (force)
+                    randomWallId = 0;
                 for(int i = 0; i < wallList.Count; i++)
                 {
                     if (i == randomWallId)

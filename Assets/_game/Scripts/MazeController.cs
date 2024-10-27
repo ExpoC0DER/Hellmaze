@@ -178,6 +178,11 @@ namespace _game.Scripts
                 }
             }
             UpdateIndicators();
+            if (Application.isPlaying)
+            {
+                print("up");
+                UpdateWalls(force: true);
+            }
         }
 
         private void UpdateIndicators()
@@ -279,7 +284,7 @@ namespace _game.Scripts
             UpdateWalls();
         }
 
-        private void UpdateWalls()
+        private void UpdateWalls(bool force = false)
         {
             for(int x = 0; x < _mazeSize; x++)
             {
@@ -290,28 +295,28 @@ namespace _game.Scripts
                         bool wallUp = CanMove((x, y + 1)) && _maze[x, y + 1].State == MNState.Down;
                         bool wallDown = CanMove((x, y - 1)) && _maze[x, y - 1].State == MNState.Up;
                         bool wallRight = CanMove((x + 1, y)) && _maze[x + 1, y].State == MNState.Left;
-                        _maze[x, y].SetWalls(wallUp: !wallUp, wallDown: !wallDown, wallRight: !wallRight);
+                        _maze[x, y].SetWalls(wallUp: !wallUp, wallDown: !wallDown, wallRight: !wallRight, force: force);
                     }
                     if (_maze[x, y].State is MNState.Right)
                     {
                         bool wallUp = CanMove((x, y + 1)) && _maze[x, y + 1].State == MNState.Down;
                         bool wallDown = CanMove((x, y - 1)) && _maze[x, y - 1].State == MNState.Up;
                         bool wallLeft = CanMove((x - 1, y)) && _maze[x - 1, y].State == MNState.Right;
-                        _maze[x, y].SetWalls(wallUp: !wallUp, wallDown: !wallDown, wallLeft: !wallLeft);
+                        _maze[x, y].SetWalls(wallUp: !wallUp, wallDown: !wallDown, wallLeft: !wallLeft, force: force);
                     }
                     if (_maze[x, y].State is MNState.Up)
                     {
                         bool wallDown = CanMove((x, y - 1)) && _maze[x, y - 1].State == MNState.Up;
                         bool wallRight = CanMove((x + 1, y)) && _maze[x + 1, y].State == MNState.Left;
                         bool wallLeft = CanMove((x - 1, y)) && _maze[x - 1, y].State == MNState.Right;
-                        _maze[x, y].SetWalls(wallLeft: !wallLeft, wallDown: !wallDown, wallRight: !wallRight);
+                        _maze[x, y].SetWalls(wallLeft: !wallLeft, wallDown: !wallDown, wallRight: !wallRight, force: force);
                     }
                     if (_maze[x, y].State is MNState.Down)
                     {
                         bool wallUp = CanMove((x, y + 1)) && _maze[x, y + 1].State == MNState.Down;
                         bool wallRight = CanMove((x + 1, y)) && _maze[x + 1, y].State == MNState.Left;
                         bool wallLeft = CanMove((x - 1, y)) && _maze[x - 1, y].State == MNState.Right;
-                        _maze[x, y].SetWalls(wallUp: !wallUp, wallLeft: !wallLeft, wallRight: !wallRight);
+                        _maze[x, y].SetWalls(wallUp: !wallUp, wallLeft: !wallLeft, wallRight: !wallRight, force: force);
                     }
                     if (_maze[x, y].State is MNState.Empty)
                     {
@@ -319,7 +324,7 @@ namespace _game.Scripts
                         bool wallDown = CanMove((x, y - 1)) && _maze[x, y - 1].State == MNState.Up;
                         bool wallRight = CanMove((x + 1, y)) && _maze[x + 1, y].State == MNState.Left;
                         bool wallLeft = CanMove((x - 1, y)) && _maze[x - 1, y].State == MNState.Right;
-                        _maze[x, y].SetWalls(wallUp: !wallUp, wallDown: !wallDown, wallRight: !wallRight, wallLeft: !wallLeft);
+                        _maze[x, y].SetWalls(wallUp: !wallUp, wallDown: !wallDown, wallRight: !wallRight, wallLeft: !wallLeft, force: force);
                     }
                 }
             }
