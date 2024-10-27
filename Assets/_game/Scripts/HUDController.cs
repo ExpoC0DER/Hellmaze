@@ -1,6 +1,8 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace _game.Scripts
 {
@@ -12,6 +14,7 @@ namespace _game.Scripts
         [SerializeField] private TMP_Text _ammoText;
         [SerializeField] private TMP_Text _timerText;
         [SerializeField] private TMP_Text _killCountText;
+        [SerializeField] private Button _restartBtn;
 
         private int _seconds = 0;
 
@@ -41,6 +44,15 @@ namespace _game.Scripts
             int seconds = newSeconds % 60;
 
             _timerText.text = $"{minutes:00}:{seconds:00}";
+
+            if (_seconds <= 0)
+            {
+                _restartBtn.onClick.AddListener(() =>
+                {
+                    SceneManager.LoadScene(0);
+                });
+                _restartBtn.gameObject.SetActive(true);
+            }
         }
 
         private int _killCount = 0;
