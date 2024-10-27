@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using EditorAttributes;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace _game.Scripts
 {
@@ -215,10 +216,15 @@ namespace _game.Scripts
                 {
                     mat.SetFloat(Dissolve1, 0f);
                     wall.GetComponent<Collider>().enabled = true;
+                    wall.GetComponent<NavMeshObstacle>().enabled = true;
                 }
                 else
                 {
-                    mat.DOFloat(0f, Dissolve1, 1f).SetEase(Ease.OutCirc).OnComplete(() => wall.GetComponent<Collider>().enabled = true);
+                    mat.DOFloat(0f, Dissolve1, 1f).SetEase(Ease.OutCirc).OnComplete(() =>
+                    {
+                        wall.GetComponent<Collider>().enabled = true;
+                        wall.GetComponent<NavMeshObstacle>().enabled = true;
+                    });
                 }
             }
             else
@@ -229,10 +235,15 @@ namespace _game.Scripts
                 {
                     mat.SetFloat(Dissolve1, 1f);
                     wall.GetComponent<Collider>().enabled = false;
+                    wall.GetComponent<NavMeshObstacle>().enabled = false;
                 }
                 else
                 {
-                    mat.DOFloat(1f, Dissolve1, 1f).SetEase(Ease.InCirc).OnStart(() => wall.GetComponent<Collider>().enabled = false);
+                    mat.DOFloat(1f, Dissolve1, 1f).SetEase(Ease.InCirc).OnStart(() =>
+                    {
+                        wall.GetComponent<Collider>().enabled = false;
+                        wall.GetComponent<NavMeshObstacle>().enabled = false;
+                    });
                 }
             }
         }

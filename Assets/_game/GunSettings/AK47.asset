@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cad91b281b9bc48968fa1da40a06d9, type: 3}
   m_Name: AK47
   m_EditorClassIdentifier: 
-  <Damage>k__BackingField: 1
+  <Damage>k__BackingField: 20
   <FiringSpeed>k__BackingField: 0.1
   <Spread>k__BackingField: 0
   <FiringMode>k__BackingField: 1

@@ -104,6 +104,11 @@ namespace _game.Scripts
             if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
             {
                 Instantiate(_hitPoint.gameObject, hit.point, Quaternion.identity);
+                print(hit.transform.name);
+                if (hit.transform.TryGetComponent(out EnemyAI ai))
+                {
+                    ai.TakeDamage(_gunSettings.Damage);
+                }
             }
             ApplyRecoil();
         }
