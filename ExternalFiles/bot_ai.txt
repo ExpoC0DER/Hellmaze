@@ -1,0 +1,30 @@
+
+
+	roam state:
+		*move around the map
+		*occassional jump
+		-sees powerup/item -> tracking state
+		-sees player (one of players is in fov and is set as target) -> attacking state
+	tracking state:
+		*go to a set destination
+		-finished -> roam state
+	attacking state:
+		*shoot at player
+		*run towards player and ocassionaly jump run sideways, crouch, 
+		-player left the view (target is null, track last seen position) -> tracking state
+		-
+		
+		
+
+	SEE:
+		trigger (sphere around player)
+			-ontrigger enter add to array (player, pickup, dangerarea)
+			-loop every second to see if objects in array are not destroyed
+				-if they are, fill the void with last one and change length
+			-loop to see if objects are in fov
+				-if none -> roam
+				-if only pickup -> track pickup
+				-if player -> attack
+			-if player suddenly leaves fov -> track player last pos
+				
+				
