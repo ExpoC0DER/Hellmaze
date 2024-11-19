@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Floor
   - GrapplePoint
+  - Bot
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Gun

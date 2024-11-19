@@ -26,5 +26,17 @@
 				-if only pickup -> track pickup
 				-if player -> attack
 			-if player suddenly leaves fov -> track player last pos
+
+anim:
+
+UPPER:
+hold (ak47, other weapons)
+shoot (ak47, other weapons)
+
+LOWER:
+run
+jump
+crouch
+slide
 				
 				
