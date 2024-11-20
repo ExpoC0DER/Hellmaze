@@ -24,7 +24,7 @@ public class EnemyVision : MonoBehaviour
 	Transform lastSeenTarget;
 	
 	
-	void Start()
+	 void Start()
 	{
 		seePlayer = false;
 		col = GetComponent<SphereCollider>();

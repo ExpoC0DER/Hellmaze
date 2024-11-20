@@ -175,7 +175,7 @@ namespace _game.Scripts
 			float speedY = Input.GetAxis("Horizontal");
 			_animator.SetFloat(SpeedX, speedY);
 			_animator.SetFloat(SpeedY, speedX);
-			_animator.SetBool(IsWalking, Mathf.Abs(speedX) > 0.1f || Mathf.Abs(speedY) > 0.1f);
+			//_animator.SetBool(IsWalking, Mathf.Abs(speedX) > 0.1f || Mathf.Abs(speedY) > 0.1f);
 
 			_moveDirection = forward * (speedX * _speed) + right * (speedY * _speed);
 			_characterController.Move(_moveDirection * Time.deltaTime);
@@ -207,6 +207,7 @@ namespace _game.Scripts
 			_gun.Value.Shoot(mouseDown);
 			if (mouseDown)
 				OnAmmoChange?.Invoke(_gun.Value.Ammo);
+			_animator.SetBool("Shooting", mouseDown);
 		}
 
 		private Vector3 originalCenter;

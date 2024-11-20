@@ -8,10 +8,10 @@ using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour
 {
-	//bot difficulty idea: less likely they will flee, faster reaction time, better accuracy
-	[SerializeField] public NavMeshAgent navMeshAgent {get; private set;}
-	[SerializeField] public float navigationRadius {get; private set;} = 30;
 	
+	//bot difficulty idea: less likely they will flee, faster reaction time, better accuracy
+	
+	[SerializeField] public Animator animator;
 	[SerializeField] EnemyVision enemyVision;
 	[SerializeField] float fovAngle = 90;
 
@@ -19,6 +19,11 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField] private float maxHealth = 100;
 	[SerializeField] ParticleSystem death_part;
 	[SerializeField] ParticleSystem hit_part;
+	
+	public NavMeshAgent navMeshAgent { get; private set; }
+	
+	public float navigationRadius {get; private set;} = 30;
+	
 	private bool _dead = false;
 	public Transform target {get; private set;}
 	public Vector3 lastSeenTargetPos {get; private set;}
@@ -31,22 +36,25 @@ public class EnemyAI : MonoBehaviour
 	public Bot_State_Roam state_Roam = new Bot_State_Roam();
 	
 
-	/* private void Start()
+	 private void Start()
 	{
+		navMeshAgent = GetComponent<NavMeshAgent>();
 		currentState = state_Roam;
 		currentState.EnterState(this);
 	}
 
 	void Update()
 	{
+		HandleMovement();
 		currentState.UpdateState();
-	} */
+	}
 	
 	public void SwitchState(Bot_State state)
 	{
+		Debug.Log("switch state to: " + state.ToString());
 		currentState.ExitState();
 		currentState = state;
-		currentState.EnterState(this);
+		currentState.EnterState(this);		
 	}
 	
 	public void SetTarget(Transform target)
@@ -72,8 +80,19 @@ public class EnemyAI : MonoBehaviour
 		if(enemyVision.CheckClosestHealthKit(out Transform position))
 		{
 			
-		}
+		} 
 	}
+	
+	void HandleMovement()
+	{
+		//if seen interactable object (grappling point, explosive barrel) interact accordingly
+		
+		//if direction to navmesh target raycast doesnt get blocked on distance of 4 -> high jump probability
+		//if distance from target > 0.5 and velocity < 1 (get blocked)
+		//		if direction to navmesh target blocked, but from origin of feet not blocked -> crouch
+		//if in navmesh target direction we see Grappling hook -> use it
+		//										breakable wall / barrel -> shoot it								
+	} 
 	
 	public void TrackTarget(Vector3 position)
 	{
@@ -151,6 +170,7 @@ public class Bot_State_Roam : Bot_State
 	public override void EnterState(EnemyAI ai)
 	{
 		enemyAI = ai;
+		agent = enemyAI.navMeshAgent;
 	}
 	public override void UpdateState()
 	{
@@ -212,7 +232,7 @@ public class Bot_State_Tracking : Bot_State
 	}
 	public override void ExitState()
 	{
-		
+	
 	}
 }
 
@@ -224,24 +244,47 @@ public class Bot_State_Attacking : Bot_State
 	{
 		enemyAI = ai;
 		agent = enemyAI.navMeshAgent;
+		agent.updateRotation = false;
 	}
 	public override void UpdateState()
 	{
 		if(agent.remainingDistance < 0.3f)
 		{
-			SetRandomPosition();
+			SetRandomRoomPosition();
 		}
-			//jump or crouch randomly
-			//crouch through small spaces
-			//if seen interactable object (grappling point, explosive barrel) interact accordingly
+		
+		ShootTarget();
+		//higher jump probability
+		//
 		//upper body is focused on target player (with some inaccuracy) and shoot him
 	}
 	public override void ExitState()
 	{
-		
+		agent.updateRotation = true;
 	}
 	
-	void SetRandomPosition()
+	void ShootTarget()
+	{
+		//rotate bot and his spine
+		Vector3 direction = enemyAI.target.position - enemyAI.transform.position;
+		if (direction.magnitude > 0.1f) // Avoid jitter when close
+		{
+			Quaternion lookRotation = Quaternion.LookRotation(direction);
+			
+			float cameraAngle = lookRotation.eulerAngles.x;
+			if(cameraAngle > 90 && cameraAngle <= 360) cameraAngle -= 360;
+			float camRot = Mathf.InverseLerp(90, -90f, cameraAngle);
+			enemyAI.animator.SetFloat("SpineRotation", camRot);
+			
+			lookRotation.z = 0;
+			lookRotation.x = 0;
+			enemyAI.transform.rotation = Quaternion.Slerp(enemyAI.transform.rotation, lookRotation, Time.deltaTime * 5); // Smooth rotation
+		}
+		
+		//shoot raycast from head towards player (with innacuracy) in intervals (based on gun scripts)
+	}
+	
+	void SetRandomRoomPosition()
 	{
 		bool pointInRoom = false;
 		Vector3 pointInRadius = Vector3.zero;
@@ -266,3 +309,33 @@ public class Bot_State_Attacking : Bot_State
 	}
 }
 
+public class Bot_State_FindPickup: Bot_State
+{
+	EnemyAI enemyAI;
+	Transform target;
+	bool lowHealth;
+	public override void EnterState(EnemyAI ai)
+	{
+		enemyAI = ai;
+	}
+	public override void UpdateState()
+	{
+		//low health?
+		//		pick last know healthkit location
+		//no ammo?
+		//		pick last know ammo location
+		
+		//check raycast if it is not blocked the target location (bot sees it)
+		// if not blocked 
+		//		check if it still exists in Vision array (not picked up)
+		//			if not pick other location	(repeat)
+		
+		//if distance from target < 0.2f
+		//		check if there is need for health / ammo
+		//				if not -> free roam
+	}
+	public override void ExitState()
+	{
+		
+	}
+}
