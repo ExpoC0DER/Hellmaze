@@ -82,7 +82,7 @@ public class EnemyVision : MonoBehaviour
 			if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget - 0.1f))
 			{
 				//player is in fov 
-				if (Vector3.Angle(transform.forward, directionToTarget) < fovAngle / 90)
+				if (Vector3.Angle(transform.forward, directionToTarget) < fovAngle)
 				{
 					//get the closest player
 					if(distanceToTarget < closestDistance)
@@ -142,6 +142,7 @@ public class EnemyVision : MonoBehaviour
 		{
 			if(CheckPlayerVisibility(out Transform target))
 			{
+				
 				if(spottedNewTarget)
 				{
 					lastSeenTarget = target;

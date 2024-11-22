@@ -1,0 +1,19 @@
+make "GunSettings" scriptable object
+	set it up
+make prefab with necessary script (BasicGun.cs like)
+add this prefab to viewmodel objects
+add this prefab to skeleton
+make animations of holding this gun
+	-weapon switch event
+make animation of shooting this gun
+	-muzzleflash event
+add this gun to WeaponSlots.cs
+	-make keybind and assign model and IGun script
+add this gun to PlayerAnimationFunctions
+	-make muzzleflash part and assign it to gun in anim
+
+
+
+-make viewmodel anim
+-add viewmodel muzzleflash particle and casing fall
+-add hud icon

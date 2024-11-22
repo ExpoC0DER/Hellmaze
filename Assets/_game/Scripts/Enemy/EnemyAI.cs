@@ -18,7 +18,6 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField] private float health = 100;
 	[SerializeField] private float maxHealth = 100;
 	[SerializeField] ParticleSystem death_part;
-	[SerializeField] ParticleSystem hit_part;
 	
 	public NavMeshAgent navMeshAgent { get; private set; }
 	
@@ -102,7 +101,6 @@ public class EnemyAI : MonoBehaviour
 	
 	public void TakeDamage(float damage)
 	{
-		hit_part.Play();//make it play correctly on pos and rot
 		health -= damage;
 		if(health<=0)
 		{
@@ -112,6 +110,8 @@ public class EnemyAI : MonoBehaviour
 		{
 			FindHealthKit();
 		}
+		//if player shot and not in attack state 
+		//		try find player in whole radius and go attack state if there is any
 	}
 	
 	public void AddHealth(float amount)
@@ -226,9 +226,6 @@ public class Bot_State_Tracking : Bot_State
 		{
 			enemyAI.SwitchState(enemyAI.state_Roam);
 		}
-			//jump or crouch randomly
-			//crouch through small spaces
-			//if seen interactable object (grappling point, explosive barrel) interact accordingly
 	}
 	public override void ExitState()
 	{
@@ -267,7 +264,7 @@ public class Bot_State_Attacking : Bot_State
 	{
 		//rotate bot and his spine
 		Vector3 direction = enemyAI.target.position - enemyAI.transform.position;
-		if (direction.magnitude > 0.1f) // Avoid jitter when close
+		if (direction.magnitude > 0.3f) // Avoid jitter when close
 		{
 			Quaternion lookRotation = Quaternion.LookRotation(direction);
 			
@@ -279,6 +276,9 @@ public class Bot_State_Attacking : Bot_State
 			lookRotation.z = 0;
 			lookRotation.x = 0;
 			enemyAI.transform.rotation = Quaternion.Slerp(enemyAI.transform.rotation, lookRotation, Time.deltaTime * 5); // Smooth rotation
+		}else
+		{
+			enemyAI.animator.SetFloat("SpineRotation", 0.5f);
 		}
 		
 		//shoot raycast from head towards player (with innacuracy) in intervals (based on gun scripts)

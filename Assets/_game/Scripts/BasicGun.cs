@@ -8,110 +8,140 @@ using UnityEngine;
 
 namespace _game.Scripts
 {
-    public class BasicGun : MonoBehaviour, IGun
-    {
-        [SerializeField] private GunSettings _gunSettings;
-        [SerializeField] private Transform _hitPoint;
-        [field: SerializeField] public int Ammo { get; set; } = 30;
+	public class BasicGun : MonoBehaviour, IGun
+	{
+		[SerializeField] private GunSettings _gunSettings;
+		[SerializeField] private Transform _hitPoint;
+		[SerializeField] private Transform _fleshHitPoint;
+		[SerializeField] ParticleSystem muzzleFlash_part;
+		[SerializeField] ParticleSystem casing_part;
+		[field: SerializeField] public int Ammo { get; set; } = 30;
+		[field: SerializeField] public int MaxAmmo { get; set; } = 120;
 
-        private bool _fired;
-        private float _fireDelay;
+		private bool _fired;
+		private float _fireDelay;
 
-        private EventInstance _automaticSound;
+		private EventInstance _automaticSound;
 
-        private Vector3 _originalPosition;
-        private Quaternion _originalRotation;
-        private Transform _camera;
+		private Vector3 _originalPosition;
+		private Quaternion _originalRotation;
+		private Transform _camera;
 
-        private void Start()
-        {
-            _camera = Camera.main!.transform;
-            // Store the initial position and rotation
-            _originalPosition = transform.localPosition;
-            _originalRotation = transform.localRotation;
-        }
+		private void Start()
+		{
+			_camera = Camera.main!.transform;
+			// Store the initial position and rotation
+			_originalPosition = transform.localPosition;
+			_originalRotation = transform.localRotation;
+		}
 
-        private void Update()
-        {
-            if (_fireDelay > 0)
-                _fireDelay -= Time.deltaTime;
-        }
+		private void Update()
+		{
+			if (_fireDelay > 0)
+				_fireDelay -= Time.deltaTime;
+		}
 
-        private void ApplyRecoil()
-        {
-            transform.DOKill(true);
-            // Position recoil (kickback)
-            transform.DOLocalMove(_originalPosition + _gunSettings.RecoilKickback, _gunSettings.RecoilDuration)
-                .SetEase(_gunSettings.RecoilEase)
-                .OnComplete(() =>
-                {
-                    // Return to original position
-                    transform.DOLocalMove(_originalPosition, _gunSettings.RecoilReturnDuration)
-                        .SetEase(_gunSettings.ReturnEase);
-                });
+		private void ApplyRecoil()
+		{
+			transform.DOKill(true);
+			// Position recoil (kickback)
+			transform.DOLocalMove(_originalPosition + _gunSettings.RecoilKickback, _gunSettings.RecoilDuration)
+				.SetEase(_gunSettings.RecoilEase)
+				.OnComplete(() =>
+				{
+					// Return to original position
+					transform.DOLocalMove(_originalPosition, _gunSettings.RecoilReturnDuration)
+						.SetEase(_gunSettings.ReturnEase);
+				});
 
-            // Rotation recoil
-            transform.DOLocalRotate(_originalRotation.eulerAngles + _gunSettings.RecoilRotation, _gunSettings.RotationDuration)
-                .SetEase(_gunSettings.RecoilEase)
-                .OnComplete(() =>
-                {
-                    // Return to original rotation
-                    transform.DOLocalRotate(_originalRotation.eulerAngles, _gunSettings.RotationReturnDuration)
-                        .SetEase(_gunSettings.ReturnEase);
-                });
-        }
+			// Rotation recoil
+			transform.DOLocalRotate(_originalRotation.eulerAngles + _gunSettings.RecoilRotation, _gunSettings.RotationDuration)
+				.SetEase(_gunSettings.RecoilEase)
+				.OnComplete(() =>
+				{
+					// Return to original rotation
+					transform.DOLocalRotate(_originalRotation.eulerAngles, _gunSettings.RotationReturnDuration)
+						.SetEase(_gunSettings.ReturnEase);
+				});
+		}
 
-        public void Shoot(bool keyDown)
-        {
-            if (keyDown)
-            {
-                if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
-                {
-                    _fired = true;
-                    FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
-                    FireRaycast();
-                }
-                if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
-                {
-                    FireRaycast();
+		public void PickAmmo(int amount)
+		{
+			if(Ammo < MaxAmmo)
+			{
+				Ammo += amount;
+				if(Ammo > MaxAmmo) Ammo = MaxAmmo;
+			}
+			
+		}
+		
+		public void Shoot(bool keyDown, out bool succesShot)
+		{
+			succesShot = Ammo != 0;
+			if (keyDown)
+			{
+				if(!succesShot)
+				{
+					//play no ammo click sound
+					return;
+				}
+				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
+				{
+					_fired = true;
+					FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
+					FireRaycast();
+				}
+				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
+				{
+					FireRaycast();
 
-                    if (!_fired)
-                    {
-                        _fired = true;
-                        _automaticSound = FMODHelper.CreateNewInstance(_gunSettings.AutomaticSound);
-                        _automaticSound.setParameterByName("Parameter 1", 1);
-                        _automaticSound.start();
-                    }
+					if (!_fired)
+					{
+						_fired = true;
+						_automaticSound = FMODHelper.CreateNewInstance(_gunSettings.AutomaticSound);
+						_automaticSound.setParameterByName("Parameter 1", 1);
+						_automaticSound.start();
+					}
 
-                    _fireDelay = _gunSettings.FiringSpeed;
-                }
-            }
-            else
-            {
-                if (FMODHelper.InstanceIsPlaying(_automaticSound))
-                {
-                    _automaticSound.setParameterByName("Parameter 1", 0);
-                    _automaticSound.release();
-                }
-                _fired = false;
-            }
-        }
+					_fireDelay = _gunSettings.FiringSpeed;
+				}
+			}
+			else
+			{
+				if (FMODHelper.InstanceIsPlaying(_automaticSound))
+				{
+					_automaticSound.setParameterByName("Parameter 1", 0);
+					_automaticSound.release();
+				}
+				_fired = false;
+			}
+		}
 
-        private void FireRaycast()
-        {
-            if (Ammo > 0)
-                Ammo--;
-            if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
-            {
-                GameObject t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.identity);
-                t.transform.SetParent(hit.transform);
-                //print(hit.transform.name);
-                if (hit.transform.TryGetComponent(out EnemyAI ai))
-                {
-                    ai.TakeDamage(_gunSettings.Damage);
-                }
-            }
-            ApplyRecoil();
-        }
-    }
+		private void FireRaycast()
+		{
+			if (Ammo > 0)
+				Ammo--;
+			if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
+			{
+				GameObject t;
+				if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
+				{
+					t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+				}else
+				{
+					t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+				}
+				
+				t.transform.SetParent(hit.transform, true);
+				//print(hit.transform.name);
+				if (hit.transform.TryGetComponent(out EnemyAI ai))
+				{
+					ai.TakeDamage(_gunSettings.Damage);
+				}
+			}
+			muzzleFlash_part.Play();
+			casing_part.Play();
+			ApplyRecoil();
+		}
+	}
 }

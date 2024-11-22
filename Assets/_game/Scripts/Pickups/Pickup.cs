@@ -1,18 +1,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(MeshRenderer))]
 public class Pickup : MonoBehaviour
 {
 	[SerializeField] ParticleSystem particle;
+	[SerializeField] GameObject visual_object;
 	
-	MeshRenderer rend;
 	bool taken = false;
-	
-	void Awake()
-	{
-		rend = GetComponent<MeshRenderer>();
-	}
 	
 	public virtual void OnPickupPlayer(GameObject gameObject)
 	{
@@ -26,7 +20,7 @@ public class Pickup : MonoBehaviour
 	
 	void OnPickup()
 	{
-		rend.enabled = false;
+		visual_object.SetActive(false);
 		particle.Play();
 		taken = true;
 		Invoke("DisableObject", 1f);
@@ -52,7 +46,7 @@ public class Pickup : MonoBehaviour
 	
 	void OnEnable()
 	{
-		rend.enabled = true;
+		visual_object.SetActive(true);
 		taken = false;
 	}
 }

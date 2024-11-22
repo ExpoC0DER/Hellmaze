@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class PlayerStats : MonoBehaviour
 	bool dead = false;
 	
 	[SerializeField] ParticleSystem blood_part;
+	public event Action<float> OnHealthChange;
 	
 	public void ChangeHealth(float amount)
 	{
@@ -24,7 +26,7 @@ public class PlayerStats : MonoBehaviour
 		{
 			currentHealth = maxHealth;
 		}
-		
+		OnHealthChange?.Invoke(currentHealth);
 	}
 	
 	void Die()

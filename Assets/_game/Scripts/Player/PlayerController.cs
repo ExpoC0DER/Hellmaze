@@ -15,6 +15,7 @@ namespace _game.Scripts
 		[SerializeField] private float _grappleSpeed = 20f;
 		[SerializeField] private float _acceleration;
 		[SerializeField] private Animator _animator;
+		[SerializeField] private PlayerAnimatorFunctions _animatorFunctions;
 
 		[SerializeField] private Transform _camera;
 		[SerializeField] private Transform _model;
@@ -68,13 +69,14 @@ namespace _game.Scripts
 
 		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.Alpha1))
+			/* if (Input.GetKeyDown(KeyCode.Alpha1))
 			{
 				_guns[0].SetActive(true);
 				_guns[1].SetActive(false);
 				_gun = _gun1;
 				OnAmmoChange?.Invoke(_gun.Value.Ammo);
 				_animator.SetFloat("WeaponIndex", 0);
+				_animatorFunctions.SetWeapon(0);
 			}
 			if (Input.GetKeyDown(KeyCode.Alpha2))
 			{
@@ -82,8 +84,9 @@ namespace _game.Scripts
 				_guns[1].SetActive(true);
 				_gun = _gun2;
 				_animator.SetFloat("WeaponIndex", 1);
+				_animatorFunctions.SetWeapon(1);
 				OnAmmoChange?.Invoke(_gun.Value.Ammo);
-			}
+			} */
 
 			CheckGrounded();
 			HandleGrapple();
@@ -94,7 +97,7 @@ namespace _game.Scripts
 				HandleJump();
 				HandleRotation();
 			}
-			HandleShooting();
+			//HandleShooting();
 		}
 
 		private Vector3 _hitPos;
@@ -201,14 +204,14 @@ namespace _game.Scripts
 
 		private void HandleRotation() { transform.rotation = Quaternion.Euler(0, _camera.rotation.eulerAngles.y, 0); }
 
-		private void HandleShooting()
+		/* private void HandleShooting()
 		{
 			bool mouseDown = Input.GetMouseButton(0);
 			_gun.Value.Shoot(mouseDown);
 			if (mouseDown)
 				OnAmmoChange?.Invoke(_gun.Value.Ammo);
 			_animator.SetBool("Shooting", mouseDown);
-		}
+		} */
 
 		private Vector3 originalCenter;
 		private float originalHeight;
