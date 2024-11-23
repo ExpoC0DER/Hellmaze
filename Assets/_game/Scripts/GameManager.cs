@@ -1,30 +1,55 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _game.Scripts
 {
-    public class GameManager : MonoBehaviour
-    {
-        private float _timer = 180f;
+	public class GameManager : MonoBehaviour
+	{
+		public bool isMainMenu = false;
+		
+		private float _timer = 180f;
 
-        public event Action<float> OnTimerChange;
+		public event Action<float> OnTimerChange;
+		public event Action OnSceneLoad;
+		public event Action OnBeforeSceneLoad;
+		
+		
 
-        private void Start()
-        {
-            Time.timeScale = 1;
-        }
+		private void Start()
+		{
+			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
+			DontDestroyOnLoad(this.gameObject);
+			Time.timeScale = 1;
+		}
 
-        private void Update()
-        {
-            _timer -= Time.deltaTime;
-            OnTimerChange?.Invoke(_timer);
-            if (_timer <= 0)
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0;
-            }
-        }
-    }
+		private void Update()
+		{
+			_timer -= Time.deltaTime;
+			OnTimerChange?.Invoke(_timer);
+			if (_timer <= 0)
+			{
+				Cursor.visible = true;
+				Cursor.lockState = CursorLockMode.None;
+				Time.timeScale = 0;
+			}
+		
+		}
+		
+		public void LoadScene(string name)
+		{
+			OnBeforeSceneLoad?.Invoke();
+			SceneManager.LoadScene(name);
+			isMainMenu = name == "MainMenu";
+			OnSceneLoad?.Invoke();
+		}
+		public void LoadScene(int index)
+		{
+			OnBeforeSceneLoad?.Invoke();
+			SceneManager.LoadScene(index);
+			isMainMenu = index == 0;
+			OnSceneLoad?.Invoke();
+		}
+	}
 }

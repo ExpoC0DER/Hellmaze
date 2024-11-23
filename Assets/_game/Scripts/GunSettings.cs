@@ -15,7 +15,9 @@ namespace _game.Scripts
         
         [field: SerializeField] public float Damage { get; private set; }
         [field: SerializeField] public float FiringSpeed { get; private set; }
-        [field: SerializeField] public float Spread { get; private set; }
+        [field: SerializeField] public float Spread { get; private set; } = 1;
+        [field: SerializeField] public float ShotsPerFire { get; private set; } = 1;
+        [field: SerializeField] public float MaxRange { get; private set; } = 50;
         [field: SerializeField] public FiringModeSetting FiringMode { get; private set; }
         [field: SerializeField] public EventReference ManualSound { get;  private set; }
         [field: SerializeField] public EventReference AutomaticSound { get;  private set; }

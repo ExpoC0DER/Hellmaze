@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField] private float health = 100;
 	[SerializeField] private float maxHealth = 100;
 	[SerializeField] ParticleSystem death_part;
-	
+	[SerializeField] public WeaponSlots weaponSlots {get; private set;}
 	public NavMeshAgent navMeshAgent { get; private set; }
 	
 	public float navigationRadius {get; private set;} = 30;
@@ -34,11 +34,6 @@ public class EnemyAI : MonoBehaviour
 	public Bot_State_Tracking state_Tracking = new Bot_State_Tracking();
 	public Bot_State_Roam state_Roam = new Bot_State_Roam();
 	
-	bool crouchedTrigger = false;
-	
-	private Vector3 originalCenter;
-	private float originalHeight;
-
 	[Header("Crouch Settings")]
 	public float crouchHeight = 1.0f;
 	public float crouchSpeed = 3.0f;
@@ -46,6 +41,10 @@ public class EnemyAI : MonoBehaviour
 	public Vector2 jumpCooldown = new Vector2(10,20);
 	float crouchCd;
 	float JumpCd;
+	float crouchCheckCd;
+	bool crouchedTrigger = false;
+	private Vector3 originalCenter;
+	private float originalHeight;
 	
 	[Header("Slide Settings")]
 	public float speedToSlide = 7;
@@ -76,6 +75,7 @@ public class EnemyAI : MonoBehaviour
 		col = GetComponent<CapsuleCollider>();
 		rb=GetComponent<Rigidbody>();
 		navMeshAgent = GetComponent<NavMeshAgent>();
+		weaponSlots = GetComponent<WeaponSlots>();
 		currentState = state_Roam;
 		currentState.EnterState(this);
 		originalHeight = col.height;
@@ -139,6 +139,10 @@ public class EnemyAI : MonoBehaviour
 		RandomCrouch();
 		RandomJump();
 		HandleJump();
+		if(NeedCrouchCheck())
+		{
+			ForceCrouch();
+		}
 		/* if(navMeshAgent.velocity.magnitude < 1f && navMeshAgent.remainingDistance > 0.2f)
 		{
 			Crouch();
@@ -177,7 +181,7 @@ public class EnemyAI : MonoBehaviour
 					isJumping= false;
 				}else
 				{
-					Debug.Log("bot jumped");
+					//Debug.Log("bot jumped");
 					animator.SetTrigger("Jump");
 					rb.isKinematic = false;
 					rb.AddForce(navMeshAgent.desiredVelocity + Vector3.up * jumpForce, ForceMode.Impulse);
@@ -188,6 +192,29 @@ public class EnemyAI : MonoBehaviour
 				jumpLeapTime = 0;
 			}
 		}
+	}
+	
+	bool NeedCrouchCheck()
+	{
+		bool needs = false;
+		if(crouchCheckCd >= 0)
+		{
+			crouchCheckCd -= Time.deltaTime;
+			if(crouchCheckCd <= 0)
+			{
+				//Debug.DrawRay(transform.position, navMeshAgent.velocity.normalized * 4, Color.blue, 5);
+				//Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z), navMeshAgent.velocity.normalized * 4, Color.green, 5);
+				if(Physics.Raycast(transform.position, navMeshAgent.velocity.normalized, 4))
+				{
+					if(!Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z), navMeshAgent.velocity.normalized, 4))
+					{
+						needs = true;
+					}
+				}
+				crouchCheckCd = 0.3f;
+			}
+		}
+		return needs;
 	}
 	
 	void RandomCrouch()
@@ -213,16 +240,22 @@ public class EnemyAI : MonoBehaviour
 	
 	void Crouch()
 	{
-		Debug.Log("crouch");
+		//Debug.Log("crouch");
 		crouchedTrigger = true;
 	}
 	
 	void UnCrouch()
 	{
-		Debug.Log("uncrouch");
+		//Debug.Log("uncrouch");
 		crouchedTrigger = false;
 	}
 
+	void ForceCrouch()
+	{
+		crouchedTrigger = false;
+		crouchCd = 0;
+	}
+	
 	void HandleJump()
 	{
 		//Debug.DrawRay(transform.position, Vector3.down * 1f, Color.blue, 1);
@@ -310,12 +343,33 @@ public class EnemyAI : MonoBehaviour
 		col.center = originalCenter;
 	}	
 	
+	public void RotateToPosition(Vector3 position)
+	{
+		Vector3 direction = position - transform.position;
+		if (direction.magnitude > 0.5f) // Avoid jitter when close
+		{
+			Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+			float cameraAngle = lookRotation.eulerAngles.x;
+			if(cameraAngle > 90 && cameraAngle <= 360) cameraAngle -= 360;
+			float camRot = Mathf.InverseLerp(90, -90f, cameraAngle);
+			animator.SetFloat("SpineRotation", camRot);
+
+			lookRotation.z = 0;
+			lookRotation.x = 0;
+			transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5); // Smooth rotation
+		}else
+		{
+			animator.SetFloat("SpineRotation", Mathf.Lerp(animator.GetFloat("SpineRotation"), 0.5f, Time.deltaTime));
+		}
+	}
+	
 	void HandleInteraction()
 	{
 		//if seen interactable object (grappling point, explosive barrel) interact accordingly
 	}
 	
-	public void TakeDamage(float damage)
+	public void TakeDamage(float damage, Vector3 sourcePos)
 	{
 		health -= damage;
 		if(health<=0)
@@ -326,8 +380,7 @@ public class EnemyAI : MonoBehaviour
 		{
 			FindHealthKit();
 		}
-		//if player shot and not in attack state 
-		//		try find player in whole radius and go attack state if there is any
+		RotateToPosition(sourcePos);
 	}
 	
 	public void AddHealth(float amount)
@@ -453,10 +506,12 @@ public class Bot_State_Attacking : Bot_State
 {
 	NavMeshAgent agent;
 	EnemyAI enemyAI;
+	WeaponSlots weaponSlots;
 	public override void EnterState(EnemyAI ai)
 	{
 		enemyAI = ai;
 		agent = enemyAI.navMeshAgent;
+		this.weaponSlots = enemyAI.weaponSlots;
 		agent.updateRotation = false;
 		SetRandomRoomPosition();
 	}
@@ -480,7 +535,7 @@ public class Bot_State_Attacking : Bot_State
 	void ShootTarget()
 	{
 		//rotate bot and his spine
-		Vector3 direction = new Vector3(enemyAI.target.position.x, enemyAI.target.position.y + 0.9f, enemyAI.target.position.z) - enemyAI.transform.position;
+		/* Vector3 direction = new Vector3(enemyAI.target.position.x, enemyAI.target.position.y + 0.9f, enemyAI.target.position.z) - enemyAI.transform.position;
 		if (direction.magnitude > 0.3f) // Avoid jitter when close
 		{
 			Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -496,9 +551,9 @@ public class Bot_State_Attacking : Bot_State
 		}else
 		{
 			enemyAI.animator.SetFloat("SpineRotation", 0.5f);
-		}
-		
-		//shoot raycast from head towards player (with innacuracy) in intervals (based on gun scripts)
+		} */
+		enemyAI.RotateToPosition(new Vector3(enemyAI.target.position.x, enemyAI.target.position.y + 0.9f, enemyAI.target.position.z));
+		if(enemyAI.target != null )weaponSlots.Bot_Shooting(enemyAI.target);
 	}
 	
 	void SetRandomRoomPosition()

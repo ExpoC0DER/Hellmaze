@@ -18,6 +18,11 @@ public class WeaponSlots : MonoBehaviour
 	public event Action<int> OnAmmoChange;
 	[SerializeField] List<KeyCode> keyBinds;
 	
+	[Header("Bot")]
+	[SerializeField] float innaccuracy = 1;
+	[SerializeField] float damage_multiplier = 0.5f;
+	bool bot_shoot_trigger = false;
+	
 	void Awake()
 	{
 		isPlayer = CompareTag("Player");
@@ -25,6 +30,15 @@ public class WeaponSlots : MonoBehaviour
 		currentWeaponIndex = 0;
 		PickWeapon(currentWeaponIndex, 0);
 		if(!autoSwitch)SwitchWeapon(currentWeaponIndex);
+		if(!isPlayer) // setup bot weapons
+		{
+			for (int i = 0; i < _guns.Length; i++)
+			{
+				_guns[i].Value.BotInaccuracy = innaccuracy;
+				_guns[i].Value.DamageMultiplier = damage_multiplier;
+			}
+		}
+			
 	}
 	
 	void Update()
@@ -77,16 +91,29 @@ public class WeaponSlots : MonoBehaviour
 	private void HandleShooting()
 	{
 		bool triggered = Input.GetMouseButton(0);
-		_currentGun.Value.Shoot(triggered, out bool succesShot);
+		_currentGun.Value.Shoot(triggered, null, out bool succesShot);
 		if (succesShot) OnAmmoChange?.Invoke(_currentGun.Value.Ammo);
 		animator.SetBool("Shooting", succesShot && triggered);
 		
 	}
 	
-	public void Bot_Shooting()
+	public void Bot_Shooting(Transform target)
 	{
-		
+		if(bot_shoot_trigger)
+		{
+			_currentGun.Value.StopShooting();
+			animator.SetBool("Shooting", false);
+			return;
+		}
+		Debug.Log("shot");
+		bot_shoot_trigger = true;
+		_currentGun.Value.Shoot(bot_shoot_trigger, target, out bool succesShot);
+		animator.SetBool("Shooting", succesShot && bot_shoot_trigger);
+		Invoke("StopShooting", UnityEngine.Random.Range(0.2f, 0.4f));
 	}
+	
+	void StopShooting() => bot_shoot_trigger = false;
+	
 	
 	public void ThrowAwayWeapon(int weaponIndex)
 	{

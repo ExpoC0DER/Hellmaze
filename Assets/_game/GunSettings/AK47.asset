@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 20
   <FiringSpeed>k__BackingField: 0.1
-  <Spread>k__BackingField: 0
+  <Spread>k__BackingField: 1
+  <ShotsPerFire>k__BackingField: 1
+  <MaxRange>k__BackingField: 50
   <FiringMode>k__BackingField: 1
   <ManualSound>k__BackingField:
     Guid:
