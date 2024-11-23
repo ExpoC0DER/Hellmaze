@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -5,6 +6,7 @@ public class Pickup : MonoBehaviour
 {
 	[SerializeField] ParticleSystem particle;
 	[SerializeField] GameObject visual_object;
+	[SerializeField] float respawnTime = 30;
 	
 	bool taken = false;
 	
@@ -23,7 +25,7 @@ public class Pickup : MonoBehaviour
 		visual_object.SetActive(false);
 		particle.Play();
 		taken = true;
-		Invoke("DisableObject", 1f);
+		StartCoroutine(Respawn());
 	}
 	
 	void DisableObject()
@@ -42,6 +44,16 @@ public class Pickup : MonoBehaviour
 			OnPickupBot(other.gameObject);
 			OnPickup();
 		}
+	}
+	
+	IEnumerator Respawn()
+	{
+		yield return new WaitForSeconds(1);
+		DisableObject();
+		yield return new WaitForSeconds(respawnTime);
+		visual_object.SetActive(false);
+		particle.Play();
+		taken = false;
 	}
 	
 	void OnEnable()

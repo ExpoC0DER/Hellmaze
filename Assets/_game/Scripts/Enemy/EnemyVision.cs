@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System;
-using UnityEditor.Rendering;
 
 [RequireComponent(typeof(SphereCollider))]
 public class EnemyVision : MonoBehaviour
@@ -39,47 +38,47 @@ public class EnemyVision : MonoBehaviour
 	void Update()
 	{
 		RemoveDestroyedObjects();
-		CheckVisibleObjects();
+		//CheckVisibleObjects();
 		LookForPlayer();
 	}
 
 	// add check for players and pickups in range
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Player")) 
+		if(other.CompareTag("Player") || other.CompareTag("Bot")) 
 		{
 			if(!targets.Contains(other.transform))
 			{
 				targets.Add(other.transform);
 			} 
 		}
-		else if(other.TryGetComponent(out HealthKit healthKit))
+		/* else if(other.TryGetComponent(out HealthKit healthKit))
 		{
 			if(!healthKits.Contains(other.transform)) healthKits.Add(other.transform);
 		}
 		else if(other.TryGetComponent(out WeaponPickup weapon))
 		{
 			if(!weaponPickups.Contains(other.transform)) weaponPickups.Add(other.transform);
-		}
+		} */
 	}
 	
 	void OnTriggerExit(Collider other)
 	{
-		if(other.CompareTag("Player"))
+		if(other.CompareTag("Player") || other.CompareTag("Bot"))
 		{
 			if(targets.Contains(other.transform))
 			{
 				targets.Remove(other.transform);
 			} 
 		}
-		else if(other.TryGetComponent(out HealthKit healthKit))
+		/* else if(other.TryGetComponent(out HealthKit healthKit))
 		{
 			if(healthKits.Contains(other.transform)) healthKits.Add(other.transform);
 		}
 		else if(other.TryGetComponent(out WeaponPickup weapon))
 		{
 			if(weaponPickups.Contains(other.transform)) weaponPickups.Add(other.transform);
-		}
+		} */
 	}
 	
 	//Check objects in proximity array to see if they are in Enemy FOV and are not behind wall, then prefer PLAYER as target

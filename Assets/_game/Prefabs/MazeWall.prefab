@@ -274,7 +274,7 @@ NavMeshObstacle:
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 4, z: 0}
-  m_TimeToStationary: 0.5
+  m_TimeToStationary: 2
 --- !u!4 &966889477725988318 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ae6bc07eb2e6af43bf8abfa4e860c9b, type: 3}
@@ -396,7 +396,7 @@ NavMeshObstacle:
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 4, z: 0}
-  m_TimeToStationary: 0.5
+  m_TimeToStationary: 2
 --- !u!4 &4193775415299558582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2303da7ea776f5b4f88ff7d37ed8bdfd, type: 3}
@@ -523,7 +523,7 @@ NavMeshObstacle:
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 4, z: 0}
-  m_TimeToStationary: 0.5
+  m_TimeToStationary: 2
 --- !u!23 &8287824550387285094 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: e1b7048c88536314690644982049550a, type: 3}

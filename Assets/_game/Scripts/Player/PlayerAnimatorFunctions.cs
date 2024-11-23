@@ -25,6 +25,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 		isPlayer = transform.parent.CompareTag("Player");
+		if(!isPlayer) character_selected = Random.Range(0, characters.Length);
 		SetAvatar(character_selected);
 	}
 	

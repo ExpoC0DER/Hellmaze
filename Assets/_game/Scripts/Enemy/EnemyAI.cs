@@ -440,12 +440,13 @@ public class Bot_State_Roam : Bot_State
 	{
 		enemyAI = ai;
 		agent = enemyAI.navMeshAgent;
+		SetRandomPosition();
 	}
 	public override void UpdateState()
 	{
-		if(agent.remainingDistance < 0.3f)
+		if(agent.isOnNavMesh)
 		{
-			SetRandomPosition();
+			if(agent.remainingDistance < 0.3f) SetRandomPosition();
 		}
 			//jump or crouch randomly
 			//crouch through small spaces

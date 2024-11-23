@@ -2,6 +2,7 @@ using _game.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class Menu : MonoBehaviour
 {
 	[SerializeField] GameManager gameManager;
@@ -10,12 +11,25 @@ public class Menu : MonoBehaviour
 	[SerializeField] GameObject menuObject, pausemenu_visual, mainmenu_visual;
 	
 	public bool isPaused {get; private set; } = false;
+	public static Menu main {get; private set;}
 	
 	void Awake()
 	{
+		if(main != null)
+		{
+			Destroy(this.gameObject);
+		}else
+		{
+			main = this;
+		}
 		DontDestroyOnLoad(transform.parent);
 	}
 	
+	void Start()
+	{
+		Reload();
+		
+	}
 	void Update()
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))

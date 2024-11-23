@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace _game.Scripts
@@ -28,6 +29,7 @@ namespace _game.Scripts
 		private Vector3 _originalPosition;
 		private Quaternion _originalRotation;
 		private Transform _camera;
+		
 
 		private void Start()
 		{
@@ -137,8 +139,8 @@ namespace _game.Scripts
 				Ammo--;
 			if(target == null)
 			{
-				orig = _camera.position;
 				dir = _camera.forward;
+				orig = _camera.position + _camera.forward * 0.13f; //PLAYER SHOT ITSELF (QUICKFIX)
 			}else
 			{
 				orig = transform.position;

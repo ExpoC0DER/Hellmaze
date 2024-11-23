@@ -15,12 +15,26 @@ namespace _game.Scripts
 		public event Action OnSceneLoad;
 		public event Action OnBeforeSceneLoad;
 		
+		public static GameManager main { get; private set; }
 		
+		void Awake()
+		{
+			if(main != null)
+			{
+				Destroy(this.gameObject);
+			}else
+			{
+				main = this;
+			}
+			
+			DontDestroyOnLoad(this.gameObject);
+			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
+		}
 
 		private void Start()
 		{
-			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
-			DontDestroyOnLoad(this.gameObject);
+			
+			
 			Time.timeScale = 1;
 		}
 

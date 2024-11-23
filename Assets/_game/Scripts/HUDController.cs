@@ -69,7 +69,7 @@ namespace _game.Scripts
         {
             _playerStats.OnHealthChange += SetHealthText;
             _weapons.OnAmmoChange += SetAmmoText;
-            _gameManager.OnTimerChange += SetTimerText;
+            GameManager.main.OnTimerChange += SetTimerText;
             EnemyAI.OnDeath += UpdateKillCount;
         }
 
@@ -77,7 +77,7 @@ namespace _game.Scripts
         {
             _playerStats.OnHealthChange -= SetHealthText;
             _weapons.OnAmmoChange -= SetAmmoText;
-            _gameManager.OnTimerChange -= SetTimerText;
+            GameManager.main.OnTimerChange -= SetTimerText;
             EnemyAI.OnDeath -= UpdateKillCount;
         }
     }
