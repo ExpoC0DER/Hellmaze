@@ -66,7 +66,7 @@ public class WeaponSlots : MonoBehaviour
 			if(canSwitch)
 			{
 				animatorFunctions.SetWeapon(i);
-				animator.SetFloat("WeaponIndex", 0);
+				animator.SetFloat("WeaponIndex", i);
 				currentWeaponIndex = weaponIndex;
 				_currentGun = _guns[currentWeaponIndex];
 				OnAmmoChange?.Invoke(_currentGun.Value.Ammo);

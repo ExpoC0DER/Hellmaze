@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using UnityEditor.Rendering;
 
 [RequireComponent(typeof(SphereCollider))]
 public class EnemyVision : MonoBehaviour
@@ -11,17 +12,21 @@ public class EnemyVision : MonoBehaviour
 	[SerializeField] EnemyAI enemyAI;
 	[SerializeField] float fovAngle = 90;
 	[SerializeField] float reactionTime = 0.3f;
-	public Transform target { get; private set; }
-	List<Transform> targets = new List<Transform>();
-	List<Transform> healthKits = new List<Transform>();
-	List<Transform> weaponPickups = new List<Transform>();
-	List<Transform> seenHealthKits = new List<Transform>();
-	List<Transform> seenWeaponPickups = new List<Transform>();
+	[SerializeField] public Transform target { get; private set; }
+	[SerializeField] List<Transform> targets = new List<Transform>();
+	[SerializeField] List<Transform> healthKits = new List<Transform>();
+	[SerializeField] List<Transform> weaponPickups = new List<Transform>();
+	[SerializeField] List<Transform> seenHealthKits = new List<Transform>();
+	[SerializeField] List<Transform> seenWeaponPickups = new List<Transform>();
 	public bool seePlayer {get; private set;}
 	SphereCollider col;
 	float detectionRadius;
 	float checkInterval = 0.3f;
+	float checkInterval_cd = 0;
+	float playerCheck_cd = 0;
+	float removeDestroyed_cd = 0;
 	Transform lastSeenTarget;
+	bool spottedNewTarget = true;
 	
 	
 	 void Start()
@@ -29,9 +34,13 @@ public class EnemyVision : MonoBehaviour
 		seePlayer = false;
 		col = GetComponent<SphereCollider>();
 		detectionRadius = col.radius;
-		StartCoroutine(RemoveDestroyedObjects());
-		StartCoroutine(CheckVisibleObjects());
-		StartCoroutine(LookForPlayer());
+	}
+	
+	void Update()
+	{
+		RemoveDestroyedObjects();
+		CheckVisibleObjects();
+		LookForPlayer();
 	}
 
 	// add check for players and pickups in range
@@ -39,7 +48,10 @@ public class EnemyVision : MonoBehaviour
 	{
 		if(other.CompareTag("Player")) 
 		{
-			if(!targets.Contains(other.transform)) targets.Add(other.transform);
+			if(!targets.Contains(other.transform))
+			{
+				targets.Add(other.transform);
+			} 
 		}
 		else if(other.TryGetComponent(out HealthKit healthKit))
 		{
@@ -55,7 +67,10 @@ public class EnemyVision : MonoBehaviour
 	{
 		if(other.CompareTag("Player"))
 		{
-			if(targets.Contains(other.transform)) targets.Remove(other.transform);
+			if(targets.Contains(other.transform))
+			{
+				targets.Remove(other.transform);
+			} 
 		}
 		else if(other.TryGetComponent(out HealthKit healthKit))
 		{
@@ -79,6 +94,7 @@ public class EnemyVision : MonoBehaviour
 			Vector3 directionToTarget = (obj.position - transform.position).normalized;
 			float distanceToTarget = Vector3.Distance(transform.position, obj.position);
 			//player is not behind wall
+			//Debug.DrawRay(transform.position, directionToTarget * distanceToTarget, Color.yellow, 60);
 			if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget - 0.1f))
 			{
 				//player is in fov 
@@ -94,6 +110,7 @@ public class EnemyVision : MonoBehaviour
 			}
 		}
 		target = visibleObj;
+		//Debug.Log("Target seen = " + (target != null), target );
 		return target;
 	}
 	
@@ -135,105 +152,124 @@ public class EnemyVision : MonoBehaviour
 		return position;
 	}
 	
-	IEnumerator LookForPlayer()
+	void LookForPlayer()
 	{
-		bool spottedNewTarget = true;
-		while(true)
+		if(playerCheck_cd >= 0)
 		{
-			if(CheckPlayerVisibility(out Transform target))
+			playerCheck_cd -= Time.deltaTime;
+			if(playerCheck_cd <= 0)
 			{
-				
-				if(spottedNewTarget)
+				if(CheckPlayerVisibility(out Transform target))
 				{
-					lastSeenTarget = target;
-					enemyAI.SetTarget(target);
-					spottedNewTarget = false;
-				}
-			}else
-			{
-				if(!spottedNewTarget)
+					if(spottedNewTarget)
+					{
+						lastSeenTarget = target;
+						enemyAI.SetTarget(target);
+						spottedNewTarget = false;
+					}
+				}else
 				{
-					enemyAI.SetTarget(null);
-					enemyAI.TrackTarget(lastSeenTarget.position);
-					spottedNewTarget = true;
+					//Debug.Log("player not visible");
+					if(!spottedNewTarget)
+					{
+						if(Physics.Raycast(new Vector3(transform.position.x, transform.position.y +0.9f, transform.position.z), (lastSeenTarget.position - transform.position).normalized, out RaycastHit hit))
+						{
+							
+							if(hit.transform != lastSeenTarget)
+							{
+								//Debug.Log("player not in room");
+								enemyAI.SetTarget(null);
+								spottedNewTarget = true;
+							}
+						}
+					}
+					
 				}
+				playerCheck_cd = reactionTime;
 			}
-			yield return new WaitForSeconds(reactionTime);
 		}
 	}
 	
-	IEnumerator CheckVisibleObjects()
+	void CheckVisibleObjects()
 	{
-		while(true)
+		if(checkInterval_cd >= 0)
 		{
-			for (int i = 0; i < weaponPickups.Count; i++)
+			checkInterval_cd -= Time.deltaTime;
+			if(checkInterval_cd <= 0)
 			{
-				Transform obj = weaponPickups[i];
-				if(obj == null) continue;
-				Vector3 directionToTarget = (obj.position - transform.position).normalized;
-				float distanceToTarget = Vector3.Distance(transform.position, obj.position);
-				//player is not behind wall
-				if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget - 0.1f))
+				for (int i = 0; i < weaponPickups.Count; i++)
 				{
-					//player is in fov 
-					if (Vector3.Angle(transform.forward, directionToTarget) < fovAngle / 90)
+					Transform obj = weaponPickups[i];
+					if(obj == null) continue;
+					Vector3 directionToTarget = (obj.position - transform.position).normalized;
+					float distanceToTarget = Vector3.Distance(transform.position, obj.position);
+					//player is not behind wall
+					if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget - 0.1f))
 					{
-						if(!seenWeaponPickups.Contains(obj))seenWeaponPickups.Add(obj);
-						enemyAI.SeenWeaponPickup(obj);
+						//player is in fov 
+						if (Vector3.Angle(transform.forward, directionToTarget) < fovAngle / 90)
+						{
+							if(!seenWeaponPickups.Contains(obj))seenWeaponPickups.Add(obj);
+							enemyAI.SeenWeaponPickup(obj);
+						}
 					}
 				}
-			}
-			yield return new WaitForSeconds(checkInterval);
-			for (int i = 0; i < healthKits.Count; i++)
-			{
-				Transform obj = healthKits[i];
-				if(obj == null) continue;
-				Vector3 directionToTarget = (obj.position - transform.position).normalized;
-				float distanceToTarget = Vector3.Distance(transform.position, obj.position);
-				//player is not behind wall
-				if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget - 0.1f))
+				for (int i = 0; i < healthKits.Count; i++)
 				{
-					//player is in fov 
-					if (Vector3.Angle(transform.forward, directionToTarget) < fovAngle / 90)
+					Transform obj = healthKits[i];
+					if(obj == null) continue;
+					Vector3 directionToTarget = (obj.position - transform.position).normalized;
+					float distanceToTarget = Vector3.Distance(transform.position, obj.position);
+					//player is not behind wall
+					if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget - 0.1f))
 					{
-						if(!seenHealthKits.Contains(obj))seenHealthKits.Add(obj);
-						enemyAI.SeenHealthKit(obj);
+						//player is in fov 
+						if (Vector3.Angle(transform.forward, directionToTarget) < fovAngle / 90)
+						{
+							if(!seenHealthKits.Contains(obj))seenHealthKits.Add(obj);
+							enemyAI.SeenHealthKit(obj);
+						}
 					}
 				}
+				checkInterval_cd = checkInterval;
 			}
-			yield return new WaitForSeconds(checkInterval);
 		}
+		
+		
 	}
 	
-	IEnumerator RemoveDestroyedObjects()
+	void RemoveDestroyedObjects()
 	{
-		while(true)
+		if(removeDestroyed_cd >= 0)
 		{
-			for (int i = 0; i < targets.Count; i++)
+			removeDestroyed_cd -= Time.deltaTime;
+			if(removeDestroyed_cd <= 0)
 			{
-				if(targets[i] == null)
+				for (int i = 0; i < targets.Count; i++)
 				{
-					targets.RemoveAt(i);
+					if(targets[i] == null)
+					{
+						targets.RemoveAt(i);
+					}
 				}
-			}
-			yield return new WaitForSeconds(0.5f);
-			for (int i = 0; i < weaponPickups.Count; i++)
-			{
-				if(weaponPickups[i] == null)
+				for (int i = 0; i < weaponPickups.Count; i++)
 				{
-					weaponPickups.RemoveAt(i);
+					if(weaponPickups[i] == null)
+					{
+						weaponPickups.RemoveAt(i);
+					}
 				}
-			}
-			yield return new WaitForSeconds(0.5f);
-			for (int i = 0; i < healthKits.Count; i++)
-			{
-				if(healthKits[i] == null)
+				for (int i = 0; i < healthKits.Count; i++)
 				{
-					healthKits.RemoveAt(i);
+					if(healthKits[i] == null)
+					{
+						healthKits.RemoveAt(i);
+					}
 				}
+				removeDestroyed_cd = checkInterval;
 			}
-			yield return new WaitForSeconds(0.5f);
 		}
+		
 	}
 	
 }

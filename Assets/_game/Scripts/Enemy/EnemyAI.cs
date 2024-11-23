@@ -34,17 +34,58 @@ public class EnemyAI : MonoBehaviour
 	public Bot_State_Tracking state_Tracking = new Bot_State_Tracking();
 	public Bot_State_Roam state_Roam = new Bot_State_Roam();
 	
+	bool crouchedTrigger = false;
+	
+	private Vector3 originalCenter;
+	private float originalHeight;
+
+	[Header("Crouch Settings")]
+	public float crouchHeight = 1.0f;
+	public float crouchSpeed = 3.0f;
+	public Vector2 crouchCooldown = new Vector2(10,20);
+	public Vector2 jumpCooldown = new Vector2(10,20);
+	float crouchCd;
+	float JumpCd;
+	
+	[Header("Slide Settings")]
+	public float speedToSlide = 7;
+	public float slideSpeed = 10.0f;
+	public float slideDuration = 1.0f;
+	public float slideCooldown = 2.0f;
+	private float lastSlideTime;
+
+	private bool isCrouching = false;
+	private bool isSliding = false;
+	private float slideTimer;
+	private bool isRunning;
+	
+	[Header("Jump Settings")]
+	public float jumpForce = 5f;
+	//public float gravity = -9.81f;
+	private bool _isGrounded;
+	float jumpLeapTime;
+	bool isJumping = false;
+	bool isFalling = false;
+	private CapsuleCollider col;
+	[SerializeField] Transform groundCheckPos;
+	[SerializeField] Rigidbody rb;
+
 
 	 private void Start()
 	{
+		col = GetComponent<CapsuleCollider>();
+		rb=GetComponent<Rigidbody>();
 		navMeshAgent = GetComponent<NavMeshAgent>();
 		currentState = state_Roam;
 		currentState.EnterState(this);
+		originalHeight = col.height;
+		originalCenter = col.center;
 	}
 
 	void Update()
 	{
 		HandleMovement();
+		HandleInteraction();
 		currentState.UpdateState();
 	}
 	
@@ -58,8 +99,16 @@ public class EnemyAI : MonoBehaviour
 	
 	public void SetTarget(Transform target)
 	{
-		this.target = target;
-		SwitchState(state_Attacking);
+		if(target == null)
+		{
+			lastSeenTargetPos = this.transform.position;
+			SwitchState(state_Tracking);
+			this.target = target;
+		}else
+		{
+			this.target = target;
+			SwitchState(state_Attacking);
+		}
 	}
 	public void SeenHealthKit(Transform pickup)
 	{
@@ -82,21 +131,188 @@ public class EnemyAI : MonoBehaviour
 		} 
 	}
 	
+	private void CheckGrounded() { _isGrounded = Physics.Raycast(groundCheckPos.position, Vector3.down, 0.3f); }
+	
 	void HandleMovement()
 	{
-		//if seen interactable object (grappling point, explosive barrel) interact accordingly
-		
+		CheckGrounded();
+		RandomCrouch();
+		RandomJump();
+		HandleJump();
+		/* if(navMeshAgent.velocity.magnitude < 1f && navMeshAgent.remainingDistance > 0.2f)
+		{
+			Crouch();
+		}
+		if(crouchedTrigger)
+		{
+			if(!Physics.Raycast(transform.position, Vector3.up, 2))
+			{
+				UnCrouch();
+			}
+		} */
+		HandleCrouchAndSlide();
 		//if direction to navmesh target raycast doesnt get blocked on distance of 4 -> high jump probability
-		//if distance from target > 0.5 and velocity < 1 (get blocked)
-		//		if direction to navmesh target blocked, but from origin of feet not blocked -> crouch
-		//if in navmesh target direction we see Grappling hook -> use it
-		//										breakable wall / barrel -> shoot it								
-	} 
+		
+		
+		//if in navmesh target direction we see Grappling hook -> use it							
+	}
 	
-	public void TrackTarget(Vector3 position)
+	void RandomJump()
 	{
-		lastSeenTargetPos = position;
-		SwitchState(state_Tracking);
+		
+		if(JumpCd >= 0)
+		{
+			JumpCd -= Time.deltaTime;
+			jumpLeapTime += Time.deltaTime;
+			if(isJumping && _isGrounded && jumpLeapTime > 0.5f)
+			{
+				JumpCd = 0;
+			}
+			if(JumpCd <= 0)
+			{
+				if(isJumping)
+				{
+					JumpCd = UnityEngine.Random.Range(jumpCooldown.x, jumpCooldown.y);
+					isFalling= true;
+					isJumping= false;
+				}else
+				{
+					Debug.Log("bot jumped");
+					animator.SetTrigger("Jump");
+					rb.isKinematic = false;
+					rb.AddForce(navMeshAgent.desiredVelocity + Vector3.up * jumpForce, ForceMode.Impulse);
+					JumpCd = UnityEngine.Random.Range(1, 1.5f);
+					isJumping = true;
+					navMeshAgent.updatePosition = false;
+				}
+				jumpLeapTime = 0;
+			}
+		}
+	}
+	
+	void RandomCrouch()
+	{
+		if(crouchCd >= 0)
+		{
+			crouchCd -= Time.deltaTime;
+			if(crouchCd <= 0)
+			{
+				if(crouchedTrigger)
+				{
+					UnCrouch();
+					crouchCd = UnityEngine.Random.Range(crouchCooldown.x, crouchCooldown.y);
+				}else
+				{
+					Crouch();
+					crouchCd = UnityEngine.Random.Range(1f,3f);
+				}
+			}
+		}
+		
+	}
+	
+	void Crouch()
+	{
+		Debug.Log("crouch");
+		crouchedTrigger = true;
+	}
+	
+	void UnCrouch()
+	{
+		Debug.Log("uncrouch");
+		crouchedTrigger = false;
+	}
+
+	void HandleJump()
+	{
+		//Debug.DrawRay(transform.position, Vector3.down * 1f, Color.blue, 1);
+		//Debug.Log("grounded "+ _isGrounded);
+		/* if (isJumping)
+		{
+			//velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+			//characterController.Move(velocity * Time.deltaTime);
+			//transform.position = new Vector3(transform.position.x, transform.position.y + velocity.y * Time.deltaTime, transform.position.z);
+			
+		} */
+		/* if(!_isGrounded || isFalling)
+		{
+			//transform.position = new Vector3 (transform.position.x, transform.position.y + gravity * Time.deltaTime, transform.position.z);
+		} */
+		if(isFalling && _isGrounded)
+		{
+			navMeshAgent.nextPosition = transform.position;
+			navMeshAgent.updatePosition = true;	
+			rb.isKinematic = true;
+			isFalling = false;
+		}
+		
+	}
+		
+
+	private void HandleCrouchAndSlide()
+	{
+		if (crouchedTrigger && navMeshAgent.speed > 7 && !isSliding && Time.time >= lastSlideTime + slideCooldown)
+		{
+			// Start slide
+			isSliding = true;
+			slideTimer = slideDuration;
+			col.height = crouchHeight / 2; // Shorten height for slide
+			col.center = new Vector3(0, crouchHeight / 4, 0);
+			animator.SetFloat("SlideAnim", UnityEngine.Random.Range(0f,1f));
+			//Debug.Log("start slide");
+		}
+
+		if (isSliding)
+		{
+			slideTimer -= Time.deltaTime;
+			if (slideTimer <= 0)
+			{
+				// End slide
+				isSliding = false;
+				lastSlideTime = Time.time;
+				ResetHeight();
+				//Debug.Log("end slide");
+			}
+		}
+
+		if (crouchedTrigger && !isSliding && !isCrouching)
+		{
+			// Crouch
+			isCrouching = true;
+			col.height = crouchHeight;
+			col.center = new Vector3(0, crouchHeight / 2, 0);
+			//Debug.Log("start crouch");
+		}
+		else if (!crouchedTrigger && isCrouching)
+		{
+			// End crouch
+			isCrouching = false;
+			ResetHeight();
+			//Debug.Log("end crouch");
+		}
+		animator.SetBool("IsSliding", isSliding);
+		animator.SetBool("IsCrouching", isCrouching);
+
+		// if (isCrouching || isSliding)
+		// {
+		//     _model.localPosition = new Vector3(0, -0.8f, 0);
+		// }
+		// else
+		// {
+		//     _model.localPosition = Vector3.zero;
+		// }
+	}
+
+	private void ResetHeight()
+	{
+		// Reset height and center when crouching or sliding ends
+		col.height = originalHeight;
+		col.center = originalCenter;
+	}	
+	
+	void HandleInteraction()
+	{
+		//if seen interactable object (grappling point, explosive barrel) interact accordingly
 	}
 	
 	public void TakeDamage(float damage)
@@ -242,6 +458,7 @@ public class Bot_State_Attacking : Bot_State
 		enemyAI = ai;
 		agent = enemyAI.navMeshAgent;
 		agent.updateRotation = false;
+		SetRandomRoomPosition();
 	}
 	public override void UpdateState()
 	{
@@ -263,7 +480,7 @@ public class Bot_State_Attacking : Bot_State
 	void ShootTarget()
 	{
 		//rotate bot and his spine
-		Vector3 direction = enemyAI.target.position - enemyAI.transform.position;
+		Vector3 direction = new Vector3(enemyAI.target.position.x, enemyAI.target.position.y + 0.9f, enemyAI.target.position.z) - enemyAI.transform.position;
 		if (direction.magnitude > 0.3f) // Avoid jitter when close
 		{
 			Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -292,9 +509,9 @@ public class Bot_State_Attacking : Bot_State
 		//check if random position is in the same room (bot wont leave fight)
 		while(!pointInRoom)
 		{
-			pointInRadius = enemyAI.target.position + Random.insideUnitSphere * 10;
+			pointInRadius = enemyAI.target.position + Random.insideUnitSphere * 4;
 			pointInRadius.y += 3;
-			if(!Physics.Raycast(enemyAI.transform.position, (pointInRadius - enemyAI.transform.position).normalized))
+			if(!Physics.Raycast(enemyAI.transform.position, (pointInRadius - enemyAI.transform.position).normalized, Vector3.Distance(enemyAI.transform.position, pointInRadius)))
 			{
 				pointInRoom = true;
 			}

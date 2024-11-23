@@ -148,8 +148,7 @@ namespace _game.Scripts
 
 			// Press Left Shift to run
 			isRunning = Input.GetKey(KeyCode.LeftShift);
-			_animator.SetBool(IsRunning, isRunning);
-
+			_animator.SetBool("IsSprinting", isRunning);
 			if (_canMove)
 			{
 				if (isCrouching)
@@ -197,6 +196,7 @@ namespace _game.Scripts
 			// Jump if grounded and jump button pressed
 			if (_isGrounded && Input.GetButtonDown("Jump"))
 			{
+				_animator.SetTrigger("Jump");
 				velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 				_characterController.Move(velocity * Time.deltaTime);
 			}
@@ -245,6 +245,8 @@ namespace _game.Scripts
 				slideTimer = slideDuration;
 				_characterController.height = crouchHeight / 2; // Shorten height for slide
 				_characterController.center = new Vector3(0, crouchHeight / 4, 0);
+				_animator.SetFloat("SlideAnim", UnityEngine.Random.Range(0f,1f));
+				Debug.Log("started SLIDE");
 			}
 
 			if (isSliding)
@@ -256,11 +258,14 @@ namespace _game.Scripts
 					isSliding = false;
 					lastSlideTime = Time.time;
 					ResetHeight();
+					Debug.Log("ended SLIDE");
+					
 				}
 			}
 
 			if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && !isCrouching)
 			{
+				Debug.Log("started Crouch");
 				// Crouch
 				isCrouching = true;
 				_characterController.height = crouchHeight;
@@ -271,8 +276,9 @@ namespace _game.Scripts
 				// End crouch
 				isCrouching = false;
 				ResetHeight();
+				Debug.Log("ended Crouch");
 			}
-
+			_animator.SetBool("IsSliding", isSliding);
 			_animator.SetBool(IsCrouching, isCrouching);
 
 			// if (isCrouching || isSliding)

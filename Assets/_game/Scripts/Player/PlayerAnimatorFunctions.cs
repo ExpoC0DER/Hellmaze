@@ -1,10 +1,18 @@
+using System.Collections.Generic;
 using _game.Scripts;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerAnimatorFunctions : MonoBehaviour
 {
+	[SerializeField] int character_selected = 0;
+	[SerializeField] GameObject[] characters;
+	[SerializeField] Avatar[] character_avatars;
 	[SerializeField] GameObject[] weaponsModels;
+	[SerializeField] List<TransformArray> weaponPositions = new List<TransformArray>();
+	[SerializeField] Transform weaponBaseParent;
+	[SerializeField] CinemachineCamera cinemachineCamera;
 	[SerializeField] ParticleSystem[] muzzleParticles;
 	[SerializeField] Transform cameraTransform;
 	int weaponSet;
@@ -17,6 +25,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 		isPlayer = transform.parent.CompareTag("Player");
+		SetAvatar(character_selected);
 	}
 	
 	public void SetWeapon(int index)
@@ -58,4 +67,34 @@ public class PlayerAnimatorFunctions : MonoBehaviour
 		animator.SetFloat("SpeedY", speedY);
 		//Debug.Log("velocity " +agentVel);
 	}
+	
+	public void SetAvatar(int index)
+	{
+		animator.enabled = false;
+		if(isPlayer)
+		{
+			cinemachineCamera.Follow = characters[index].transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head");
+		}
+		for (int i = 0; i < characters.Length; i++)
+		{
+			characters[i].SetActive(i == index);
+		}
+		
+		for (int i = 0; i < weaponPositions.Count; i++)
+		{
+			weaponsModels[i].transform.SetParent(weaponPositions[index].Transforms[i] ,false);
+		}
+		
+		animator.avatar = character_avatars[index];
+		animator.enabled = true;
+	}
+	
 }
+
+[System.Serializable]
+public class TransformArray
+{
+	public Transform[] Transforms;
+}
+
+
