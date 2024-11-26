@@ -153,16 +153,19 @@ namespace _game.Scripts
 			
 			if (Physics.Raycast(orig, dir, out RaycastHit hit, _gunSettings.MaxRange))
 			{
-				GameObject t;
+				//GameObject t;
 				if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
 				{
-					t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+					ObjectPooler.main.SpawnPooledObject("blood_part", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+					//t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
 				}else
 				{
-					t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+					ObjectPooler.main.SpawnPooledObject("gunShot_dec", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+					//t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
 				}
 				
-				t.transform.SetParent(hit.transform, true);
+				//t.transform.SetParent(hit.transform, true);
+				
 				//print(hit.transform.name);
 				if (hit.transform.TryGetComponent(out EnemyAI ai))
 				{

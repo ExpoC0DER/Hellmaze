@@ -357,7 +357,7 @@ public class EnemyAI : MonoBehaviour
 
 			lookRotation.z = 0;
 			lookRotation.x = 0;
-			transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5); // Smooth rotation
+			transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10); // Smooth rotation
 		}else
 		{
 			animator.SetFloat("SpineRotation", Mathf.Lerp(animator.GetFloat("SpineRotation"), 0.5f, Time.deltaTime));

@@ -87,6 +87,24 @@ public class WeaponSlots : MonoBehaviour
 			}  
 		}
 	}
+	void SwitchToWeaponWithAmmo()
+	{
+		bool switched = false;
+		for (int i = weaponObjects.Count -1; i >= 0; i--)
+		{
+			bool canSwitch = weaponsPicked[i] && _guns[i].Value.Ammo > 0;
+			weaponObjects[i].SetActive(canSwitch && !switched);
+			if(canSwitch && !switched)
+			{
+				animatorFunctions.SetWeapon(i);
+				animator.SetFloat("WeaponIndex", i);
+				currentWeaponIndex = i;
+				_currentGun = _guns[currentWeaponIndex];
+				OnAmmoChange?.Invoke(_currentGun.Value.Ammo);
+				switched = true;
+			}
+		}
+	}
 	
 	private void HandleShooting()
 	{
@@ -110,6 +128,10 @@ public class WeaponSlots : MonoBehaviour
 		_currentGun.Value.Shoot(bot_shoot_trigger, target, out bool succesShot);
 		animator.SetBool("Shooting", succesShot && bot_shoot_trigger);
 		Invoke("StopShooting", UnityEngine.Random.Range(0.2f, 0.4f));
+		if(!succesShot) // no ammo try other gun
+		{
+			SwitchToWeaponWithAmmo();
+		}
 	}
 	
 	void StopShooting() => bot_shoot_trigger = false;

@@ -7,7 +7,7 @@ namespace _game.Scripts
 {
 	public class GameManager : MonoBehaviour
 	{
-		public bool isMainMenu = false;
+		public bool isMainMenu {get; private set;} = false;
 		
 		private float _timer = 180f;
 

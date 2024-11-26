@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class Menu : MonoBehaviour
 {
-	[SerializeField] GameManager gameManager;
 	[SerializeField] GameObject[] tabs;
 	[SerializeField] GameObject[] buttons;
 	[SerializeField] GameObject menuObject, pausemenu_visual, mainmenu_visual;
@@ -27,8 +26,9 @@ public class Menu : MonoBehaviour
 	
 	void Start()
 	{
+		GameManager.main.OnSceneLoad += Reload;
+		GameManager.main.OnBeforeSceneLoad += Preload;
 		Reload();
-		
 	}
 	void Update()
 	{
@@ -40,10 +40,10 @@ public class Menu : MonoBehaviour
 	
 	void SetButtons()
 	{
-		bool activate = gameManager.isMainMenu;
+		bool activate = GameManager.main.isMainMenu;
 		for (int i = 0; i < 4; i++)
 		{
-			if(i>=2) activate = !gameManager.isMainMenu;
+			if(i>=2) activate = !GameManager.main.isMainMenu;
 			buttons[i].SetActive(activate);
 		}
 	}
@@ -59,13 +59,13 @@ public class Menu : MonoBehaviour
 	public void Quit(bool toMenu)
 	{
 		PauseGame(false);
-		if(toMenu) gameManager.LoadScene(0);
+		if(toMenu) GameManager.main.LoadScene(0);
 		else Application.Quit();
 	}
 	
 	public void PauseGame(bool lockedInMenu = true)
 	{
-		if(gameManager.isMainMenu && lockedInMenu) return;
+		if(GameManager.main.isMainMenu && lockedInMenu) return;
 		isPaused = !isPaused;
 		if(isPaused)
 		{
@@ -85,13 +85,13 @@ public class Menu : MonoBehaviour
 	public void StartGame()
 	{
 		PauseGame(false);
-		gameManager.LoadScene(1);
+		GameManager.main.LoadScene(1);
 	}
 	
 	void Reload()
 	{
-		mainmenu_visual.SetActive(gameManager.isMainMenu);
-		pausemenu_visual.SetActive(!gameManager.isMainMenu);
+		mainmenu_visual.SetActive(GameManager.main.isMainMenu);
+		pausemenu_visual.SetActive(!GameManager.main.isMainMenu);
 		SetButtons();
 	}
 	
@@ -102,12 +102,11 @@ public class Menu : MonoBehaviour
 	
 	void OnEnable()
 	{
-		gameManager.OnSceneLoad += Reload;
-		gameManager.OnBeforeSceneLoad += Preload;
+		
 	}
 	void OnDisable()
 	{
-		gameManager.OnSceneLoad -= Reload;
-		gameManager.OnBeforeSceneLoad -= Preload;
+		GameManager.main.OnSceneLoad -= Reload;
+		GameManager.main.OnBeforeSceneLoad -= Preload;
 	}
 }

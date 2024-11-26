@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1246210167618490971}
   - component: {fileID: 4681121988323291605}
   - component: {fileID: 6533229248820790247}
+  - component: {fileID: 6206673175684993225}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -137,6 +138,33 @@ MonoBehaviour:
   keyBinds: 3100000032000000
   innaccuracy: 1
   damage_multiplier: 0.5
+--- !u!54 &6206673175684993225
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474328840864553748}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2276343540311030474
 GameObject:
   m_ObjectHideFlags: 0
