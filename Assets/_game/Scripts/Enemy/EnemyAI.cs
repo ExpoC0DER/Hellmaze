@@ -22,8 +22,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        target = FindFirstObjectByType<PlayerController>().gameObject.transform;
-        StartCoroutine(RandomMovement());
+        // target = FindFirstObjectByType<PlayerController>().gameObject.transform;
+        // StartCoroutine(RandomMovement());
     }
 
     private IEnumerator RandomMovement()

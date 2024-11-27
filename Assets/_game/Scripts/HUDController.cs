@@ -8,7 +8,7 @@ namespace _game.Scripts
 {
     public class HUDController : MonoBehaviour
     {
-        [SerializeField] private PlayerController _player;
+        // [SerializeField] private PlayerController _player;
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private TMP_Text _healthText;
         [SerializeField] private TMP_Text _ammoText;
@@ -65,16 +65,16 @@ namespace _game.Scripts
 
         private void OnEnable()
         {
-            _player.OnHealthChange += SetHealthText;
-            _player.OnAmmoChange += SetAmmoText;
+            // _player.OnHealthChange += SetHealthText;
+            // _player.OnAmmoChange += SetAmmoText;
             _gameManager.OnTimerChange += SetTimerText;
             EnemyAI.OnDeath += UpdateKillCount;
         }
 
         private void OnDisable()
         {
-            _player.OnHealthChange -= SetHealthText;
-            _player.OnAmmoChange -= SetAmmoText;
+            // _player.OnHealthChange -= SetHealthText;
+            // _player.OnAmmoChange -= SetAmmoText;
             _gameManager.OnTimerChange -= SetTimerText;
             EnemyAI.OnDeath -= UpdateKillCount;
         }

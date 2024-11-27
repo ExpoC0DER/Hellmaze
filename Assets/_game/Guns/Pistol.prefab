@@ -133,8 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunSettings: {fileID: 11400000, guid: 6f4119b2148282a4baefbcb86c3a294e, type: 2}
-  _shootPoint: {fileID: 7517474029545342395}
   _hitPoint: {fileID: 1100017743567450252, guid: 140e256f36677c644b7cfb4967959c27, type: 3}
+  <Ammo>k__BackingField: 30
 --- !u!1001 &3677740301432666264
 PrefabInstance:
   m_ObjectHideFlags: 0

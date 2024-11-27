@@ -4,6 +4,7 @@ namespace _game.Scripts
 {
     public class HitPoint : MonoBehaviour
     {
-        private void Start() { Destroy(gameObject, 1f); }
+        [SerializeField] private float _duration = 1f;
+        private void Start() { Destroy(gameObject, _duration); }
     }
 }
