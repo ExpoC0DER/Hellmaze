@@ -19,9 +19,9 @@ namespace _game.Scripts
 
 		[SerializeField] private Transform _camera;
 		[SerializeField] private Transform _model;
-		[SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun1;
-		[SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun2;
-		[SerializeField] private GameObject[] _guns;
+		//[SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun1;
+		//[SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun2;
+		//[SerializeField] private GameObject[] _guns;
 
 		private float Health
 		{
@@ -61,7 +61,7 @@ namespace _game.Scripts
 			originalHeight = _characterController.height;
 			originalCenter = _characterController.center;
 
-			_gun = _gun1;
+			//_gun = _gun1;
 
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;

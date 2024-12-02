@@ -6,6 +6,7 @@ using _game.Scripts;
 
 public class WeaponSlots : MonoBehaviour
 {
+	[SerializeField] PlayerStats playerStats;
 	[SerializeField] PlayerAnimatorFunctions animatorFunctions;
 	[SerializeField] Animator animator;
 	[SerializeField] InterfaceReference<IGun, MonoBehaviour>[] _guns;
@@ -18,6 +19,7 @@ public class WeaponSlots : MonoBehaviour
 	public event Action<int> OnAmmoChange;
 	[SerializeField] List<KeyCode> keyBinds;
 	
+	
 	[Header("Bot")]
 	[SerializeField] float innaccuracy = 1;
 	[SerializeField] float damage_multiplier = 0.5f;
@@ -26,6 +28,11 @@ public class WeaponSlots : MonoBehaviour
 	void Awake()
 	{
 		isPlayer = CompareTag("Player");
+		for (int i = 0; i < _guns.Length; i++)
+		{
+			_guns[i].Value.WeaponIndex = i;
+			_guns[i].Value.Source = playerStats;
+		}
 		weaponsPicked = new bool[weaponObjects.Count];
 		currentWeaponIndex = 0;
 		PickWeapon(currentWeaponIndex, 0);
@@ -36,9 +43,8 @@ public class WeaponSlots : MonoBehaviour
 			{
 				_guns[i].Value.BotInaccuracy = innaccuracy;
 				_guns[i].Value.DamageMultiplier = damage_multiplier;
-			}
-		}
-			
+			}	
+		}		
 	}
 	
 	void Update()
@@ -115,7 +121,7 @@ public class WeaponSlots : MonoBehaviour
 		
 	}
 	
-	public void Bot_Shooting(Transform target)
+	public void Bot_Shooting(Transform target, Transform source)
 	{
 		if(bot_shoot_trigger)
 		{
@@ -125,7 +131,7 @@ public class WeaponSlots : MonoBehaviour
 		}
 		Debug.Log("shot");
 		bot_shoot_trigger = true;
-		_currentGun.Value.Shoot(bot_shoot_trigger, target, out bool succesShot);
+		_currentGun.Value.Shoot(bot_shoot_trigger, source, out bool succesShot);
 		animator.SetBool("Shooting", succesShot && bot_shoot_trigger);
 		Invoke("StopShooting", UnityEngine.Random.Range(0.2f, 0.4f));
 		if(!succesShot) // no ammo try other gun

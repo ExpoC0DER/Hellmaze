@@ -11,6 +11,7 @@ public class ObjectPooler: MonoBehaviour
 	[SerializeField] GameObject blood_part;
 	[Header("Projectiles")]
 	[SerializeField] GameObject bomb;
+	[SerializeField] GameObject rocket;
 	//could also do audio files
 	
 	ObjectPool objectPooler;
@@ -36,6 +37,7 @@ public class ObjectPooler: MonoBehaviour
 		objectPooler.SetupPool(blood_part.GetComponent<Transform>(), 50, "blood_part");
 		
 		objectPooler.SetupPool(bomb.GetComponent<MonoBehaviour>(), 100, "bomb");
+		objectPooler.SetupPool(rocket.GetComponent<MonoBehaviour>(), 100, "rocket");
 	}
 	
 	public void SpawnPooledObject(string poolName, Vector3 position, Quaternion rotation, Transform toParent)
@@ -50,15 +52,14 @@ public class ObjectPooler: MonoBehaviour
 		//instance.transform.localScale = Vector3.one;
 	}
 	
-	public void SpawnProjectile(string poolName, Vector3 position, Quaternion rotation, Transform source, float damage)
+	public void SpawnProjectile(string poolName, Vector3 position, Quaternion rotation, PlayerStats source, float damage, int weaponIndex)
 	{
 		MonoBehaviour instance = objectPooler.DequeueObject<MonoBehaviour>(poolName);
 		IProjectile proj = instance as IProjectile;
-		proj.Initialize(source, damage, poolName);
-		
-		instance.gameObject.SetActive(true);
+		proj.Initialize(source, damage, weaponIndex, poolName);
 		instance.transform.position = position;
 		instance.transform.rotation = rotation;
+		instance.gameObject.SetActive(true);
 	}
 	
 	public void SpawnDecalParticleObject(string poolName, Vector3 position, Quaternion rotation, Transform toParent)

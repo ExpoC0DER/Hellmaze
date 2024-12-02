@@ -15,13 +15,16 @@ namespace _game.Scripts
 		[SerializeField] private Transform _hitPoint;
 		[SerializeField] private Transform _fleshHitPoint;
 		[SerializeField] ParticleSystem muzzleFlash_part;
+		[SerializeField] ParticleSystem bullet_fire_part;
 		[SerializeField] ParticleSystem casing_part;
 		[field: SerializeField] public int Ammo { get; set; } = 30;
 		[field: SerializeField] public int MaxAmmo { get; set; } = 120;
 		[field: SerializeField] public float BotInaccuracy { get; set; } = 1;
 		[field: SerializeField] public float DamageMultiplier { get; set; } = 0.5f;
+		public PlayerStats Source { get; set; }
+        public int WeaponIndex { get; set; }
 
-		private bool _fired;
+        private bool _fired;
 		private float _fireDelay;
 
 		private EventInstance _automaticSound;
@@ -147,35 +150,42 @@ namespace _game.Scripts
 				dir = (new Vector3(target.position.x, target.position.y +0.75f, target.position.z) - transform.position).normalized;
 			}
 			
-			dir = GetShootingSpread_Direction(orig, dir);
+			BulletParticle(Quaternion.LookRotation(dir));
 			
-			//Debug.DrawRay(orig, dir * _gunSettings.MaxRange, Color.red, 3);
-			
-			if (Physics.Raycast(orig, dir, out RaycastHit hit, _gunSettings.MaxRange))
+			for (int i = 0; i < _gunSettings.ShotsPerFire; i++)
 			{
-				//GameObject t;
-				if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
-				{
-					ObjectPooler.main.SpawnPooledObject("blood_part", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-					//t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
-				}else
-				{
-					ObjectPooler.main.SpawnPooledObject("gunShot_dec", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-					//t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
-				}
+				dir = GetShootingSpread_Direction(orig, dir);
+			
+				//Debug.DrawRay(orig, dir * _gunSettings.MaxRange, Color.red, 3);
 				
-				//t.transform.SetParent(hit.transform, true);
-				
-				//print(hit.transform.name);
-				if (hit.transform.TryGetComponent(out EnemyAI ai))
+				if (Physics.Raycast(orig, dir, out RaycastHit hit, _gunSettings.MaxRange))
 				{
-					ai.TakeDamage(_gunSettings.Damage * DamageMultiplier, transform.position);
-				}else if (hit.transform.TryGetComponent(out PlayerStats player))
-				{
-					//Debug.Log("bot shot player " + _gunSettings.Damage);
-					player.ChangeHealth(-_gunSettings.Damage * DamageMultiplier);
+					//GameObject t;
+					if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
+					{
+						ObjectPooler.main.SpawnPooledObject("blood_part", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+						//t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+					}else
+					{
+						ObjectPooler.main.SpawnPooledObject("gunShot_dec", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+						//t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+					}
+					
+					//t.transform.SetParent(hit.transform, true);
+					
+					//print(hit.transform.name);
+					/* if (hit.transform.TryGetComponent(out EnemyAI ai))
+					{
+						ai.TakeDamage(_gunSettings.Damage * DamageMultiplier, transform.position);
+					}else  */
+					if (hit.transform.TryGetComponent(out PlayerStats player))
+					{
+						//Debug.Log("bot shot player " + _gunSettings.Damage);
+						player.TakeDamage(_gunSettings.Damage * DamageMultiplier, Source, WeaponIndex);
+					}
 				}
 			}
+			
 			muzzleFlash_part.Play();
 			casing_part.Play();
 			ApplyRecoil();
@@ -191,6 +201,12 @@ namespace _game.Scripts
 				);
 			Vector3 dir = targetPos - origin;
 			return dir.normalized;
+		}
+		
+		void BulletParticle(Quaternion rotation)
+		{
+			bullet_fire_part.transform.rotation = rotation;
+			bullet_fire_part.Play();
 		}
 	}
 }

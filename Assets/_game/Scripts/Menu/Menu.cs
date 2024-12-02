@@ -93,6 +93,7 @@ public class Menu : MonoBehaviour
 		mainmenu_visual.SetActive(GameManager.main.isMainMenu);
 		pausemenu_visual.SetActive(!GameManager.main.isMainMenu);
 		SetButtons();
+		menuObject.SetActive(GameManager.main.isMainMenu);
 	}
 	
 	void Preload()

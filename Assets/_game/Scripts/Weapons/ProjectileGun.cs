@@ -16,6 +16,8 @@ namespace _game.Scripts
 		[field: SerializeField] public int MaxAmmo { get; set; } = 120;
 		[field: SerializeField] public float BotInaccuracy { get; set; } = 1;
 		[field: SerializeField] public float DamageMultiplier { get; set; } = 0.5f;
+		public PlayerStats Source { get; set; }
+		public int WeaponIndex { get; set; }
 
 		private bool _fired;
 		private float _fireDelay;
@@ -89,11 +91,11 @@ namespace _game.Scripts
 				{
 					_fired = true;
 					FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
-					FireRaycast(target);
+					Fire(target);
 				}
 				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
 				{
-					FireRaycast(target);
+					Fire(target);
 
 					if (!_fired)
 					{
@@ -127,7 +129,7 @@ namespace _game.Scripts
 				_fired = false;
 		}
 
-		private void FireRaycast(Transform source)
+		private void Fire(Transform source)
 		{
 			Vector3 dir;
 			Vector3 orig;
@@ -147,7 +149,7 @@ namespace _game.Scripts
 			
 			//Debug.DrawRay(orig, dir * _gunSettings.MaxRange, Color.red, 3);
 			
-			ObjectPooler.main.SpawnProjectile(projectilePool_name, spawnPoint.position, Quaternion.LookRotation(spawnPoint.forward), transform, _gunSettings.Damage * DamageMultiplier); 
+			ObjectPooler.main.SpawnProjectile(projectilePool_name, spawnPoint.position, Quaternion.LookRotation(spawnPoint.forward), Source, _gunSettings.Damage * DamageMultiplier, WeaponIndex); 
 			
 			muzzleFlash_part.Play();
 			casing_part.Play();

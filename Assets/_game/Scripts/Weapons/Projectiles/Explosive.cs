@@ -5,14 +5,17 @@ public class Explosive : MonoBehaviour
 	[SerializeField] float expl_radius = 5;
 	[SerializeField] float expl_force = 5;
 	
-	protected float _damage;
-	protected Transform _source;
+	[SerializeField] protected float _damage;
+	[SerializeField] protected int _weaponIndex;
+	[SerializeField] protected GameObject visual_model;
+	protected PlayerStats _source;
 	
 	[SerializeField] ParticleSystem explosion_part;
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public virtual void Explode()
 	{
 		explosion_part.Play();
+		visual_model.SetActive(false);
 		
 		Collider[] cols = Physics.OverlapSphere(transform.position, expl_radius);
 		
@@ -26,11 +29,13 @@ public class Explosive : MonoBehaviour
 				float damage = Mathf.Lerp(_damage, 0, distanceRatio);
 				if(obj.TryGetComponent(out PlayerStats playerStats))
 				{
-					playerStats.ChangeHealth(-damage);
-				}else if(obj.TryGetComponent(out EnemyAI enemyAI))
+					playerStats.TakeDamage(damage, _source, _weaponIndex);
+					Debug.Log("explosive damage " + -damage);
+				}/* else if(obj.TryGetComponent(out EnemyAI enemyAI))
 				{
 					enemyAI.TakeDamage(damage, _source.position);
-				}
+					Debug.Log("explosive damage bot " + damage);
+				} */
 			}else
 			{
 				continue;

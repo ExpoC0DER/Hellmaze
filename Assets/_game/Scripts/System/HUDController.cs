@@ -17,7 +17,7 @@ namespace _game.Scripts
 		[SerializeField] private TMP_Text _timerText;
 		[SerializeField] private TMP_Text _killCountText;
 		[SerializeField] private Button _restartBtn;
-
+		
 		private int _seconds = 0;
 
 		void Start()
@@ -75,7 +75,8 @@ namespace _game.Scripts
 			_playerStats.OnHealthChange += SetHealthText;
 			_weapons.OnAmmoChange += SetAmmoText;
 			
-			EnemyAI.OnDeath += UpdateKillCount;
+			PlayerStats.OnDeath += UpdateKillCount;
+			
 		}
 
 		private void OnDisable()
@@ -83,7 +84,7 @@ namespace _game.Scripts
 			_playerStats.OnHealthChange -= SetHealthText;
 			_weapons.OnAmmoChange -= SetAmmoText;
 			GameManager.main.OnTimerChange -= SetTimerText;
-			EnemyAI.OnDeath -= UpdateKillCount;
+			PlayerStats.OnDeath -= UpdateKillCount;
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace _game.Scripts
 {
 	public class GameManager : MonoBehaviour
 	{
-		public bool isMainMenu {get; private set;} = false;
+		public bool isMainMenu { get; private set; } = false;
 		
 		private float _timer = 180f;
 
@@ -33,8 +33,6 @@ namespace _game.Scripts
 
 		private void Start()
 		{
-			
-			
 			Time.timeScale = 1;
 		}
 

@@ -4,24 +4,26 @@ using UnityEngine;
 public class Bomb : Explosive, IProjectile
 {
 	[HideInInspector] public float Damage { get; set; }
-	[HideInInspector] public Transform Source { get; set; }
+	[HideInInspector] public PlayerStats Source { get; set; }
 	[HideInInspector] public string PoolName { get; set; }
+	public int WeaponIndex { get; set; }
 
 	[SerializeField] Rigidbody rb;
 	[SerializeField] float init_force = 10;
 	[SerializeField] float detonation_time = 5;
-	[SerializeField] float expl_radius = 5;
-	[SerializeField] float expl_force = 5;
 	
-	[SerializeField] ParticleSystem explosion_part;
+	bool onTrigger = false;
 	
-	public void Initialize(Transform source, float damage, string poolName)
+	public void Initialize(PlayerStats source, float damage, int weaponIndex, string poolName)
 	{
 		this.Source = source;
 		this.Damage = damage;
 		this.PoolName = poolName;
+		this.WeaponIndex = weaponIndex;
+		base._weaponIndex = weaponIndex;
 		base._damage = damage;
 		base._source = source;
+		onTrigger = false;
 	}
 	
 	public override void Explode()
@@ -51,23 +53,34 @@ public class Bomb : Explosive, IProjectile
 			}
 		} */
 		base.Explode();
-		Invoke("Return", 1f);
+	}
+	
+	IEnumerator ExplosiveRoutine()
+	{
+		yield return new WaitForSeconds(0.3f);
+		onTrigger = true;
+		yield return new WaitForSeconds(detonation_time);
+		Explode();
+		yield return new WaitForSeconds(1);
+		Return();
+		
 	}
 	
 	void Return() => ObjectPooler.main.ReturnObject(transform, PoolName);
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Player") || other.CompareTag("Bot"))
+		if(other.CompareTag("Player") || other.CompareTag("Bot") && onTrigger)
 		{
 			Explode();
+			Invoke("Return", 1);
 		}
 	}
 	
 	void OnEnable()
 	{
 		rb.AddForce(init_force * transform.forward, ForceMode.Impulse);
-		Invoke("Explode", detonation_time);
+		StartCoroutine(ExplosiveRoutine());
 	}
 	
 	void OnDisable()

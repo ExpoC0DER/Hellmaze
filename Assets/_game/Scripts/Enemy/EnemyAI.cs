@@ -15,9 +15,9 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField] EnemyVision enemyVision;
 	[SerializeField] float fovAngle = 90;
 
-	[SerializeField] private float health = 100;
+	/* [SerializeField] private float health = 100;
 	[SerializeField] private float maxHealth = 100;
-	[SerializeField] ParticleSystem death_part;
+	[SerializeField] ParticleSystem death_part; */
 	[SerializeField] public WeaponSlots weaponSlots {get; private set;}
 	public NavMeshAgent navMeshAgent { get; private set; }
 	
@@ -27,7 +27,6 @@ public class EnemyAI : MonoBehaviour
 	public Transform target {get; private set;}
 	public Vector3 lastSeenTargetPos {get; private set;}
 	
-	public static event Action OnDeath;
 
 	Bot_State currentState;
 	public Bot_State_Attacking state_Attacking = new Bot_State_Attacking();
@@ -369,7 +368,7 @@ public class EnemyAI : MonoBehaviour
 		//if seen interactable object (grappling point, explosive barrel) interact accordingly
 	}
 	
-	public void TakeDamage(float damage, Vector3 sourcePos)
+	/* public void TakeDamage(float damage, Vector3 sourcePos)
 	{
 		health -= damage;
 		if(health<=0)
@@ -391,35 +390,31 @@ public class EnemyAI : MonoBehaviour
 		{
 			FindHealthKit();
 		}
-	}
+	} */
 
-	private void Respawn()
-	{
-		death_part.Play();
-		OnDeath?.Invoke();
-		
+	public void Respawn(int mapCellScale, int mapCellCount)
+	{		
 		//reset state
-		health = maxHealth;
 		target = null;
 		currentState = state_Roam;
 		currentState.EnterState(this);
 		
 		//reset position
-		int side = Random.Range(0, 4);
+		int side = Random.Range(0, mapCellScale);
 		int cell = Random.Range(-5, 6);
 		switch (side)
 		{
 			case 0:
-				navMeshAgent.Warp(new Vector3(20, 0, cell * 4));
+				navMeshAgent.Warp(new Vector3(mapCellCount, 0, cell * mapCellScale));
 				break;
 			case 1:
-				navMeshAgent.Warp(new Vector3(-20, 0, cell * 4));
+				navMeshAgent.Warp(new Vector3(-mapCellCount, 0, cell * mapCellScale));
 				break;
 			case 2:
-				navMeshAgent.Warp(new Vector3(cell * 4, 0, 20));
+				navMeshAgent.Warp(new Vector3(cell * mapCellScale, 0, mapCellCount));
 				break;
 			case 3:
-				navMeshAgent.Warp(new Vector3(cell * 4, 0, -20));
+				navMeshAgent.Warp(new Vector3(cell * mapCellScale, 0, -mapCellCount));
 				break;
 		}
 	}
@@ -465,7 +460,7 @@ public class Bot_State_Roam : Bot_State
 		RaycastHit hit;
 
 		Physics.Raycast(pointInRadius, Vector3.down, out hit);
-		if (NavMesh.SamplePosition(hit.point, out NavMeshHit navHit, 1, NavMesh.AllAreas))
+		if (NavMesh.SamplePosition(hit.point, out NavMeshHit navHit, 1, NavMesh.AllAreas) && agent.isOnNavMesh)
 		{
 			agent.SetDestination(hit.point);
 		}
@@ -554,7 +549,7 @@ public class Bot_State_Attacking : Bot_State
 			enemyAI.animator.SetFloat("SpineRotation", 0.5f);
 		} */
 		enemyAI.RotateToPosition(new Vector3(enemyAI.target.position.x, enemyAI.target.position.y + 0.9f, enemyAI.target.position.z));
-		if(enemyAI.target != null )weaponSlots.Bot_Shooting(enemyAI.target);
+		if( enemyAI.target != null ) weaponSlots.Bot_Shooting( enemyAI.target, enemyAI.transform );
 	}
 	
 	void SetRandomRoomPosition()

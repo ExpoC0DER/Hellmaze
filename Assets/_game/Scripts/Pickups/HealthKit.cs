@@ -5,9 +5,9 @@ public class HealthKit : Pickup
 	[SerializeField] float healthAmount = 50f;
 	public override void OnPickupBot(GameObject gameObject)
 	{
-		if(gameObject.TryGetComponent(out EnemyAI enemy))
+		if(gameObject.TryGetComponent(out PlayerStats player))
 		{
-			enemy.AddHealth(healthAmount);
+			player.AddHealth(healthAmount);
 		}
 	}
 
@@ -15,7 +15,7 @@ public class HealthKit : Pickup
 	{
 		if(gameObject.TryGetComponent(out PlayerStats player))
 		{
-			player.ChangeHealth(healthAmount);
+			player.AddHealth(healthAmount);
 		}
 	}
 }
