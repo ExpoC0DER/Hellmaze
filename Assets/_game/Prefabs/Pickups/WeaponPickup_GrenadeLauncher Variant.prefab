@@ -103,6 +103,26 @@ PrefabInstance:
       propertyPath: visual_object
       value: 
       objectReference: {fileID: 4689423298480414159}
+    - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
+      propertyPath: pickupSfx.Path
+      value: event:/pickup_sfx/Weapon_Pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
+      propertyPath: pickupSfx.Guid.Data1
+      value: -276046409
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
+      propertyPath: pickupSfx.Guid.Data2
+      value: 1131668895
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
+      propertyPath: pickupSfx.Guid.Data3
+      value: 338786947
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
+      propertyPath: pickupSfx.Guid.Data4
+      value: -1991569849
+      objectReference: {fileID: 0}
     - target: {fileID: 2326610196648483368, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.25751054

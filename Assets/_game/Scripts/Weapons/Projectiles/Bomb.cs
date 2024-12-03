@@ -23,6 +23,7 @@ public class Bomb : Explosive, IProjectile
 		base._weaponIndex = weaponIndex;
 		base._damage = damage;
 		base._source = source;
+		base._exploded = false;
 		onTrigger = false;
 	}
 	

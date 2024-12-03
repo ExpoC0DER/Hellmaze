@@ -5243,6 +5243,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particle: {fileID: 5788355530280577685}
   visual_object: {fileID: 2788579092357937573}
+  respawnTime: 30
+  pickupSfx:
+    Guid:
+      Data1: -108441926
+      Data2: 1280228204
+      Data3: 102544771
+      Data4: -903928800
+    Path: event:/pickup_sfx/Powerup pickup 1
   healthAmount: 50
 --- !u!114 &6775065897084139621
 MonoBehaviour:

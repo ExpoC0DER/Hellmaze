@@ -1397,7 +1397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a487bca722925a4188de1170bc3b932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMainMenu: 0
 --- !u!4 &1529162257
 Transform:
   m_ObjectHideFlags: 0
@@ -3471,7 +3470,7 @@ MonoBehaviour:
       Data2: 1199680631
       Data3: -778706519
       Data4: 2055738516
-    Path: event:/Ambience
+    Path: event:/ambiance_sfx/Ambience
   Event: 
   EventPlayTrigger: 11
   EventStopTrigger: 12

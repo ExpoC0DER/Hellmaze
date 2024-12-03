@@ -2,6 +2,7 @@ using _game.Scripts;
 using UnityEngine;
 using DG.Tweening;
 using FMOD.Studio;
+using FMODUnity;
 
 namespace _game.Scripts
 {
@@ -27,7 +28,7 @@ namespace _game.Scripts
 		private Vector3 _originalPosition;
 		private Quaternion _originalRotation;
 		private Transform _camera;
-		
+		bool noAmmoClicked = false;
 
 		private void Start()
 		{
@@ -84,7 +85,11 @@ namespace _game.Scripts
 			{
 				if(!succesShot)
 				{
-					//play no ammo click sound
+					if(!noAmmoClicked)
+					{
+						FMODHelper.PlayNewInstance(_gunSettings.NoAmmoSound);
+						noAmmoClicked = true;
+					}
 					return;
 				}
 				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
@@ -116,6 +121,7 @@ namespace _game.Scripts
 					_automaticSound.release();
 				}
 				_fired = false;
+				noAmmoClicked = false;
 			}
 		}
 		

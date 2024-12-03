@@ -1,4 +1,5 @@
 using _game.Scripts;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ public class Menu : MonoBehaviour
 	[SerializeField] GameObject[] tabs;
 	[SerializeField] GameObject[] buttons;
 	[SerializeField] GameObject menuObject, pausemenu_visual, mainmenu_visual;
+	[SerializeField] EventReference[] button_sfx;
 	
 	public bool isPaused {get; private set; } = false;
 	public static Menu main {get; private set;}
@@ -54,6 +56,11 @@ public class Menu : MonoBehaviour
 		{
 			tabs[i].SetActive(i == index);
 		}
+	}
+	
+	public void PlayUISound(int index)
+	{
+		FMODHelper.PlayNewInstance(button_sfx[index]);
 	}
 	
 	public void Quit(bool toMenu)

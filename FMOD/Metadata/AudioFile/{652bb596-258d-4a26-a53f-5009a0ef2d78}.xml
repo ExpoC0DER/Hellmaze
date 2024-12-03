@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{652bb596-258d-4a26-a53f-5009a0ef2d78}">
+		<property name="assetPath">
+			<value>Rypák_Matúš_No_Ammo_Click_AK47.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.18285714285714286</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{40913624-2249-420f-ae29-318554c22436}</destination>
+		</relationship>
+	</object>
+</objects>

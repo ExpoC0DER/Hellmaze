@@ -50,6 +50,8 @@ public class WeaponSlots : MonoBehaviour
 	void Update()
 	{
 		if(!isPlayer) return;
+		if(Menu.main.isPaused) return;
+		
 		HandleInput();
 		HandleShooting();
 	}
@@ -140,7 +142,7 @@ public class WeaponSlots : MonoBehaviour
 		}
 	}
 	
-	void StopShooting() => bot_shoot_trigger = false;
+	public void StopShooting() => bot_shoot_trigger = false;
 	
 	
 	public void ThrowAwayWeapon(int weaponIndex)

@@ -1,4 +1,7 @@
 using UnityEngine;
+using FMODUnity;
+using _game.Scripts;
+
 
 public class Explosive : MonoBehaviour
 {
@@ -8,15 +11,24 @@ public class Explosive : MonoBehaviour
 	[SerializeField] protected float _damage;
 	[SerializeField] protected int _weaponIndex;
 	[SerializeField] protected GameObject visual_model;
+	[SerializeField] EventReference _explosion_sfx;
 	protected PlayerStats _source;
+	protected bool _exploded = false;
 	
 	[SerializeField] ParticleSystem explosion_part;
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public virtual void Explode()
 	{
+		if(!_exploded)
+		{
+			_exploded = true;
+		}else
+		{
+			return;
+		}
 		explosion_part.Play();
 		visual_model.SetActive(false);
-		
+		FMODHelper.PlayNewInstance(_explosion_sfx, transform.position);
 		Collider[] cols = Physics.OverlapSphere(transform.position, expl_radius);
 		
 		for (int i = 0; i < cols.Length; i++)
@@ -42,4 +54,5 @@ public class Explosive : MonoBehaviour
 			}
 		}
 	}
+	
 }

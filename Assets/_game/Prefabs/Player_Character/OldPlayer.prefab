@@ -306,13 +306,6 @@ MonoBehaviour:
   _animatorFunctions: {fileID: 0}
   _camera: {fileID: 5504835407912690126}
   _model: {fileID: 3017093640472161952}
-  _gun1:
-    _underlyingValue: {fileID: 4541673265372838557}
-  _gun2:
-    _underlyingValue: {fileID: 63087766224776758}
-  _guns:
-  - {fileID: 4898796054352145061}
-  - {fileID: 8942854970547453454}
   jumpHeight: 2
   gravity: -9.81
   crouchHeight: 1
@@ -1504,7 +1497,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a487bca722925a4188de1170bc3b932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMainMenu: 0
 --- !u!1 &5851173528089526135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,25 +2524,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
---- !u!114 &63087766224776758 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 291824988599342815, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
-  m_PrefabInstance: {fileID: 354909961820305641}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8942854970547453454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e7d7505e805dd49828b5ba531605e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1792337948095032773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2032052951989867820, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
-  m_PrefabInstance: {fileID: 354909961820305641}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8942854970547453454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8716580242138515175, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
   m_PrefabInstance: {fileID: 354909961820305641}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3012512879216976352
@@ -2668,7 +2644,7 @@ MonoBehaviour:
       Data2: 1199222687
       Data3: 752978593
       Data4: 1739394352
-    Path: event:/Walking
+    Path: event:/player_sfx/Walking
   Event: 
   EventPlayTrigger: 3
   EventStopTrigger: 0
@@ -2725,7 +2701,7 @@ MonoBehaviour:
       Data2: 1199222687
       Data3: 752978593
       Data4: 1739394352
-    Path: event:/Walking
+    Path: event:/player_sfx/Walking
   Event: 
   EventPlayTrigger: 3
   EventStopTrigger: 0
@@ -2831,22 +2807,6 @@ PrefabInstance:
 --- !u!4 &2826232957197859182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2032052951989867820, guid: f3ae914276a057f439fbb71f069ebd5b, type: 3}
-  m_PrefabInstance: {fileID: 4254642167133531202}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4541673265372838557 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 291824988599342815, guid: f3ae914276a057f439fbb71f069ebd5b, type: 3}
-  m_PrefabInstance: {fileID: 4254642167133531202}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4898796054352145061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e7d7505e805dd49828b5ba531605e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &4898796054352145061 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8716580242138515175, guid: f3ae914276a057f439fbb71f069ebd5b, type: 3}
   m_PrefabInstance: {fileID: 4254642167133531202}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5214285549261798945

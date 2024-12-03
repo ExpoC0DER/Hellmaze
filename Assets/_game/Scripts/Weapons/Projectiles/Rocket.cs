@@ -23,6 +23,7 @@ public class Rocket : Explosive, IProjectile
 		base._weaponIndex = weaponIndex;
 		base._damage = damage;
 		base._source = source;
+		base._exploded = false;
 		onTrigger = false;
 	}
 	
@@ -45,7 +46,7 @@ public class Rocket : Explosive, IProjectile
 	void FixedUpdate()
 	{
 		if(!gameObject.activeSelf) return;
-		rb.AddForce(init_force * transform.forward, ForceMode.Force);
+		rb.MovePosition(rb.position + init_force * transform.forward * Time.fixedDeltaTime);
 	}
 	
 	void Return() => ObjectPooler.main.ReturnObject(transform, PoolName);
@@ -61,6 +62,15 @@ public class Rocket : Explosive, IProjectile
 	
 	void OnCollisionEnter(Collision other)
 	{
+		if(other.gameObject == Source.gameObject) return;
+		Explode();
+		Invoke("Return", 1);
+	}
+	
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other == Source.gameObject) return;
+		
 		Explode();
 		Invoke("Return", 1);
 	}

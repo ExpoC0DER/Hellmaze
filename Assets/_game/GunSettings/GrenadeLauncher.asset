@@ -20,11 +20,11 @@ MonoBehaviour:
   <FiringMode>k__BackingField: 0
   <ManualSound>k__BackingField:
     Guid:
-      Data1: -1202842815
-      Data2: 1086773430
-      Data3: -1486765901
-      Data4: -1793374549
-    Path: event:/Pistol
+      Data1: -1630227071
+      Data2: 1186346894
+      Data3: 361309620
+      Data4: 495927920
+    Path: event:/weapon_sfx/Grenade Launcher (shot)
   <AutomaticSound>k__BackingField:
     Guid:
       Data1: 0
@@ -32,6 +32,13 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  <NoAmmoSound>k__BackingField:
+    Guid:
+      Data1: -1829521505
+      Data2: 1214519112
+      Data3: -1378050133
+      Data4: 924044617
+    Path: event:/weapon_sfx/No_Ammo_Click_Pistol
   <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.2}
   <RecoilDuration>k__BackingField: 0.1
   <RecoilReturnDuration>k__BackingField: 0.15

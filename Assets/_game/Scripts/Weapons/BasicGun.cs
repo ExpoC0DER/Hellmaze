@@ -22,9 +22,9 @@ namespace _game.Scripts
 		[field: SerializeField] public float BotInaccuracy { get; set; } = 1;
 		[field: SerializeField] public float DamageMultiplier { get; set; } = 0.5f;
 		public PlayerStats Source { get; set; }
-        public int WeaponIndex { get; set; }
+		public int WeaponIndex { get; set; }
 
-        private bool _fired;
+		private bool _fired;
 		private float _fireDelay;
 
 		private EventInstance _automaticSound;
@@ -33,6 +33,7 @@ namespace _game.Scripts
 		private Quaternion _originalRotation;
 		private Transform _camera;
 		
+		bool noAmmoClicked = false;
 
 		private void Start()
 		{
@@ -89,13 +90,17 @@ namespace _game.Scripts
 			{
 				if(!succesShot)
 				{
-					//play no ammo click sound
+					if(!noAmmoClicked)
+					{
+						FMODHelper.PlayNewInstance(_gunSettings.NoAmmoSound, transform.position);
+						noAmmoClicked = true;
+					}
 					return;
 				}
 				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
 				{
 					_fired = true;
-					FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
+					FMODHelper.PlayNewInstance(_gunSettings.ManualSound, transform.position);
 					FireRaycast(target);
 				}
 				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
@@ -121,6 +126,7 @@ namespace _game.Scripts
 					_automaticSound.release();
 				}
 				_fired = false;
+				noAmmoClicked = false;
 			}
 		}
 		

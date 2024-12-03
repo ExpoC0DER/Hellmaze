@@ -363,6 +363,11 @@ public class EnemyAI : MonoBehaviour
 		}
 	}
 	
+	public void SetSpineRotation(float zeroToOne)
+	{
+		animator.SetFloat("SpineRotation", zeroToOne);
+	}
+	
 	void HandleInteraction()
 	{
 		//if seen interactable object (grappling point, explosive barrel) interact accordingly
@@ -394,7 +399,9 @@ public class EnemyAI : MonoBehaviour
 
 	public void Respawn(int mapCellScale, int mapCellCount)
 	{		
+		
 		//reset state
+		weaponSlots.StopShooting();
 		target = null;
 		currentState = state_Roam;
 		currentState.EnterState(this);
@@ -525,6 +532,7 @@ public class Bot_State_Attacking : Bot_State
 	}
 	public override void ExitState()
 	{
+		enemyAI.SetSpineRotation(0.5f);
 		agent.updateRotation = true;
 	}
 	

@@ -102,6 +102,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool_name: gunShot_dec
+  sfx:
+  - Guid:
+      Data1: -116399621
+      Data2: 1336519758
+      Data3: -2055991640
+      Data4: -1616203805
+    Path: event:/environmental_sfx/Bullet_Impact_Brick
+  - Guid:
+      Data1: 471088122
+      Data2: 1269857237
+      Data3: -715712885
+      Data4: 693527876
+    Path: event:/environmental_sfx/Hit_Wall
 --- !u!1 &6170405225181163842
 GameObject:
   m_ObjectHideFlags: 0

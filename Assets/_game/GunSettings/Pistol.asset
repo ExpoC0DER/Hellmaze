@@ -24,7 +24,7 @@ MonoBehaviour:
       Data2: 1086773430
       Data3: -1486765901
       Data4: -1793374549
-    Path: event:/Pistol
+    Path: event:/weapon_sfx/Pistol
   <AutomaticSound>k__BackingField:
     Guid:
       Data1: 0
@@ -32,6 +32,13 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  <NoAmmoSound>k__BackingField:
+    Guid:
+      Data1: 1258713384
+      Data2: 1134400089
+      Data3: 355281085
+      Data4: -1736016190
+    Path: event:/weapon_sfx/Click_no_ammo
   <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.2}
   <RecoilDuration>k__BackingField: 0.1
   <RecoilReturnDuration>k__BackingField: 0.15

@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 namespace _game.Scripts
@@ -5,6 +6,7 @@ namespace _game.Scripts
 	public class HitPoint : MonoBehaviour
 	{
 		[SerializeField] string pool_name;
+		[SerializeField] EventReference[] sfx;
 		void Start()
 		{
 			Invoke("ReturnToPool", 10);
@@ -18,6 +20,11 @@ namespace _game.Scripts
 		void ReturnToPool()
 		{
 			ObjectPooler.main.ReturnObject(transform, pool_name);
+		}
+		
+		private void OnEnable()
+		{
+			FMODHelper.PlayNewInstance(sfx[Random.Range(0, sfx.Length)]);
 		}
 	}
 }

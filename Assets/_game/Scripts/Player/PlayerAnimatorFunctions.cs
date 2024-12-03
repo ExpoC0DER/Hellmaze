@@ -72,10 +72,10 @@ public class PlayerAnimatorFunctions : MonoBehaviour
 	public void SetAvatar(int index)
 	{
 		animator.enabled = false;
-		if(isPlayer)
+		/* if(isPlayer)
 		{
 			cinemachineCamera.Follow = characters[index].transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head");
-		}
+		} */
 		for (int i = 0; i < characters.Length; i++)
 		{
 			characters[i].SetActive(i == index);

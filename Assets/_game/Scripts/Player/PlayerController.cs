@@ -16,6 +16,7 @@ namespace _game.Scripts
 		[SerializeField] private float _acceleration;
 		[SerializeField] private Animator _animator;
 		[SerializeField] private PlayerAnimatorFunctions _animatorFunctions;
+		[SerializeField] private Transform _cameraHeadTarget;
 
 		[SerializeField] private Transform _camera;
 		[SerializeField] private Transform _model;
@@ -60,6 +61,7 @@ namespace _game.Scripts
 			_characterController = GetComponent<CharacterController>();
 			originalHeight = _characterController.height;
 			originalCenter = _characterController.center;
+			originalCameraPos = _cameraHeadTarget.transform.position;
 
 			//_gun = _gun1;
 
@@ -130,7 +132,7 @@ namespace _game.Scripts
 			}
 		}
 
-		private void CheckGrounded() { _isGrounded = Physics.Raycast(transform.position, -transform.up, 0.1f); }
+		private void CheckGrounded() { _isGrounded = Physics.Raycast(transform.position, -transform.up, 0.25f); Debug.Log(_isGrounded); }
 
 		private void HandleMovement()
 		{
@@ -215,6 +217,7 @@ namespace _game.Scripts
 
 		private Vector3 originalCenter;
 		private float originalHeight;
+		private Vector3 originalCameraPos;
 
 		[Header("Crouch Settings")]
 		public float crouchHeight = 1.0f;
@@ -245,6 +248,7 @@ namespace _game.Scripts
 				slideTimer = slideDuration;
 				_characterController.height = crouchHeight / 2; // Shorten height for slide
 				_characterController.center = new Vector3(0, crouchHeight / 4, 0);
+				_cameraHeadTarget.transform.localPosition = new Vector3(0, crouchHeight * 0.2f, 0);
 				_animator.SetFloat("SlideAnim", UnityEngine.Random.Range(0f,1f));
 				Debug.Log("started SLIDE");
 			}
@@ -270,6 +274,7 @@ namespace _game.Scripts
 				isCrouching = true;
 				_characterController.height = crouchHeight;
 				_characterController.center = new Vector3(0, crouchHeight / 2, 0);
+				_cameraHeadTarget.transform.localPosition = new Vector3(0, crouchHeight * 0.8f, 0);
 			}
 			else if (Input.GetKeyUp(KeyCode.LeftControl) && isCrouching)
 			{
@@ -296,6 +301,7 @@ namespace _game.Scripts
 			// Reset height and center when crouching or sliding ends
 			_characterController.height = originalHeight;
 			_characterController.center = originalCenter;
+			_cameraHeadTarget.transform.localPosition = originalCameraPos;
 		}
 	}
 }

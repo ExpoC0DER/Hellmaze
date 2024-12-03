@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{aa180156-8543-47dd-a6c6-b90f59e37f07}">
+		<property name="assetPath">
+			<value>Rivers of Cum.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>106.128</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{40913624-2249-420f-ae29-318554c22436}</destination>
+		</relationship>
+	</object>
+</objects>

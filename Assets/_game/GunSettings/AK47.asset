@@ -31,7 +31,14 @@ MonoBehaviour:
       Data2: 1194319412
       Data3: -1723049060
       Data4: 1468457709
-    Path: event:/AK47
+    Path: event:/weapon_sfx/AK47
+  <NoAmmoSound>k__BackingField:
+    Guid:
+      Data1: -650306901
+      Data2: 1084326519
+      Data3: 267054241
+      Data4: 1819966761
+    Path: event:/weapon_sfx/No_Ammo_Click_AK47
   <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.35}
   <RecoilDuration>k__BackingField: 0.1
   <RecoilReturnDuration>k__BackingField: 0.15
