@@ -8,7 +8,7 @@ public class PlayerDatabase : MonoBehaviour
 	
 	void Awake()
 	{
-		GetAllPlayers();
+		FindAllPlayers();
 		PickRandomBotNames();
 	}
 	
@@ -25,8 +25,16 @@ public class PlayerDatabase : MonoBehaviour
 		return null;
 	}
 	
-	void GetAllPlayers()
+	public List<PlayerStats> GetPlayerList()
 	{
+		FindAllPlayers();
+		return players;
+	}
+	
+	void FindAllPlayers()
+	{
+		players.Clear();
+		
 		PlayerStats[] p = FindObjectsByType<PlayerStats>(FindObjectsSortMode.None);
 		foreach (PlayerStats player in p)
 		{

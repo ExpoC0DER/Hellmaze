@@ -42,7 +42,7 @@ public class Explosive : MonoBehaviour
 				if(obj.TryGetComponent(out PlayerStats playerStats))
 				{
 					playerStats.TakeDamage(damage, _source, _weaponIndex);
-					Debug.Log("explosive damage " + -damage);
+					//Debug.Log("explosive damage " + -damage);
 				}/* else if(obj.TryGetComponent(out EnemyAI enemyAI))
 				{
 					enemyAI.TakeDamage(damage, _source.position);

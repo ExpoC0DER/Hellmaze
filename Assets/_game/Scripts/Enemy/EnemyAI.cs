@@ -90,7 +90,7 @@ public class EnemyAI : MonoBehaviour
 	
 	public void SwitchState(Bot_State state)
 	{
-		Debug.Log("switch state to: " + state.ToString());
+		//Debug.Log("switch state to: " + state.ToString());
 		currentState.ExitState();
 		currentState = state;
 		currentState.EnterState(this);		
@@ -557,7 +557,7 @@ public class Bot_State_Attacking : Bot_State
 			enemyAI.animator.SetFloat("SpineRotation", 0.5f);
 		} */
 		enemyAI.RotateToPosition(new Vector3(enemyAI.target.position.x, enemyAI.target.position.y + 0.9f, enemyAI.target.position.z));
-		if( enemyAI.target != null ) weaponSlots.Bot_Shooting( enemyAI.target, enemyAI.transform );
+		if( enemyAI.target != null ) weaponSlots.Bot_Shooting(enemyAI.target);
 	}
 	
 	void SetRandomRoomPosition()

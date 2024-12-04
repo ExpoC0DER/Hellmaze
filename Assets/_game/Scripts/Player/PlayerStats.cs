@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 public class PlayerStats : MonoBehaviour
 {
 	public string playerName = "Bot";
+	public Sprite playerProfilePic;
 	[SerializeField] float currentHealth = 100;
 	[SerializeField] float maxHealth = 100;	
 	[SerializeField] EnemyAI enemyAI;
@@ -34,7 +35,7 @@ public class PlayerStats : MonoBehaviour
 		currentHealth -= amount;
 		blood_part.Play();
 		
-		Debug.Log(playerName + " was hit by " + source.playerName + " for damage of:" + amount);
+		//Debug.Log(playerName + " was hit by " + source.playerName + " for damage of:" + amount);
 		
 		if(currentHealth <= 0)
 		{

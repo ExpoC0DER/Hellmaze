@@ -135,20 +135,20 @@ namespace _game.Scripts
 				_fired = false;
 		}
 
-		private void Fire(Transform source)
+		private void Fire(Transform target)
 		{
 			Vector3 dir;
 			Vector3 orig;
 			if (Ammo > 0)
 				Ammo--;
-			if(source == null)
+			if(target == null)
 			{
 				dir = _camera.forward;
 				orig = _camera.position;
 			}else
 			{
-				orig = transform.position;
-				dir = (new Vector3(source.position.x, source.position.y +0.75f, source.position.z) - transform.position).normalized;
+				orig = new Vector3(transform.position.x, transform.position.y +0.75f, transform.position.z);
+				dir = (new Vector3(target.position.x, target.position.y +0.4f, target.position.z) - orig).normalized;
 			}
 			
 			dir = GetShootingSpread_Direction(orig, dir);

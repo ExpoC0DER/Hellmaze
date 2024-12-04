@@ -152,9 +152,15 @@ namespace _game.Scripts
 				orig = _camera.position + _camera.forward * 0.13f; //PLAYER SHOT ITSELF (QUICKFIX)
 			}else
 			{
-				orig = transform.position;
-				dir = (new Vector3(target.position.x, target.position.y +0.75f, target.position.z) - transform.position).normalized;
+				orig = new Vector3(transform.position.x, transform.position.y +0.75f, transform.position.z);
+				dir = (new Vector3(target.position.x, target.position.y +0.4f, target.position.z) - orig).normalized;
 			}
+			
+			/* LG_tools.DrawPoint(orig, 5, Color.green);
+			LG_tools.DrawPoint(target.position, 5, Color.red);
+			Debug.Log("bot shooting at " + target.name, target.gameObject);
+			
+			Debug.DrawLine(orig, dir * 50, Color.magenta, 5); */
 			
 			BulletParticle(Quaternion.LookRotation(dir));
 			
@@ -162,10 +168,11 @@ namespace _game.Scripts
 			{
 				dir = GetShootingSpread_Direction(orig, dir);
 			
-				//Debug.DrawRay(orig, dir * _gunSettings.MaxRange, Color.red, 3);
+				//Debug.DrawRay(orig, dir * _gunSettings.MaxRange, Color.red, 5);
 				
 				if (Physics.Raycast(orig, dir, out RaycastHit hit, _gunSettings.MaxRange))
 				{
+					//Debug.DrawLine(orig, hit.point, Color.green, 5);
 					//GameObject t;
 					if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
 					{

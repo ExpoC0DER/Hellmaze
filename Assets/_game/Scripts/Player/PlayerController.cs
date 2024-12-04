@@ -132,7 +132,7 @@ namespace _game.Scripts
 			}
 		}
 
-		private void CheckGrounded() { _isGrounded = Physics.Raycast(transform.position, -transform.up, 0.25f); Debug.Log(_isGrounded); }
+		private void CheckGrounded() { _isGrounded = Physics.Raycast(transform.position, -transform.up, 0.25f); }
 
 		private void HandleMovement()
 		{

@@ -123,7 +123,7 @@ public class WeaponSlots : MonoBehaviour
 		
 	}
 	
-	public void Bot_Shooting(Transform target, Transform source)
+	public void Bot_Shooting(Transform target)
 	{
 		if(bot_shoot_trigger)
 		{
@@ -131,9 +131,8 @@ public class WeaponSlots : MonoBehaviour
 			animator.SetBool("Shooting", false);
 			return;
 		}
-		Debug.Log("shot");
 		bot_shoot_trigger = true;
-		_currentGun.Value.Shoot(bot_shoot_trigger, source, out bool succesShot);
+		_currentGun.Value.Shoot(bot_shoot_trigger, target, out bool succesShot);
 		animator.SetBool("Shooting", succesShot && bot_shoot_trigger);
 		Invoke("StopShooting", UnityEngine.Random.Range(0.2f, 0.4f));
 		if(!succesShot) // no ammo try other gun

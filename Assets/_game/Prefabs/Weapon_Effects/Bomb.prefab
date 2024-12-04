@@ -44,7 +44,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.9787291, b: 0.49622637, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_Range: 1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -331,7 +331,7 @@ MonoBehaviour:
   expl_force: 10
   _damage: 0
   _weaponIndex: 0
-  visual_model: {fileID: 0}
+  visual_model: {fileID: 8683064078722926872}
   _explosion_sfx:
     Guid:
       Data1: 2055427326
@@ -364,7 +364,7 @@ CapsuleCollider:
   serializedVersion: 2
   m_Radius: 0.08
   m_Height: 0.26
-  m_Direction: 1
+  m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4547014021013330759
 PrefabInstance:
@@ -374,6 +374,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 925625266705936783}
     m_Modifications:
+    - target: {fileID: 1434456530050263103, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2344682560832193420, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4179226865850884029, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -417,6 +425,14 @@ PrefabInstance:
     - target: {fileID: 4681728339026605035, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
       propertyPath: m_Name
       value: bomb_explosion_part
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776990256664569134, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5574497840423560904, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -512,5 +528,10 @@ PrefabInstance:
 --- !u!4 &8343939115192701858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9f4bc5af8d2c9e44d97881cce5f4d308, type: 3}
+  m_PrefabInstance: {fileID: 8377004371450344521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8683064078722926872 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f4bc5af8d2c9e44d97881cce5f4d308, type: 3}
   m_PrefabInstance: {fileID: 8377004371450344521}
   m_PrefabAsset: {fileID: 0}
