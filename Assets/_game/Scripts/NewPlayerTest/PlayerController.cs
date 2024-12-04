@@ -1,6 +1,8 @@
 using System;
 using _game.Scripts.Player;
+using AYellowpaper;
 using Unity.Cinemachine;
+using Unity.IO.LowLevel.Unsafe;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,6 +11,10 @@ namespace _game.Scripts.NewPlayerTest
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : NetworkBehaviour
     {
+        [SerializeField] private NetworkVariable<float> _health = new NetworkVariable<float>(100f);
+        [SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun1;
+        [SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun2;
+
         [SerializeField] private Vector2 _minMaxRotationX;
         [SerializeField] private Transform _camTransform;
         [SerializeField] private NetworkPlayerMovement _networkMovement;
@@ -17,6 +23,7 @@ namespace _game.Scripts.NewPlayerTest
         [SerializeField] private NetworkObject _hitPoint;
 
 
+        private IGun _equippedGun;
         private PlayerInput _playerInput;
         private float _cameraAngle;
 
@@ -40,10 +47,18 @@ namespace _game.Scripts.NewPlayerTest
             _playerInput = new PlayerInput();
             _playerInput.Enable();
 
+            _equippedGun = _gun1.Value;
+
             Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void Update()
+        {
+            HandleMovement();
+            HandleShooting();
+        }
+
+        private void HandleMovement()
         {
             Vector2 movementInput = _playerInput.OnFoot.Movement.ReadValue<Vector2>();
             Vector2 lookInput = _playerInput.OnFoot.Look.ReadValue<Vector2>();
@@ -58,40 +73,20 @@ namespace _game.Scripts.NewPlayerTest
             {
                 _networkMovement.ProcessSimulatedPlayerMovement();
             }
-
-            if (IsLocalPlayer && _playerInput.OnFoot.Shoot.inProgress)
-            {
-                if (Physics.Raycast(_camTransform.position, _camTransform.forward, out RaycastHit raycastHit, _shootDistance, _shootLayerMask))
-                {
-                    PlaceHitMarkServerRpc();
-                }
-            }
         }
 
-        [ServerRpc]
-        private void PlaceHitMarkServerRpc()
+        private void HandleShooting()
         {
-            if (Physics.Raycast(_camTransform.position, _camTransform.forward, out RaycastHit raycastHit, _shootDistance, _shootLayerMask))
-            {
-                NetworkObject newHotpoint = Instantiate(_hitPoint, raycastHit.point, Quaternion.identity);
-                //newHotpoint.transform.position = position;
-                newHotpoint.Spawn();
-
-                if (raycastHit.transform.TryGetComponent(out NetworkObject networkObject))
-                {
-                    print(networkObject.name);
-                    newHotpoint.TrySetParent(networkObject);
-                }
-            }
-
+            if (IsClient && IsLocalPlayer)
+                _equippedGun?.TryShoot(_playerInput.OnFoot.Shoot.inProgress, _camTransform);
         }
 
-        [ServerRpc]
-        private void PlaceHitMarkServerRpc(Vector3 position)
+        public void TakeDamage(float damage)
         {
-            NetworkObject newHotpoint = Instantiate(_hitPoint);
-            newHotpoint.transform.position = position;
-            newHotpoint.Spawn();
+            if (!IsServer)
+                return;
+
+            _health.Value -= damage;
         }
 
         // private void RotateCamera(Vector2 lookInput)

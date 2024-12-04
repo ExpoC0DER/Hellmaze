@@ -1,18 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _game.Scripts.NewPlayerTest;
 using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace _game.Scripts
 {
-    public class BasicGun : MonoBehaviour, IGun
+    public class BasicGun : NetworkBehaviour, IGun
     {
         [SerializeField] private GunSettings _gunSettings;
         [SerializeField] private Transform _hitPoint;
         [field: SerializeField] public int Ammo { get; set; } = 30;
+        [field: SerializeField] public float Damage { get; set; } = 5f;
 
         private bool _fired;
         private float _fireDelay;
@@ -37,7 +40,7 @@ namespace _game.Scripts
                 _fireDelay -= Time.deltaTime;
         }
 
-        private void ApplyRecoil()
+        public void ApplyRecoil()
         {
             transform.DOKill(true);
             // Position recoil (kickback)
@@ -61,7 +64,7 @@ namespace _game.Scripts
                 });
         }
 
-        public void Shoot(bool keyDown)
+        public void TryShoot(bool keyDown, Transform point)
         {
             if (keyDown)
             {
@@ -69,12 +72,17 @@ namespace _game.Scripts
                 {
                     _fired = true;
                     FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
-                    FireRaycast();
+
+                    if (Ammo > 0)
+                        Ammo--;
+
+                    if (IsLocalPlayer)
+                        ApplyRecoil();
+
+                    PlaceHitMarkServerRpc(Damage, point.position, point.forward);
                 }
                 if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
                 {
-                    FireRaycast();
-
                     if (!_fired)
                     {
                         _fired = true;
@@ -84,6 +92,15 @@ namespace _game.Scripts
                     }
 
                     _fireDelay = _gunSettings.FiringSpeed;
+
+                    if (Ammo > 0)
+                        Ammo--;
+
+                    // If local player play recoil animation instantly
+                    if (IsLocalPlayer)
+                        ApplyRecoil();
+
+                    PlaceHitMarkServerRpc(Damage, point.position, point.forward);
                 }
             }
             else
@@ -97,21 +114,35 @@ namespace _game.Scripts
             }
         }
 
-        private void FireRaycast()
+        [ServerRpc]
+        private void PlaceHitMarkServerRpc(float damage, Vector3 position, Vector3 direction)
         {
-            if (Ammo > 0)
-                Ammo--;
-            if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
+            if (Physics.Raycast(position, direction, out RaycastHit raycastHit))
             {
-                GameObject t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.identity);
-                t.transform.SetParent(hit.transform);
-                //print(hit.transform.name);
-                if (hit.transform.TryGetComponent(out EnemyAI ai))
+                //NetworkObject newHotpoint = Instantiate(_hitPoint, raycastHit.point, Quaternion.identity);
+                //newHotpoint.transform.position = position;
+                //newHotpoint.Spawn();
+
+                // if (raycastHit.transform.TryGetComponent(out NetworkObject networkObject))
+                // {
+                //     print(networkObject.name);
+                //     newHotpoint.TrySetParent(networkObject);
+                // }
+
+                if (raycastHit.transform.TryGetComponent(out PlayerController playerController))
                 {
-                    ai.TakeDamage(_gunSettings.Damage);
+                    playerController.TakeDamage(damage);
                 }
             }
-            ApplyRecoil();
+            ApplyRecoilClientRpc();
+        }
+
+        [ClientRpc]
+        private void ApplyRecoilClientRpc()
+        {
+            // Play the recoil animation for other other players too
+            if (!IsLocalPlayer)
+                ApplyRecoil();
         }
     }
 }
