@@ -17,6 +17,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/NGO_Minimal_Setup/NGO_Setup.unity
     guid: 9833d004224062e42aab6739a42eecf3
+  - enabled: 1
+    path: Assets/_game/Scenes/Init.unity
+    guid: 0978ff21cbadf3047953a413e21b7db0
+  - enabled: 1
+    path: Assets/_game/Scenes/MainMenu.unity
+    guid: 923701f9f3f6939498eaa02b6ffb5a2b
+  - enabled: 1
+    path: Assets/_game/Scenes/Loading.unity
+    guid: d1fa4618db01f144586bc071149e156b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
