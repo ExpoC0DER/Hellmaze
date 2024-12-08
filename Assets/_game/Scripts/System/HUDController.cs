@@ -8,14 +8,14 @@ namespace _game.Scripts
 {
 	public class HUDController : MonoBehaviour
 	{
-		[SerializeField] private PlayerController _player;
+		//[SerializeField] private PlayerController _player;
 		[SerializeField] private WeaponSlots _weapons;
 		[SerializeField] private PlayerStats _playerStats;
-		[SerializeField] private GameManager _gameManager;
+		//[SerializeField] private GameManager _gameManager;
 		[SerializeField] private TMP_Text _healthText;
 		[SerializeField] private TMP_Text _ammoText;
 		[SerializeField] private TMP_Text _timerText;
-		[SerializeField] private TMP_Text _killCountText;
+		//[SerializeField] private TMP_Text _killCountText;
 		[SerializeField] private Button _restartBtn;
 		
 		private int _seconds = 0;
@@ -62,20 +62,12 @@ namespace _game.Scripts
 			}
 		}
 
-		private int _killCount = 0;
-
-		private void UpdateKillCount()
-		{
-			_killCount++;
-			_killCountText.text = $"Kills: {_killCount}";
-		}
-
 		private void OnEnable()
 		{
 			_playerStats.OnHealthChange += SetHealthText;
 			_weapons.OnAmmoChange += SetAmmoText;
 			
-			PlayerStats.OnDeath += UpdateKillCount;
+			//PlayerStats.OnDeath += UpdateKillCount;
 			
 		}
 
@@ -84,7 +76,7 @@ namespace _game.Scripts
 			_playerStats.OnHealthChange -= SetHealthText;
 			_weapons.OnAmmoChange -= SetAmmoText;
 			GameManager.main.OnTimerChange -= SetTimerText;
-			PlayerStats.OnDeath -= UpdateKillCount;
+			//PlayerStats.OnDeath -= UpdateKillCount;
 		}
 	}
 }

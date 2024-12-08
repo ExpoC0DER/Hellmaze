@@ -13,17 +13,12 @@ public class EnemyAI : MonoBehaviour
 	
 	[SerializeField] public Animator animator;
 	[SerializeField] EnemyVision enemyVision;
-	[SerializeField] float fovAngle = 90;
-
-	/* [SerializeField] private float health = 100;
-	[SerializeField] private float maxHealth = 100;
-	[SerializeField] ParticleSystem death_part; */
+	
 	[SerializeField] public WeaponSlots weaponSlots {get; private set;}
 	public NavMeshAgent navMeshAgent { get; private set; }
 	
 	public float navigationRadius {get; private set;} = 30;
 	
-	private bool _dead = false;
 	public Transform target {get; private set;}
 	public Vector3 lastSeenTargetPos {get; private set;}
 	
@@ -68,8 +63,9 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField] Transform groundCheckPos;
 	[SerializeField] Rigidbody rb;
 
-
-	 private void Start()
+	bool dead = false;
+	
+	private void Start()
 	{
 		col = GetComponent<CapsuleCollider>();
 		rb=GetComponent<Rigidbody>();
@@ -83,6 +79,7 @@ public class EnemyAI : MonoBehaviour
 
 	void Update()
 	{
+		if(dead) return;
 		HandleMovement();
 		HandleInteraction();
 		currentState.UpdateState();
@@ -109,6 +106,21 @@ public class EnemyAI : MonoBehaviour
 			SwitchState(state_Attacking);
 		}
 	}
+	
+	public void SetDead(bool isDead)
+	{
+		dead = isDead;
+		navMeshAgent.isStopped = isDead;
+		rb.linearVelocity = Vector3.zero;
+	}
+	
+	public void SetGibbed(bool isGibbed) => col.isTrigger = isGibbed;
+	
+	public void EnableRigidbodyToAddForce()
+	{
+		
+	}
+	
 	public void SeenHealthKit(Transform pickup)
 	{
 		//if health is low go to this position
@@ -193,6 +205,31 @@ public class EnemyAI : MonoBehaviour
 		}
 	}
 	
+	void HandleJump()
+	{
+		//Debug.DrawRay(transform.position, Vector3.down * 1f, Color.blue, 1);
+		//Debug.Log("grounded "+ _isGrounded);
+		/* if (isJumping)
+		{
+			//velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+			//characterController.Move(velocity * Time.deltaTime);
+			//transform.position = new Vector3(transform.position.x, transform.position.y + velocity.y * Time.deltaTime, transform.position.z);
+			
+		} */
+		/* if(!_isGrounded || isFalling)
+		{
+			//transform.position = new Vector3 (transform.position.x, transform.position.y + gravity * Time.deltaTime, transform.position.z);
+		} */
+		if(isFalling && _isGrounded)
+		{
+			navMeshAgent.nextPosition = transform.position;
+			navMeshAgent.updatePosition = true;	
+			rb.isKinematic = true;
+			isFalling = false;
+		}
+		
+	}
+	
 	bool NeedCrouchCheck()
 	{
 		bool needs = false;
@@ -255,32 +292,6 @@ public class EnemyAI : MonoBehaviour
 		crouchCd = 0;
 	}
 	
-	void HandleJump()
-	{
-		//Debug.DrawRay(transform.position, Vector3.down * 1f, Color.blue, 1);
-		//Debug.Log("grounded "+ _isGrounded);
-		/* if (isJumping)
-		{
-			//velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-			//characterController.Move(velocity * Time.deltaTime);
-			//transform.position = new Vector3(transform.position.x, transform.position.y + velocity.y * Time.deltaTime, transform.position.z);
-			
-		} */
-		/* if(!_isGrounded || isFalling)
-		{
-			//transform.position = new Vector3 (transform.position.x, transform.position.y + gravity * Time.deltaTime, transform.position.z);
-		} */
-		if(isFalling && _isGrounded)
-		{
-			navMeshAgent.nextPosition = transform.position;
-			navMeshAgent.updatePosition = true;	
-			rb.isKinematic = true;
-			isFalling = false;
-		}
-		
-	}
-		
-
 	private void HandleCrouchAndSlide()
 	{
 		if (crouchedTrigger && navMeshAgent.speed > 7 && !isSliding && Time.time >= lastSlideTime + slideCooldown)
@@ -289,7 +300,7 @@ public class EnemyAI : MonoBehaviour
 			isSliding = true;
 			slideTimer = slideDuration;
 			col.height = crouchHeight / 2; // Shorten height for slide
-			col.center = new Vector3(0, crouchHeight / 4, 0);
+			col.center = new Vector3(0, -crouchHeight / 4, 0);
 			animator.SetFloat("SlideAnim", UnityEngine.Random.Range(0f,1f));
 			//Debug.Log("start slide");
 		}
@@ -312,7 +323,7 @@ public class EnemyAI : MonoBehaviour
 			// Crouch
 			isCrouching = true;
 			col.height = crouchHeight;
-			col.center = new Vector3(0, crouchHeight / 2, 0);
+			col.center = new Vector3(0, -crouchHeight / 2, 0);
 			//Debug.Log("start crouch");
 		}
 		else if (!crouchedTrigger && isCrouching)
@@ -615,3 +626,4 @@ public class Bot_State_FindPickup: Bot_State
 		
 	}
 }
+

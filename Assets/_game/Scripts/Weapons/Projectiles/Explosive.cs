@@ -2,7 +2,6 @@ using UnityEngine;
 using FMODUnity;
 using _game.Scripts;
 
-
 public class Explosive : MonoBehaviour
 {
 	[SerializeField] float expl_radius = 5;

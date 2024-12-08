@@ -132,7 +132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4963850416919952175
 Transform:
   m_ObjectHideFlags: 0
@@ -5066,6 +5066,14 @@ PrefabInstance:
     - target: {fileID: 6128007128064760064, guid: 8f26386fb5e57d54c91d20e6be03e5c8, type: 3}
       propertyPath: m_Name
       value: impact_hole_part
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697264217540363203, guid: 8f26386fb5e57d54c91d20e6be03e5c8, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697264217540363203, guid: 8f26386fb5e57d54c91d20e6be03e5c8, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

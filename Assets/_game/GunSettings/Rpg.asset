@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rpg
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 90
-  <FiringSpeed>k__BackingField: 1
+  <FiringSpeed>k__BackingField: 0.75
   <Spread>k__BackingField: 0
   <ShotsPerFire>k__BackingField: 1
   <MaxRange>k__BackingField: 50

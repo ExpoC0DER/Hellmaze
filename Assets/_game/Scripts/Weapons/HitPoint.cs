@@ -1,3 +1,4 @@
+using System.Collections;
 using FMODUnity;
 using UnityEngine;
 
@@ -22,9 +23,15 @@ namespace _game.Scripts
 			ObjectPooler.main.ReturnObject(transform, pool_name);
 		}
 		
-		private void OnEnable()
+		void OnEnable()
 		{
-			FMODHelper.PlayNewInstance(sfx[Random.Range(0, sfx.Length)]);
+			StartCoroutine(DelaySound());
+		}
+		
+		IEnumerator DelaySound()
+		{
+			yield return new WaitForSeconds(0.04f);
+			FMODHelper.PlayNewInstance(sfx[Random.Range(0, sfx.Length)], transform.position);
 		}
 	}
 }

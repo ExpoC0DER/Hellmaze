@@ -4,8 +4,8 @@ using FMOD.Studio;
 
 public class BackgroundMusic : MonoBehaviour
 {
-    [EventRef]
-    public string backgroundMusicEvent = "event:/Music/Background"; // Set this to your music event path
+    //[EventRef]
+    public EventReference backgroundMusicEvent;// = "event:/Music/Background"; // Set this to your music event path
 
     private EventInstance musicInstance;
 

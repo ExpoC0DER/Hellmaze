@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 35
-  <FiringSpeed>k__BackingField: 1
+  <FiringSpeed>k__BackingField: 0.1
   <Spread>k__BackingField: 0.2
   <ShotsPerFire>k__BackingField: 1
   <MaxRange>k__BackingField: 50

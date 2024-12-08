@@ -39,6 +39,7 @@ public class Pickup : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
+		if(taken) return;
 		if(other.CompareTag("Player"))
 		{
 			OnPickupPlayer(other.gameObject);

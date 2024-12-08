@@ -12,8 +12,6 @@ namespace _game.Scripts
 	public class BasicGun : MonoBehaviour, IGun
 	{
 		[SerializeField] private GunSettings _gunSettings;
-		[SerializeField] private Transform _hitPoint;
-		[SerializeField] private Transform _fleshHitPoint;
 		[SerializeField] ParticleSystem muzzleFlash_part;
 		[SerializeField] ParticleSystem bullet_fire_part;
 		[SerializeField] ParticleSystem casing_part;
@@ -92,16 +90,17 @@ namespace _game.Scripts
 				{
 					if(!noAmmoClicked)
 					{
-						FMODHelper.PlayNewInstance(_gunSettings.NoAmmoSound, transform.position);
+						FMODHelper.PlayNewInstance(_gunSettings.NoAmmoSound, transform);
 						noAmmoClicked = true;
 					}
 					return;
 				}
-				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
+				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false && _fireDelay <= 0)
 				{
 					_fired = true;
-					FMODHelper.PlayNewInstance(_gunSettings.ManualSound, transform.position);
+					FMODHelper.PlayNewInstance(_gunSettings.ManualSound, transform);
 					FireRaycast(target);
+					_fireDelay = _gunSettings.FiringSpeed;
 				}
 				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
 				{
@@ -120,12 +119,7 @@ namespace _game.Scripts
 			}
 			else
 			{
-				if (FMODHelper.InstanceIsPlaying(_automaticSound))
-				{
-					_automaticSound.setParameterByName("Parameter 1", 0);
-					_automaticSound.release();
-				}
-				_fired = false;
+				StopShooting();
 				noAmmoClicked = false;
 			}
 		}
@@ -133,11 +127,11 @@ namespace _game.Scripts
 		public void StopShooting()
 		{
 			if (FMODHelper.InstanceIsPlaying(_automaticSound))
-				{
-					_automaticSound.setParameterByName("Parameter 1", 0);
-					_automaticSound.release();
-				}
-				_fired = false;
+			{
+				_automaticSound.setParameterByName("Parameter 1", 0);
+				_automaticSound.release();
+			}
+			_fired = false;
 		}
 
 		private void FireRaycast(Transform target)
@@ -149,7 +143,7 @@ namespace _game.Scripts
 			if(target == null)
 			{
 				dir = _camera.forward;
-				orig = _camera.position + _camera.forward * 0.13f; //PLAYER SHOT ITSELF (QUICKFIX)
+				orig = _camera.position;
 			}else
 			{
 				orig = new Vector3(transform.position.x, transform.position.y +0.75f, transform.position.z);
@@ -159,7 +153,6 @@ namespace _game.Scripts
 			/* LG_tools.DrawPoint(orig, 5, Color.green);
 			LG_tools.DrawPoint(target.position, 5, Color.red);
 			Debug.Log("bot shooting at " + target.name, target.gameObject);
-			
 			Debug.DrawLine(orig, dir * 50, Color.magenta, 5); */
 			
 			BulletParticle(Quaternion.LookRotation(dir));
@@ -169,32 +162,47 @@ namespace _game.Scripts
 				dir = GetShootingSpread_Direction(orig, dir);
 			
 				//Debug.DrawRay(orig, dir * _gunSettings.MaxRange, Color.red, 5);
-				
-				if (Physics.Raycast(orig, dir, out RaycastHit hit, _gunSettings.MaxRange))
+				bool hitSelf = true;
+				while (hitSelf)
 				{
-					//Debug.DrawLine(orig, hit.point, Color.green, 5);
-					//GameObject t;
-					if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
+					LG_tools.DrawPoint(orig, 10, Color.red);
+					if (Physics.Raycast(orig, dir, out RaycastHit hit, _gunSettings.MaxRange, Physics.AllLayers, QueryTriggerInteraction.Ignore))
 					{
-						ObjectPooler.main.SpawnPooledObject("blood_part", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-						//t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+						if(hit.transform == Source.transform)
+						{
+							orig += orig + dir * 0.15f;
+							Debug.Log("hit self");
+						}else
+						{
+							hitSelf = false;
+						}
+						//Debug.DrawLine(orig, hit.point, Color.green, 5);
+						//GameObject t;
+						if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
+						{
+							ObjectPooler.main.SpawnPooledObject("blood_part", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+							//t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+						}else
+						{
+							ObjectPooler.main.SpawnPooledObject("gunShot_dec", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+							//t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
+						}
+
+						//t.transform.SetParent(hit.transform, true);
+
+						//print(hit.transform.name);
+						/* if (hit.transform.TryGetComponent(out EnemyAI ai))
+						{
+							ai.TakeDamage(_gunSettings.Damage * DamageMultiplier, transform.position);
+						}else  */
+						if (hit.transform.TryGetComponent(out PlayerStats player))
+						{
+							//Debug.Log("bot shot player " + _gunSettings.Damage);
+							player.TakeDamage(_gunSettings.Damage * DamageMultiplier, Source, WeaponIndex);
+						}
 					}else
 					{
-						ObjectPooler.main.SpawnPooledObject("gunShot_dec", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-						//t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
-					}
-					
-					//t.transform.SetParent(hit.transform, true);
-					
-					//print(hit.transform.name);
-					/* if (hit.transform.TryGetComponent(out EnemyAI ai))
-					{
-						ai.TakeDamage(_gunSettings.Damage * DamageMultiplier, transform.position);
-					}else  */
-					if (hit.transform.TryGetComponent(out PlayerStats player))
-					{
-						//Debug.Log("bot shot player " + _gunSettings.Damage);
-						player.TakeDamage(_gunSettings.Damage * DamageMultiplier, Source, WeaponIndex);
+						hitSelf = false;
 					}
 				}
 			}

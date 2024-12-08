@@ -86,12 +86,18 @@ public class ResultScreen : MonoBehaviour
 	
 	void SetupScores(List<PlayerStats> players)
 	{
-		SortScore_Kills(players);
+		SortScore_Kills(players, out Vector2 minMax_value);
+		
+		
+		
 		for (int i = 0; i < players.Count; i++)
 		{
-			PlayerStats playerStats = players[i];
-			string score = "Kills: " + playerStats.kills + "\nDeaths: "+ playerStats.deaths + "\nK/D: " + playerStats.kills / playerStats.deaths;
-			playerScores[i].Setup(playerStats.playerName, playerStats.playerProfilePic, score, Color.red);
+			PlayerStats playerStats = players[i];			
+			string score = "Kills: " + playerStats.kills + "\nDeaths: "+ playerStats.deaths + "\nK/D: " + GetKillDeathRatio(playerStats.kills, playerStats.deaths).ToString("f2");
+			float interp_score = Mathf.Lerp(0.20f, 1, Mathf.InverseLerp(minMax_value.x, minMax_value.y, playerStats.kills));
+			Color color = Color.HSVToRGB(Random.Range(0f,1f), 1, 1);
+			//Debug.Log("minmax " + minMax_value + " kills " + playerStats.kills + " interpScore " + interp_score);
+			playerScores[i].Setup(playerStats.playerName, playerStats.playerProfilePic, score, interp_score, color);
 		}
 	}
 	
@@ -99,7 +105,7 @@ public class ResultScreen : MonoBehaviour
 	{
 		players.Sort((x, y) => y.kills.CompareTo(x.kills));
 		// Lowest score
-		minMax_value = new Vector2(0,0);
+		minMax_value = Vector2.zero;
 		minMax_value.x = players.Min(player => player.kills);
 		//Player lowestScorePlayer = players.First(player => player.Score == lowestScore);
 
@@ -111,7 +117,18 @@ public class ResultScreen : MonoBehaviour
 	void SortScore_KD(List<PlayerStats> players, out Vector2 minMax_value)
 	{
 		players.Sort((x, y) => y.kills/y.deaths.CompareTo(x.kills/x.deaths));
+		minMax_value = Vector2.zero;
+		minMax_value.x = players.Min(player => player.kills / player.deaths);
+		//Player lowestScorePlayer = players.First(player => player.Score == lowestScore);
+
+		// Highest score
+		minMax_value.y = players.Max(player => player.kills / player.deaths);
 	}
-	
+	float GetKillDeathRatio(float kills, float deaths)
+	{
+		if(kills == 0) return -deaths;
+		if(deaths == 0) return kills;
+		return kills / deaths;
+	}
 	
 }

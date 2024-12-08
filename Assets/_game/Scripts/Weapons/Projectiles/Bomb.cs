@@ -25,7 +25,12 @@ public class Bomb : Explosive, IProjectile
 		base._source = source;
 		base._exploded = false;
 		onTrigger = false;
+		
+		/* rb.AddForce(init_force * transform.forward, ForceMode.Impulse);
+		Invoke("StartExplosionCor", 0.1f); */
 	}
+	
+	//void StartExplosionCor() => StartCoroutine(ExplosiveRoutine());
 	
 	public override void Explode()
 	{
@@ -78,14 +83,19 @@ public class Bomb : Explosive, IProjectile
 		}
 	}
 	
+	void OnCollisionEnter(Collision other)
+	{
+		//Debug.Log("explode on col: " + other.gameObject.tag, other.gameObject);
+		if((other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot")) && onTrigger)
+		{
+			Explode();
+			Invoke("Return", 1);
+		}
+	}
+	
 	void OnEnable()
 	{
 		rb.AddForce(init_force * transform.forward, ForceMode.Impulse);
 		StartCoroutine(ExplosiveRoutine());
-	}
-	
-	void OnDisable()
-	{
-		
 	}
 }

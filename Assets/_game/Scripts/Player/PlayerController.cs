@@ -9,34 +9,21 @@ namespace _game.Scripts
 	[RequireComponent(typeof(CharacterController))]
 	public class PlayerController : MonoBehaviour
 	{
-		[SerializeField] private float _health;
+		[SerializeField] PlayerStats playerStats;
 		[SerializeField] private float _walkSpeed = 6f;
 		[SerializeField] private float _runSpeed = 12f;
 		[SerializeField] private float _grappleSpeed = 20f;
 		[SerializeField] private float _acceleration;
 		[SerializeField] private Animator _animator;
-		[SerializeField] private PlayerAnimatorFunctions _animatorFunctions;
 		[SerializeField] private Transform _cameraHeadTarget;
+		[SerializeField] private Rigidbody _cameraHeadTarget_rb;
+		[SerializeField] private Collider _cameraHeadTarget_col;
 
 		[SerializeField] private Transform _camera;
 		[SerializeField] private Transform _model;
-		//[SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun1;
-		//[SerializeField] private InterfaceReference<IGun, MonoBehaviour> _gun2;
-		//[SerializeField] private GameObject[] _guns;
-
-		private float Health
-		{
-			get { return _health; }
-			set
-			{
-				_health = value;
-				OnHealthChange?.Invoke(_health);
-			}
-		}
-
-		public event Action<float> OnHealthChange;
-		public event Action<int> OnAmmoChange;
-
+		
+		private bool isDead;
+		
 		private InterfaceReference<IGun, MonoBehaviour> _gun;
 		private Vector3 _moveDirection = Vector3.zero;
 		private bool _canMove = true;
@@ -52,45 +39,28 @@ namespace _game.Scripts
 
 		private Vector3 velocity;
 
-		[Button("Take Damage")]
-		private void TakeDmg() { Health -= 10; }
-
-
 		private void Start()
 		{
 			_characterController = GetComponent<CharacterController>();
 			originalHeight = _characterController.height;
 			originalCenter = _characterController.center;
-			originalCameraPos = _cameraHeadTarget.transform.position;
+			originalCameraPos = _cameraHeadTarget.transform.localPosition;
 
 			//_gun = _gun1;
 
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
+			
+			playerStats.OnDeath += OnDeath;
+			playerStats.OnRespawn += OnRespawn;
 		}
 
 		private void Update()
 		{
-			/* if (Input.GetKeyDown(KeyCode.Alpha1))
-			{
-				_guns[0].SetActive(true);
-				_guns[1].SetActive(false);
-				_gun = _gun1;
-				OnAmmoChange?.Invoke(_gun.Value.Ammo);
-				_animator.SetFloat("WeaponIndex", 0);
-				_animatorFunctions.SetWeapon(0);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha2))
-			{
-				_guns[0].SetActive(false);
-				_guns[1].SetActive(true);
-				_gun = _gun2;
-				_animator.SetFloat("WeaponIndex", 1);
-				_animatorFunctions.SetWeapon(1);
-				OnAmmoChange?.Invoke(_gun.Value.Ammo);
-			} */
-
 			CheckGrounded();
+			
+			if(isDead) return;
+			
 			HandleGrapple();
 			if (!_isGrappling)
 			{
@@ -99,9 +69,30 @@ namespace _game.Scripts
 				HandleJump();
 				HandleRotation();
 			}
-			//HandleShooting();
+		}
+		
+		void OnDeath()
+		{
+			SetDeathCamPhysics(true);
+			isDead = true;
 		}
 
+		void OnRespawn()
+		{
+			SetDeathCamPhysics(false);
+			isDead = false;
+		}
+		
+		void SetDeathCamPhysics(bool enable)
+		{
+			_cameraHeadTarget_rb.isKinematic = !enable;
+			_cameraHeadTarget_col.enabled = enable;
+			if(!enable)
+			{
+				_cameraHeadTarget.localPosition = originalCameraPos;
+			}
+		}
+		
 		private Vector3 _hitPos;
 
 		private void HandleGrapple()
@@ -250,7 +241,7 @@ namespace _game.Scripts
 				_characterController.center = new Vector3(0, crouchHeight / 4, 0);
 				_cameraHeadTarget.transform.localPosition = new Vector3(0, crouchHeight * 0.2f, 0);
 				_animator.SetFloat("SlideAnim", UnityEngine.Random.Range(0f,1f));
-				Debug.Log("started SLIDE");
+				//Debug.Log("started SLIDE");
 			}
 
 			if (isSliding)
@@ -262,14 +253,14 @@ namespace _game.Scripts
 					isSliding = false;
 					lastSlideTime = Time.time;
 					ResetHeight();
-					Debug.Log("ended SLIDE");
+					//Debug.Log("ended SLIDE");
 					
 				}
 			}
 
 			if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && !isCrouching)
 			{
-				Debug.Log("started Crouch");
+				//Debug.Log("started Crouch");
 				// Crouch
 				isCrouching = true;
 				_characterController.height = crouchHeight;
@@ -281,7 +272,7 @@ namespace _game.Scripts
 				// End crouch
 				isCrouching = false;
 				ResetHeight();
-				Debug.Log("ended Crouch");
+				//Debug.Log("ended Crouch");
 			}
 			_animator.SetBool("IsSliding", isSliding);
 			_animator.SetBool(IsCrouching, isCrouching);
@@ -303,5 +294,20 @@ namespace _game.Scripts
 			_characterController.center = originalCenter;
 			_cameraHeadTarget.transform.localPosition = originalCameraPos;
 		}
+		
+		public void SetGibbed(bool isGibbed)
+		{
+			if(isGibbed)
+			{
+				_characterController.height = 0.3f;
+				_characterController.center = new Vector3(0, 0.15f, 0);
+			}else
+			{
+				ResetHeight();
+			}
+			
+		}
+		
+		public void ResetCharacterControllerVelocity() => _characterController.Move(Vector3.zero);
 	}
 }

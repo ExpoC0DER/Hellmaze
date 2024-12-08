@@ -16,6 +16,7 @@ public class WeaponSlots : MonoBehaviour
 	InterfaceReference<IGun, MonoBehaviour> _currentGun;
 	bool[] weaponsPicked;
 	bool isPlayer = true;
+	bool isDead = false;
 	public event Action<int> OnAmmoChange;
 	[SerializeField] List<KeyCode> keyBinds;
 	
@@ -44,16 +45,26 @@ public class WeaponSlots : MonoBehaviour
 				_guns[i].Value.BotInaccuracy = innaccuracy;
 				_guns[i].Value.DamageMultiplier = damage_multiplier;
 			}	
-		}		
+		}
+		playerStats.OnDeath += OnDeath;
+		playerStats.OnRespawn += OnRespawn;
+	}
+	
+	void OnDisable()
+	{
+		playerStats.OnDeath -= OnDeath;
+		playerStats.OnRespawn -= OnRespawn;
 	}
 	
 	void Update()
 	{
 		if(!isPlayer) return;
 		if(Menu.main.isPaused) return;
+		if(isDead) return;
 		
 		HandleInput();
 		HandleShooting();
+		HandleScrollWheelInput();
 	}
 	
 	void HandleInput()
@@ -66,6 +77,49 @@ public class WeaponSlots : MonoBehaviour
 			}
 		}
 	}
+	
+	void HandleScrollWheelInput()
+	{
+		float scroll = Input.GetAxis("Mouse ScrollWheel");
+		if(scroll > 0)
+		{
+			SwitchWeapon(ScrollToNextWeapon());
+		}
+		else if(scroll < 0)
+		{
+			SwitchWeapon(ScrollToPreviousWeapon());
+		}
+	}
+	
+	int ScrollToNextWeapon()
+	{
+		int weaponIndex = currentWeaponIndex + 1;
+		
+		if(weaponIndex >= weaponsPicked.Length) weaponIndex = 0;
+		
+		for (int i = weaponIndex; i < weaponsPicked.Length; i++)
+		{
+			if(weaponsPicked[i]) return i;
+			if(i == weaponsPicked.Length - 1) i = 0;
+		}
+		return weaponIndex;
+	}
+	
+	int ScrollToPreviousWeapon()
+	{
+		int weaponIndex = currentWeaponIndex - 1;
+		
+		if(weaponIndex < 0) weaponIndex = weaponsPicked.Length -1;
+		
+		for (int i = weaponIndex; i >= 0 ; i--)
+		{
+			if(weaponsPicked[i]) return i;
+			if(i == 0) i = weaponsPicked.Length -1;
+		}
+		return weaponIndex;
+	}
+	
+		
 	
 	public void PickWeapon(int weaponIndex, int ammoAmount)
 	{
@@ -159,5 +213,30 @@ public class WeaponSlots : MonoBehaviour
 				break;
 			}
 		}
+	}
+	
+	void ResetWeaponsOnDeath()
+	{
+		for (int i = 0; i < weaponsPicked.Length; i++)
+		{
+			weaponsPicked[i] = false;
+		}
+		for (int i = 0; i < weaponObjects.Count; i++)
+		{
+			weaponObjects[i].SetActive(false);
+		}
+	}
+	
+	void OnDeath()
+	{
+		ResetWeaponsOnDeath();
+		isDead = true;
+	}
+	
+	void OnRespawn()
+	{
+		weaponsPicked[0] = true;
+		SwitchWeapon(0);
+		isDead = false;
 	}
 }

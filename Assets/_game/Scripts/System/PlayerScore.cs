@@ -10,7 +10,7 @@ public class PlayerScore : MonoBehaviour
 	[SerializeField] private Slider scoreSlider;
 	[SerializeField] private Image fillImage;
 	
-	public void Setup(string playerName, Sprite playerPicture, string playerScore, Color color)
+	public void Setup(string playerName, Sprite playerPicture, string playerScore, float ratio, Color color)
 	{
 		if(playerPicture != null)
 		{
@@ -18,11 +18,7 @@ public class PlayerScore : MonoBehaviour
 		}
 		nameText.text = playerName;
 		scoreText.text = playerScore;
-		fillImage.color = color;
-	}
-	
-	public void SetUpRatio(float ratio)
-	{
 		scoreSlider.value = ratio;
+		fillImage.color = color;
 	}
 }

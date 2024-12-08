@@ -69,6 +69,19 @@ public class PlayerAnimatorFunctions : MonoBehaviour
 		//Debug.Log("velocity " +agentVel);
 	}
 	
+	public void SetDead()
+	{
+		animator.SetFloat("DieAnimIndex", Random.Range(0, 2));
+		animator.SetBool("IsDead", true);
+		animator.SetLayerWeight(3, 1);
+	}
+	
+	public void SetAlive()
+	{
+		animator.SetBool("IsDead", false);
+		animator.SetLayerWeight(3, 0);
+	}
+	
 	public void SetAvatar(int index)
 	{
 		animator.enabled = false;

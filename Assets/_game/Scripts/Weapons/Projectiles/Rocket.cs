@@ -25,12 +25,15 @@ public class Rocket : Explosive, IProjectile
 		base._source = source;
 		base._exploded = false;
 		onTrigger = false;
+		//Invoke("StartExplosionCor", 0.1f);
 	}
 	
 	public override void Explode()
 	{
 		base.Explode();
 	}
+	
+	//void StartExplosionCor() => StartCoroutine(ExplosiveRoutine());
 	
 	IEnumerator ExplosiveRoutine()
 	{
@@ -51,37 +54,28 @@ public class Rocket : Explosive, IProjectile
 	
 	void Return() => ObjectPooler.main.ReturnObject(transform, PoolName);
 	
-	/* void OnTriggerEnter(Collider other)
-	{
-		if(other.CompareTag("Player") || other.CompareTag("Bot") && onTrigger)
-		{
-			Explode();
-			Invoke("Return", 1);
-		}
-	} */
-	
 	void OnCollisionEnter(Collision other)
 	{
-		if(other.gameObject == Source.gameObject) return;
-		Explode();
-		Invoke("Return", 1);
-	}
-	
-	private void OnTriggerEnter(Collider other)
-	{
-		if(other == Source.gameObject) return;
+		if(other.transform == Source.transform && onTrigger == false) return;
 		
 		Explode();
 		Invoke("Return", 1);
+		
 	}
+	
+	/* private void OnTriggerEnter(Collider other)
+	{
+		if(other.transform != Source.transform && (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot")) && !other.isTrigger && onTrigger)
+		{
+			//Debug.Log(" rocket hit : " + other.gameObject.name + " can it hit it: " + (other.transform != Source.transform) + " source is: " + Source.gameObject.name, other.gameObject);
+			Explode();
+			Invoke("Return", 1);
+		}
+	}  */
 	
 	void OnEnable()
 	{
 		StartCoroutine(ExplosiveRoutine());
 	}
 	
-	void OnDisable()
-	{
-		
-	}
 }

@@ -60,7 +60,7 @@ public class Menu : MonoBehaviour
 	
 	public void PlayUISound(int index)
 	{
-		FMODHelper.PlayNewInstance(button_sfx[index]);
+		FMODHelper.PlayNewInstance(button_sfx[index], Camera.main!.transform);
 	}
 	
 	public void Quit(bool toMenu)

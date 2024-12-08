@@ -87,16 +87,17 @@ namespace _game.Scripts
 				{
 					if(!noAmmoClicked)
 					{
-						FMODHelper.PlayNewInstance(_gunSettings.NoAmmoSound);
+						FMODHelper.PlayNewInstance(_gunSettings.NoAmmoSound, transform);
 						noAmmoClicked = true;
 					}
 					return;
 				}
-				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
+				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false && _fireDelay <= 0)
 				{
 					_fired = true;
-					FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
+					FMODHelper.PlayNewInstance(_gunSettings.ManualSound, transform);
 					Fire(target);
+					_fireDelay = _gunSettings.FiringSpeed;
 				}
 				if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Automatic && _fireDelay <= 0)
 				{
@@ -115,12 +116,7 @@ namespace _game.Scripts
 			}
 			else
 			{
-				if (FMODHelper.InstanceIsPlaying(_automaticSound))
-				{
-					_automaticSound.setParameterByName("Parameter 1", 0);
-					_automaticSound.release();
-				}
-				_fired = false;
+				StopShooting();
 				noAmmoClicked = false;
 			}
 		}

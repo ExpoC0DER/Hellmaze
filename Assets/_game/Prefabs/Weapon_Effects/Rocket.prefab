@@ -56,7 +56,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.17
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &3355198521752108628
 SphereCollider:
@@ -77,7 +77,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4314416838752032319
 Rigidbody:
@@ -102,7 +102,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 1
@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8604db4223ad6d478a35cae9c3dee2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expl_radius: 5
-  expl_force: 10
+  expl_radius: 6
+  expl_force: 30
   _damage: 0
   _weaponIndex: 0
   visual_model: {fileID: 2229206185367075879}
@@ -132,7 +132,7 @@ MonoBehaviour:
     Path: event:/weapon_sfx/Rocket Launcher (Explosion)
   explosion_part: {fileID: 1713912007526751030}
   rb: {fileID: 4314416838752032319}
-  init_force: 10
+  init_force: 22
   detonation_time: 5
 --- !u!1001 &1310216431692235126
 PrefabInstance:
@@ -144,15 +144,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7f0f50e8fd02e2944beb5e5964e3d530, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.038768165
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f0f50e8fd02e2944beb5e5964e3d530, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.038768165
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f0f50e8fd02e2944beb5e5964e3d530, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.038768165
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f0f50e8fd02e2944beb5e5964e3d530, type: 3}
       propertyPath: m_LocalPosition.x
@@ -263,7 +263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4179226865850884029, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.32
       objectReference: {fileID: 0}
     - target: {fileID: 4179226865850884029, guid: eddeee93a64ae874a8e741ae4a6693ce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -328,6 +328,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1559489681812891293}
     m_Modifications:
+    - target: {fileID: 1874491653385842477, guid: 4271ae651d89bd5428a6ada4bc28a9ef, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874491653385842477, guid: 4271ae651d89bd5428a6ada4bc28a9ef, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874491653385842477, guid: 4271ae651d89bd5428a6ada4bc28a9ef, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8925571384187444167, guid: 4271ae651d89bd5428a6ada4bc28a9ef, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

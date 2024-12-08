@@ -9,6 +9,9 @@ public class PlayerDatabase : MonoBehaviour
 	void Awake()
 	{
 		FindAllPlayers();
+	}
+	void Start()
+	{
 		PickRandomBotNames();
 	}
 	

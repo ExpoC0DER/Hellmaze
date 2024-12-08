@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GrenadeLauncher
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 80
-  <FiringSpeed>k__BackingField: 1.2
+  <FiringSpeed>k__BackingField: 0.5
   <Spread>k__BackingField: 0
   <ShotsPerFire>k__BackingField: 1
   <MaxRange>k__BackingField: 50
