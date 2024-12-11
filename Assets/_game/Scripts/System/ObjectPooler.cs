@@ -9,6 +9,9 @@ public class ObjectPooler: MonoBehaviour
 	[Header("Decals")]
 	[SerializeField] GameObject gunShot_dec;
 	[SerializeField] GameObject blood_part;
+	[SerializeField] GameObject blood_dec;
+	[SerializeField] GameObject blood_gib_dec;
+	[SerializeField] GameObject explosion_dec;
 	[Header("Projectiles")]
 	[SerializeField] GameObject bomb;
 	[SerializeField] GameObject rocket;
@@ -35,6 +38,9 @@ public class ObjectPooler: MonoBehaviour
 		//objectPooler.SetupPool(example_part.GetComponent<ParticleSystem>(), 20, "example_part");
 		objectPooler.SetupPool(gunShot_dec.GetComponent<Transform>(), 50, "gunShot_dec");
 		objectPooler.SetupPool(blood_part.GetComponent<Transform>(), 50, "blood_part");
+		objectPooler.SetupPool(blood_dec.GetComponent<Transform>(), 50, "blood_dec");
+		objectPooler.SetupPool(blood_gib_dec.GetComponent<Transform>(), 50, "blood_gib_dec");
+		objectPooler.SetupPool(explosion_dec.GetComponent<Transform>(), 50, "explosion_dec");
 		
 		objectPooler.SetupPool(bomb.GetComponent<MonoBehaviour>(), 100, "bomb");
 		objectPooler.SetupPool(rocket.GetComponent<MonoBehaviour>(), 100, "rocket");
@@ -42,13 +48,17 @@ public class ObjectPooler: MonoBehaviour
 	
 	public void SpawnPooledObject(string poolName, Vector3 position, Quaternion rotation, Transform toParent)
 	{
+		if(toParent.CompareTag("Player") && toParent.CompareTag("Bot")) return;
+		
 		Transform instance = objectPooler.DequeueObject<Transform>(poolName);
-		instance.gameObject.SetActive(true);
+		
+		
 		instance.transform.position = position;
 		instance.transform.rotation = rotation;
 		//component specific initialization
 		//instance.Play();
 		instance.transform.SetParent(toParent, true);
+		instance.gameObject.SetActive(true);
 		//instance.transform.localScale = Vector3.one;
 	}
 	
@@ -65,13 +75,13 @@ public class ObjectPooler: MonoBehaviour
 	public void SpawnDecalParticleObject(string poolName, Vector3 position, Quaternion rotation, Transform toParent)
 	{
 		ParticleSystem instance = objectPooler.DequeueObject<ParticleSystem>(poolName);
+		
 		instance.gameObject.SetActive(true);
 		instance.transform.position = position;
 		instance.transform.rotation = rotation;
 		//component specific initialization
 		instance.Play();
 		instance.transform.SetParent(toParent, true);
-		instance.transform.localScale = Vector3.one;
 	}
 	
 	public void SpawnParticleObject(string poolName, Vector3 position, Quaternion rotation)

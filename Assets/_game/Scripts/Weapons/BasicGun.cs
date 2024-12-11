@@ -181,13 +181,21 @@ namespace _game.Scripts
 						if(hit.transform.CompareTag("Player") || hit.transform.CompareTag("Bot"))
 						{
 							ObjectPooler.main.SpawnPooledObject("blood_part", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+							if(Physics.Raycast(hit.point, dir, out RaycastHit bloodHit, 2, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
+							{
+								ObjectPooler.main.SpawnPooledObject("blood_dec", bloodHit.point, Quaternion.LookRotation(bloodHit.normal), bloodHit.transform);
+							}
+							
 							//t = Instantiate(_fleshHitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
 						}else
 						{
 							ObjectPooler.main.SpawnPooledObject("gunShot_dec", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
 							//t = Instantiate(_hitPoint.gameObject, hit.point, Quaternion.LookRotation(hit.normal));
 						}
-
+						if(hit.transform.TryGetComponent(out IDestructable destructable))
+						{
+							destructable.TakeDamage(_gunSettings.Damage * DamageMultiplier, Source, WeaponIndex);
+						}
 						//t.transform.SetParent(hit.transform, true);
 
 						//print(hit.transform.name);
@@ -195,11 +203,11 @@ namespace _game.Scripts
 						{
 							ai.TakeDamage(_gunSettings.Damage * DamageMultiplier, transform.position);
 						}else  */
-						if (hit.transform.TryGetComponent(out PlayerStats player))
+						/* if (hit.transform.TryGetComponent(out PlayerStats player))
 						{
 							//Debug.Log("bot shot player " + _gunSettings.Damage);
 							player.TakeDamage(_gunSettings.Damage * DamageMultiplier, Source, WeaponIndex);
-						}
+						} */
 					}else
 					{
 						hitSelf = false;

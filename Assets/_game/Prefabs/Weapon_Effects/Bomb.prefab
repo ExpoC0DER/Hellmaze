@@ -328,8 +328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7c0a0aa3f8061458aeabb459199cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expl_radius: 6
-  expl_force: 50
+  expl_radius: 5
+  expl_force: 3
   _damage: 0
   _weaponIndex: 0
   visual_model: {fileID: 8683064078722926872}

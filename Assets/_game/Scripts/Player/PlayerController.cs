@@ -38,6 +38,11 @@ namespace _game.Scripts
 		public float gravity = -9.81f;
 
 		private Vector3 velocity;
+		
+		private bool _simulatePhysics = false;
+		//private bool _restrainMovement = false;
+		private float _physCd;
+		//private Rigidbody rb;
 
 		private void Start()
 		{
@@ -58,6 +63,7 @@ namespace _game.Scripts
 		private void Update()
 		{
 			CheckGrounded();
+			SimulatingPhysicsCooldown();
 			
 			if(isDead) return;
 			
@@ -197,14 +203,29 @@ namespace _game.Scripts
 
 		private void HandleRotation() { transform.rotation = Quaternion.Euler(0, _camera.rotation.eulerAngles.y, 0); }
 
-		/* private void HandleShooting()
+		public void SimulatePhysics(Vector3 direction, float force)
 		{
-			bool mouseDown = Input.GetMouseButton(0);
-			_gun.Value.Shoot(mouseDown);
-			if (mouseDown)
-				OnAmmoChange?.Invoke(_gun.Value.Ammo);
-			_animator.SetBool("Shooting", mouseDown);
-		} */
+			//rb.isKinematic = false;
+			_simulatePhysics = true;
+			//_restrainMovement = true;
+			
+			_physCd = 1;
+		}
+		
+		private void SimulatingPhysicsCooldown()
+		{
+			if(_simulatePhysics)
+			{
+				_physCd -= Time.deltaTime;
+				if(_physCd <= 0)
+				{
+					//_restrainMovement = false;
+					//_simulatePhysics = false;
+					//rb.isKinematic = true;
+					
+				}
+			}
+		}
 
 		private Vector3 originalCenter;
 		private float originalHeight;

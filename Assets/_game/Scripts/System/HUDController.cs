@@ -13,19 +13,41 @@ namespace _game.Scripts
 		[SerializeField] private PlayerStats _playerStats;
 		//[SerializeField] private GameManager _gameManager;
 		[SerializeField] private TMP_Text _healthText;
+		[SerializeField] private Gradient _healthColorGrad;
+		[SerializeField] private Image _healthBar;
 		[SerializeField] private TMP_Text _ammoText;
 		[SerializeField] private TMP_Text _timerText;
 		//[SerializeField] private TMP_Text _killCountText;
 		[SerializeField] private Button _restartBtn;
 		
+		[SerializeField] private Image _crosshair;
+		
 		private int _seconds = 0;
+		
+	/* 	public static HUDController main {get; private set;}
+		
+		private void Awake()
+		{
+			if(main != null)
+			{
+				Destroy(this.gameObject);
+			}
+		} */
+		
 
 		void Start()
 		{
 			GameManager.main.OnTimerChange += SetTimerText;
 		}
 		
-		private void SetHealthText(float health) { _healthText.text = Mathf.RoundToInt(health).ToString(); }
+		private void SetHealthText(float health)
+		{ 
+			if(health < 0) health = 0;
+			_healthText.text = Mathf.RoundToInt(health).ToString();
+			_healthBar.fillAmount = Mathf.InverseLerp(0, 100, health);
+			_healthText.color = _healthColorGrad.Evaluate(_healthBar.fillAmount);
+			
+		}
 
 		private void SetAmmoText(int ammo)
 		{
@@ -62,11 +84,17 @@ namespace _game.Scripts
 			}
 		}
 
+		void SetCrosshair(Image crosshairToSet)
+		{
+			_crosshair.sprite = crosshairToSet.sprite;
+			_crosshair.color = crosshairToSet.color;
+			_crosshair.rectTransform.sizeDelta = crosshairToSet.rectTransform.sizeDelta;
+		}
 		private void OnEnable()
 		{
 			_playerStats.OnHealthChange += SetHealthText;
 			_weapons.OnAmmoChange += SetAmmoText;
-			
+			GameSettings.SetCrosshair += SetCrosshair;
 			//PlayerStats.OnDeath += UpdateKillCount;
 			
 		}
@@ -76,6 +104,7 @@ namespace _game.Scripts
 			_playerStats.OnHealthChange -= SetHealthText;
 			_weapons.OnAmmoChange -= SetAmmoText;
 			GameManager.main.OnTimerChange -= SetTimerText;
+			GameSettings.SetCrosshair -= SetCrosshair;
 			//PlayerStats.OnDeath -= UpdateKillCount;
 		}
 	}

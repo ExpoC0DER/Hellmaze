@@ -72,7 +72,7 @@ public class Menu : MonoBehaviour
 	
 	public void PauseGame(bool lockedInMenu = true)
 	{
-		if(GameManager.main.isMainMenu && lockedInMenu) return;
+		//if(GameManager.main.isMainMenu && lockedInMenu) return;
 		isPaused = !isPaused;
 		if(isPaused)
 		{

@@ -31,12 +31,24 @@ namespace _game.Scripts
 			DontDestroyOnLoad(this.gameObject);
 			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
 		}
+		
+		void Setup()
+		{
+			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
+		}
 
 		private void Start()
 		{
+			OnSceneLoad += Setup;
+			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
 			Time.timeScale = 1;
 		}
 
+		void OnDisable()
+		{
+			OnSceneLoad -= Setup;
+		}
+		
 		private void Update()
 		{
 			_timer -= Time.deltaTime;

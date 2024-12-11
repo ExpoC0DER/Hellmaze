@@ -32,10 +32,10 @@ public class Pickup : MonoBehaviour
 		StartCoroutine(Respawn());
 	}
 	
-	void DisableObject()
+	/* void DisableObject()
 	{
 		gameObject.SetActive(false);		
-	}
+	} */
 	
 	void OnTriggerEnter(Collider other)
 	{
@@ -53,10 +53,10 @@ public class Pickup : MonoBehaviour
 	
 	IEnumerator Respawn()
 	{
-		yield return new WaitForSeconds(1);
-		DisableObject();
+		/* yield return new WaitForSeconds(1);
+		DisableObject(); */
 		yield return new WaitForSeconds(respawnTime);
-		visual_object.SetActive(false);
+		visual_object.SetActive(true);
 		particle.Play();
 		taken = false;
 	}

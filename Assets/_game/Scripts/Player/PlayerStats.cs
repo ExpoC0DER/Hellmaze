@@ -3,13 +3,13 @@ using System;
 using Random = UnityEngine.Random;
 using UnityEngine.AI;
 using _game.Scripts;
+using UnityEngine.UI;
+using System.Collections;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IDestructable
 {
 	public string playerName = "Player";
 	public Sprite playerProfilePic;
-	[SerializeField] float currentHealth = 100;
-	[SerializeField] float maxHealth = 100;	
 	[SerializeField] EnemyAI enemyAI;
 	[SerializeField] PlayerAnimatorFunctions animatorFunctions;
 	[SerializeField] float respawnTime = 5;
@@ -18,7 +18,11 @@ public class PlayerStats : MonoBehaviour
 	
 	public int kills { get; private set; } = 0;
 	public int deaths { get; private set; } = 0;
-	bool dead = false;
+	
+	public float Health { get; set; } = 100;
+	public float MaxHealth { get; set; } = 100;
+	public bool IsDead { get; set; } = false;
+
 	bool gibbed = false;
 	
 	int mapCellScale = 4;
@@ -42,12 +46,12 @@ public class PlayerStats : MonoBehaviour
 	
 	public void TakeDamage(float amount, PlayerStats source, int weaponIndex)
 	{
-		currentHealth -= amount;
-		if(!dead) blood_part.Play();
+		Health -= amount;
+		if(!IsDead) blood_part.Play();
 		
 		//Debug.Log(playerName + " was hit by " + source.playerName + " for damage of:" + amount);
 		
-		if(currentHealth <= 0 && !dead)
+		if(Health <= 0 && !IsDead)
 		{
 			Die();
 			UpdateKillFeed?.Invoke(source.playerName, weaponIndex, playerName);
@@ -55,26 +59,26 @@ public class PlayerStats : MonoBehaviour
 			deaths++;
 		}
 		
-		if((IsWeaponInstaGibbing(weaponIndex) && currentHealth < 0) || currentHealth < -50 && !gibbed)
+		if((IsWeaponInstaGibbing(weaponIndex) && Health < 0) || Health < -50 && !gibbed)
 		{
 			GibBody();
 			gibbed = true;
 		}
 		
-		OnHealthChange?.Invoke(currentHealth);
+		OnHealthChange?.Invoke(Health);
 	}
 	
 	public void AddHealth(float amount)
 	{
-		currentHealth += amount;
-		if(currentHealth >= maxHealth)
+		Health += amount;
+		if(Health >= MaxHealth)
 		{
-			currentHealth = maxHealth;
+			Health = MaxHealth;
 		}
-		OnHealthChange?.Invoke(currentHealth);
+		OnHealthChange?.Invoke(Health);
 	}
 	
-	void Die()
+	public void Die()
 	{
 		OnDeath?.Invoke();
 		
@@ -88,9 +92,10 @@ public class PlayerStats : MonoBehaviour
 			playerController.ResetCharacterControllerVelocity();
 		}
 		
-		dead = true;
+		IsDead = true;
 		Invoke("Respawn", respawnTime);
 	}
+	
 	
 	private void Respawn()
 	{
@@ -102,9 +107,10 @@ public class PlayerStats : MonoBehaviour
 		}
 		animatorFunctions.SetAlive();
 		
-		currentHealth = maxHealth;
+		Health = MaxHealth;
+		OnHealthChange?.Invoke(Health);
 		
-		dead = false;
+		IsDead = false;
 		
 		if(!isPlayer)
 		{
@@ -143,6 +149,11 @@ public class PlayerStats : MonoBehaviour
 		
 		animatorFunctions.gameObject.SetActive(false);
 		gib_part.Play();
+		if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit gibHit, 2, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
+		{
+			ObjectPooler.main.SpawnPooledObject("blood_gib_dec", gibHit.point, Quaternion.LookRotation(gibHit.normal), gibHit.transform);
+		}
+		
 	}
 	
 	void UnGibBody()
@@ -160,5 +171,22 @@ public class PlayerStats : MonoBehaviour
 			if(instaGibWeaponIndexes[i] == weaponIndex) return true;
 		}
 		return false;
+	}
+	
+	void SetPlayerName(string name)
+	{
+		if(!isPlayer) return;
+		playerName = name;
+		Debug.Log("event name passed");
+	}
+	
+	
+	private void OnEnable()
+	{
+		GameSettings.SetPlayerName += SetPlayerName;
+	}
+	private void OnDisable()
+	{
+		GameSettings.SetPlayerName -= SetPlayerName;
 	}
 }

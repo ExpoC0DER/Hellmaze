@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _game.Scripts;
 using UnityEngine;
 
 public class PlayerDatabase : MonoBehaviour
@@ -8,11 +9,23 @@ public class PlayerDatabase : MonoBehaviour
 	
 	void Awake()
 	{
+		
 		FindAllPlayers();
 	}
 	void Start()
 	{
+		GameManager.main.OnSceneLoad += Setup;
 		PickRandomBotNames();
+	}
+	
+	void Setup()
+	{
+		FindAllPlayers();
+		PickRandomBotNames();
+	}
+	
+	private void OnDisable() {
+		GameManager.main.OnSceneLoad -= Setup;
 	}
 	
 	public PlayerStats GetPlayerByName(string name)

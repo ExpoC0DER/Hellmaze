@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 8424434456469345056}
   - component: {fileID: 3994786508353748033}
   - component: {fileID: 716438774012999454}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bot
   m_TagString: Bot
   m_Icon: {fileID: 0}
@@ -485,8 +485,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &716438774012999454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,8 +506,7 @@ MonoBehaviour:
   enemyAI: {fileID: 3633795193609895203}
   animatorFunctions: {fileID: 1508396294762737916}
   respawnTime: 5
-  col: {fileID: 4114110461347205773}
-  characterController: {fileID: 0}
+  playerController: {fileID: 0}
   blood_part: {fileID: 7855598899036024690}
   gib_part: {fileID: 6934509354533382298}
 --- !u!1001 &5874046210354374492

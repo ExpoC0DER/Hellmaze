@@ -46,5 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunShot_dec: {fileID: 3043473785704593007, guid: 140e256f36677c644b7cfb4967959c27, type: 3}
   blood_part: {fileID: 3043473785704593007, guid: 200025fa33251af4592928576303aeb1, type: 3}
+  blood_dec: {fileID: 7566360508720918701, guid: 9b72f691c6f84d54ab5edf686f80368c, type: 3}
+  blood_gib_dec: {fileID: 7116822887987532374, guid: 383bddef851f5d44db6bb61a93559d34, type: 3}
+  explosion_dec: {fileID: 3106187561762992662, guid: 7f4e707939882c242bb890e88fe374a8, type: 3}
   bomb: {fileID: 6391179630769891645, guid: 664e50d4d6ffcee4fbcdb9914515ee02, type: 3}
   rocket: {fileID: 6316960002275436735, guid: 2039f9003c23aed459d92f1956c2fe93, type: 3}

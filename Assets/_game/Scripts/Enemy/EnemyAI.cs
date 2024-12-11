@@ -230,6 +230,15 @@ public class EnemyAI : MonoBehaviour
 		
 	}
 	
+	public void SimulatePhysics()
+	{
+		rb.isKinematic = false;
+		JumpCd = UnityEngine.Random.Range(1, 1.5f);
+		isJumping= true;
+		navMeshAgent.updatePosition = false;
+		
+	}
+	
 	bool NeedCrouchCheck()
 	{
 		bool needs = false;

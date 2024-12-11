@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8604db4223ad6d478a35cae9c3dee2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expl_radius: 6
-  expl_force: 30
+  expl_radius: 5
+  expl_force: 3
   _damage: 0
   _weaponIndex: 0
   visual_model: {fileID: 2229206185367075879}
