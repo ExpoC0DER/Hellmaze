@@ -109,28 +109,28 @@ namespace _game.Scripts
 					if (!_fired)
 					{
 						_fired = true;
-						_automaticSound = FMODHelper.CreateNewInstance(_gunSettings.AutomaticSound);
+						_automaticSound = FMODHelper.CreateNewInstance(_gunSettings.AutomaticSound, transform);
 						_automaticSound.setParameterByName("Parameter 1", 1);
 						_automaticSound.start();
 					}
-
 					_fireDelay = _gunSettings.FiringSpeed;
 				}
 			}
 			else
 			{
 				StopShooting();
-				noAmmoClicked = false;
 			}
 		}
 		
 		public void StopShooting()
 		{
+			noAmmoClicked = false;
 			if (FMODHelper.InstanceIsPlaying(_automaticSound))
 			{
 				_automaticSound.setParameterByName("Parameter 1", 0);
 				_automaticSound.release();
 			}
+			if(muzzleFlash_part) muzzleFlash_part?.Stop();
 			_fired = false;
 		}
 
@@ -165,13 +165,14 @@ namespace _game.Scripts
 				bool hitSelf = true;
 				while (hitSelf)
 				{
-					LG_tools.DrawPoint(orig, 10, Color.red);
+					
 					if (Physics.Raycast(orig, dir, out RaycastHit hit, _gunSettings.MaxRange, Physics.AllLayers, QueryTriggerInteraction.Ignore))
 					{
 						if(hit.transform == Source.transform)
 						{
 							orig += orig + dir * 0.15f;
 							Debug.Log("hit self");
+							LG_tools.DrawPoint(orig, 10, Color.red);
 						}else
 						{
 							hitSelf = false;
@@ -215,8 +216,11 @@ namespace _game.Scripts
 				}
 			}
 			
-			muzzleFlash_part.Play();
-			casing_part.Play();
+			if(muzzleFlash_part)
+			{
+				if(!muzzleFlash_part.isPlaying) muzzleFlash_part?.Play();
+			}
+			if(casing_part) casing_part.Play();
 			ApplyRecoil();
 		}
 		
@@ -234,6 +238,7 @@ namespace _game.Scripts
 		
 		void BulletParticle(Quaternion rotation)
 		{
+			if(!bullet_fire_part) return;
 			bullet_fire_part.transform.rotation = rotation;
 			bullet_fire_part.Play();
 		}

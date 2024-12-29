@@ -12,9 +12,15 @@ public class ExplosiveBarrel : Explosive, IDestructable
 		IsDead = true;
 	}
 
+	public void Respawn()
+	{
+		base.visual_model.SetActive(true);
+		Health = MaxHealth;
+		IsDead = false;
+	}
+
 	public void TakeDamage(float amount, PlayerStats source, int weaponIndex)
 	{
-		Debug.Log(" damage " + amount+ " hp " + Health + " dead? "+ IsDead);
 		if(IsDead) return;
 		Health -= amount;
 		if(Health <= 0)

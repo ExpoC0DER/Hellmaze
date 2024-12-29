@@ -12,9 +12,15 @@ public class ObjectPooler: MonoBehaviour
 	[SerializeField] GameObject blood_dec;
 	[SerializeField] GameObject blood_gib_dec;
 	[SerializeField] GameObject explosion_dec;
+	[SerializeField] GameObject explosion_small_dec;
 	[Header("Projectiles")]
 	[SerializeField] GameObject bomb;
 	[SerializeField] GameObject rocket;
+	[SerializeField] GameObject stickyBomb;
+	[SerializeField] GameObject bullet;
+	[SerializeField] GameObject plasmaBall;
+	[SerializeField] GameObject acidSplash;
+	[SerializeField] GameObject drone;
 	//could also do audio files
 	
 	ObjectPool objectPooler;
@@ -36,14 +42,20 @@ public class ObjectPooler: MonoBehaviour
 	{
 		objectPooler = new ObjectPool();
 		//objectPooler.SetupPool(example_part.GetComponent<ParticleSystem>(), 20, "example_part");
-		objectPooler.SetupPool(gunShot_dec.GetComponent<Transform>(), 50, "gunShot_dec");
-		objectPooler.SetupPool(blood_part.GetComponent<Transform>(), 50, "blood_part");
-		objectPooler.SetupPool(blood_dec.GetComponent<Transform>(), 50, "blood_dec");
-		objectPooler.SetupPool(blood_gib_dec.GetComponent<Transform>(), 50, "blood_gib_dec");
-		objectPooler.SetupPool(explosion_dec.GetComponent<Transform>(), 50, "explosion_dec");
+		objectPooler.SetupPool(gunShot_dec.GetComponent<Transform>(), 40, "gunShot_dec");
+		objectPooler.SetupPool(blood_part.GetComponent<Transform>(), 40, "blood_part");
+		objectPooler.SetupPool(blood_dec.GetComponent<Transform>(), 40, "blood_dec");
+		objectPooler.SetupPool(blood_gib_dec.GetComponent<Transform>(), 40, "blood_gib_dec");
+		objectPooler.SetupPool(explosion_dec.GetComponent<Transform>(), 40, "explosion_dec");
+		objectPooler.SetupPool(explosion_small_dec.GetComponent<Transform>(), 40, "explosion_small_dec");
 		
-		objectPooler.SetupPool(bomb.GetComponent<MonoBehaviour>(), 100, "bomb");
-		objectPooler.SetupPool(rocket.GetComponent<MonoBehaviour>(), 100, "rocket");
+		objectPooler.SetupPool(bomb.GetComponent<MonoBehaviour>(), 60, "bomb");
+		objectPooler.SetupPool(rocket.GetComponent<MonoBehaviour>(), 60, "rocket");
+		objectPooler.SetupPool(stickyBomb.GetComponent<MonoBehaviour>(), 60, "stickyBomb");
+		objectPooler.SetupPool(bullet.GetComponent<MonoBehaviour>(), 100, "bullet");
+		objectPooler.SetupPool(plasmaBall.GetComponent<MonoBehaviour>(), 100, "plasmaBall");
+		objectPooler.SetupPool(acidSplash.GetComponent<MonoBehaviour>(), 100, "acidSplash");
+		objectPooler.SetupPool(drone.GetComponent<MonoBehaviour>(), 30, "drone");
 	}
 	
 	public void SpawnPooledObject(string poolName, Vector3 position, Quaternion rotation, Transform toParent)

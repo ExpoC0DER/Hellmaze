@@ -48,9 +48,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
-  _fullWallRange: {x: 0, y: 80}
-  _bottomHoleRange: {x: 80, y: 90}
-  _topHoleRange: {x: 90, y: 100}
+  _fullWallRange: {x: 0, y: 70}
+  _bottomHoleRange: {x: 70, y: 76}
+  _topHoleRange: {x: 76, y: 82}
+  _noWallRange: {x: 82, y: 88}
+  _breakableWallRange: {x: 88, y: 94}
+  _glassWallRange: {x: 94, y: 100}
   _wallsUp: []
   _wallsDown: []
   _wallsRight: []
@@ -220,7 +223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7064013777908622606}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
@@ -307,7 +310,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8232970129336149343}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1

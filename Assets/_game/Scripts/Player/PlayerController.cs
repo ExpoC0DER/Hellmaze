@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using AYellowpaper;
 using EditorAttributes;
 using UnityEngine;
@@ -33,16 +34,17 @@ namespace _game.Scripts
 		private bool _isGrounded;
 		private bool _isGrappling;
 
-		[Header("Jump Settings")]
+		[Header("Jump / Physics Settings")]
 		public float jumpHeight = 2.0f;
 		public float gravity = -9.81f;
+		public float mass = 1f;
+		public float drag = 0.1f;
 
 		private Vector3 velocity;
+		private Vector3 phys_velocity = Vector3.zero;
+		private float phys_groundReactTime = 0.3f;
+		private float phys_cd;
 		
-		private bool _simulatePhysics = false;
-		//private bool _restrainMovement = false;
-		private float _physCd;
-		//private Rigidbody rb;
 
 		private void Start()
 		{
@@ -51,7 +53,7 @@ namespace _game.Scripts
 			originalCenter = _characterController.center;
 			originalCameraPos = _cameraHeadTarget.transform.localPosition;
 
-			//_gun = _gun1;
+			gravity = Physics.gravity.y;
 
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
@@ -63,8 +65,7 @@ namespace _game.Scripts
 		private void Update()
 		{
 			CheckGrounded();
-			SimulatingPhysicsCooldown();
-			
+			SimulatePhysics();
 			if(isDead) return;
 			
 			HandleGrapple();
@@ -105,7 +106,7 @@ namespace _game.Scripts
 		{
 			if (!_isGrappling && Input.GetMouseButtonDown(1))
 			{
-				if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit))
+				if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 30, Physics.AllLayers, QueryTriggerInteraction.Collide))
 				{
 					if (hit.transform.TryGetComponent(out GrapplePoint grapplePoint))
 					{
@@ -129,7 +130,12 @@ namespace _game.Scripts
 			}
 		}
 
-		private void CheckGrounded() { _isGrounded = Physics.Raycast(transform.position, -transform.up, 0.25f); }
+		private void CheckGrounded()
+		{ 
+			_isGrounded = Physics.Raycast(transform.position, -transform.up, 0.15f);
+			/* if(_isGrounded)LG_tools.DrawRay(transform.position, -transform.up * 0.25f, Color.cyan);
+			else LG_tools.DrawRay(transform.position, -transform.up * 0.25f, Color.red); */
+		}
 
 		private void HandleMovement()
 		{
@@ -200,32 +206,36 @@ namespace _game.Scripts
 				_characterController.Move(velocity * Time.deltaTime);
 			}
 		}
+		
+		public void ApplyForce(Vector3 force)
+		{
+			phys_velocity += force / mass;
+			phys_cd = phys_groundReactTime;
+		}
 
 		private void HandleRotation() { transform.rotation = Quaternion.Euler(0, _camera.rotation.eulerAngles.y, 0); }
 
-		public void SimulatePhysics(Vector3 direction, float force)
+		
+		void SimulatePhysics()
 		{
-			//rb.isKinematic = false;
-			_simulatePhysics = true;
-			//_restrainMovement = true;
+			if(phys_cd >= 0)
+			{
+				if(phys_cd <= 0)
+				{
+					if(_isGrounded) phys_velocity = Vector3.zero;
+				}
+				phys_cd -= Time.deltaTime;
+			}else
+			{
+				if(_isGrounded) phys_velocity = Vector3.zero;
+			}
 			
-			_physCd = 1;
+			phys_velocity.x = Mathf.Lerp(phys_velocity.x, 0, Time.deltaTime * drag);
+			phys_velocity.z = Mathf.Lerp(phys_velocity.z, 0, Time.deltaTime * drag);
+			phys_velocity.y = Mathf.Lerp(phys_velocity.y, 0, Time.deltaTime * drag);
+			_characterController.Move(phys_velocity * Time.deltaTime);
 		}
 		
-		private void SimulatingPhysicsCooldown()
-		{
-			if(_simulatePhysics)
-			{
-				_physCd -= Time.deltaTime;
-				if(_physCd <= 0)
-				{
-					//_restrainMovement = false;
-					//_simulatePhysics = false;
-					//rb.isKinematic = true;
-					
-				}
-			}
-		}
 
 		private Vector3 originalCenter;
 		private float originalHeight;
@@ -332,3 +342,7 @@ namespace _game.Scripts
 		public void ResetCharacterControllerVelocity() => _characterController.Move(Vector3.zero);
 	}
 }
+
+
+//set velocity when not grounded to have horizontal
+//use this velocity to rocket jump or get blasted by explosives

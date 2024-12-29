@@ -112,14 +112,11 @@ public class EnemyAI : MonoBehaviour
 		dead = isDead;
 		navMeshAgent.isStopped = isDead;
 		rb.linearVelocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
 	}
 	
 	public void SetGibbed(bool isGibbed) => col.isTrigger = isGibbed;
 	
-	public void EnableRigidbodyToAddForce()
-	{
-		
-	}
 	
 	public void SeenHealthKit(Transform pickup)
 	{
@@ -149,7 +146,7 @@ public class EnemyAI : MonoBehaviour
 		CheckGrounded();
 		RandomCrouch();
 		RandomJump();
-		HandleJump();
+		HandleJumpReset();
 		if(NeedCrouchCheck())
 		{
 			ForceCrouch();
@@ -205,7 +202,7 @@ public class EnemyAI : MonoBehaviour
 		}
 	}
 	
-	void HandleJump()
+	void HandleJumpReset()
 	{
 		//Debug.DrawRay(transform.position, Vector3.down * 1f, Color.blue, 1);
 		//Debug.Log("grounded "+ _isGrounded);
@@ -230,9 +227,10 @@ public class EnemyAI : MonoBehaviour
 		
 	}
 	
-	public void SimulatePhysics()
+	public void SimulateImpulsePhysics(Vector3 force)
 	{
 		rb.isKinematic = false;
+		rb.AddForce(force, ForceMode.Impulse);
 		JumpCd = UnityEngine.Random.Range(1, 1.5f);
 		isJumping= true;
 		navMeshAgent.updatePosition = false;
@@ -421,7 +419,7 @@ public class EnemyAI : MonoBehaviour
 	{		
 		
 		//reset state
-		weaponSlots.StopShooting();
+		//weaponSlots.StopShooting();
 		target = null;
 		currentState = state_Roam;
 		currentState.EnterState(this);
@@ -585,8 +583,9 @@ public class Bot_State_Attacking : Bot_State
 		bool pointInRoom = false;
 		Vector3 pointInRadius = Vector3.zero;
 		
+		int tries = 50;
 		//check if random position is in the same room (bot wont leave fight)
-		while(!pointInRoom)
+		while(!pointInRoom && tries > 0)
 		{
 			pointInRadius = enemyAI.target.position + Random.insideUnitSphere * 4;
 			pointInRadius.y += 3;
@@ -594,6 +593,7 @@ public class Bot_State_Attacking : Bot_State
 			{
 				pointInRoom = true;
 			}
+			tries--;
 		}
 		
 		RaycastHit hit;

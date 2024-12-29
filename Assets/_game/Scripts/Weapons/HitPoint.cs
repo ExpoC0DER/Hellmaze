@@ -25,13 +25,8 @@ namespace _game.Scripts
 		
 		void OnEnable()
 		{
-			StartCoroutine(DelaySound());
-		}
-		
-		IEnumerator DelaySound()
-		{
-			yield return new WaitForSeconds(0.04f);
 			FMODHelper.PlayNewInstance(sfx[Random.Range(0, sfx.Length)], transform.position);
+			Debug.Log(transform.position);
 		}
 	}
 }

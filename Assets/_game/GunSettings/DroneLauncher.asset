@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cad91b281b9bc48968fa1da40a06d9, type: 3}
+  m_Name: DroneLauncher
+  m_EditorClassIdentifier: 
+  <Damage>k__BackingField: 80
+  <FiringSpeed>k__BackingField: 3
+  <Spread>k__BackingField: 0
+  <ShotsPerFire>k__BackingField: 1
+  <MaxRange>k__BackingField: 50
+  <FiringMode>k__BackingField: 0
+  <ManualSound>k__BackingField:
+    Guid:
+      Data1: -1630227071
+      Data2: 1186346894
+      Data3: 361309620
+      Data4: 495927920
+    Path: event:/weapon_sfx/Grenade Launcher (shot)
+  <AutomaticSound>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <NoAmmoSound>k__BackingField:
+    Guid:
+      Data1: -1829521505
+      Data2: 1214519112
+      Data3: -1378050133
+      Data4: 924044617
+    Path: event:/weapon_sfx/No_Ammo_Click_Pistol
+  <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.2}
+  <RecoilDuration>k__BackingField: 0.1
+  <RecoilReturnDuration>k__BackingField: 0.15
+  <RecoilEase>k__BackingField: 6
+  <ReturnEase>k__BackingField: 5
+  <RecoilRotation>k__BackingField: {x: -5, y: 2, z: 0}
+  <RotationDuration>k__BackingField: 0.1
+  <RotationReturnDuration>k__BackingField: 0.15

@@ -51,16 +51,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Density: 12
+    - _Density: 20
     - _FlowSpeed: 0
     - _Glow: 0.512
     - _MaxPixelation: 523
+    - _Move: 0
+    - _MoveDistance: -0.077
+    - _MoveNoiseScale: 4.71
     - _MoveSpeed: 0.5
+    - _MoveSurfaceSpeed: 1.14
     - _Pixelation: 0.75
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RippleSpeed: 2
-    - _RippleThickness: 2.58
+    - _RippleThickness: 4.8
     m_Colors:
     - _BackColor: {r: 0, g: 1, b: 0.07450986, a: 0}
     - _FlowDirection: {r: 1, g: 0, b: 0, a: 0}

@@ -11,6 +11,9 @@ public class Menu : MonoBehaviour
 	[SerializeField] GameObject menuObject, pausemenu_visual, mainmenu_visual;
 	[SerializeField] EventReference[] button_sfx;
 	
+	[field: SerializeField] public MapSettings mapSettings { get; private set; }
+	[field: SerializeField] public Settings clientSettings { get; private set; }
+	
 	public bool isPaused {get; private set; } = false;
 	public static Menu main {get; private set;}
 	
@@ -29,14 +32,13 @@ public class Menu : MonoBehaviour
 	void Start()
 	{
 		GameManager.main.OnSceneLoad += Reload;
-		GameManager.main.OnBeforeSceneLoad += Preload;
 		Reload();
 	}
 	void Update()
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			PauseGame();
+			if(!GameManager.main.isMainMenu) PauseMenu();
 		}
 	}
 	
@@ -65,14 +67,13 @@ public class Menu : MonoBehaviour
 	
 	public void Quit(bool toMenu)
 	{
-		PauseGame(false);
+		PauseMenu();
 		if(toMenu) GameManager.main.LoadScene(0);
 		else Application.Quit();
 	}
 	
-	public void PauseGame(bool lockedInMenu = true)
+	public void PauseMenu()
 	{
-		//if(GameManager.main.isMainMenu && lockedInMenu) return;
 		isPaused = !isPaused;
 		if(isPaused)
 		{
@@ -85,13 +86,26 @@ public class Menu : MonoBehaviour
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
-		SetTab(999);
+		SetTab(-1);
 		menuObject.SetActive(isPaused);
+	}
+	
+	void ForcePauseMenu(bool forceON)
+	{
+		isPaused = !forceON;
+		PauseMenu();
+	}
+	
+	void SetMainMenu_Functionality()
+	{	
+		SetTab(-1);
+		Time.timeScale = 1f;
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
 	}
 	
 	public void StartGame()
 	{
-		PauseGame(false);
 		GameManager.main.LoadScene(1);
 	}
 	
@@ -101,20 +115,11 @@ public class Menu : MonoBehaviour
 		pausemenu_visual.SetActive(!GameManager.main.isMainMenu);
 		SetButtons();
 		menuObject.SetActive(GameManager.main.isMainMenu);
+		if(GameManager.main.isMainMenu) SetMainMenu_Functionality();
 	}
 	
-	void Preload()
-	{
-		PauseGame(false);
-	}
-	
-	void OnEnable()
-	{
-		
-	}
 	void OnDisable()
 	{
 		GameManager.main.OnSceneLoad -= Reload;
-		GameManager.main.OnBeforeSceneLoad -= Preload;
 	}
 }

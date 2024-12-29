@@ -4,58 +4,46 @@ using System.Collections.Generic;
 
 public class DamagingFloor : MonoBehaviour
 {
-	List<InterfaceReference<IDestructable, MonoBehaviour>> destructables = new List<InterfaceReference<IDestructable, MonoBehaviour>>();
+	[SerializeField] Collider col;
 	[SerializeField] float _damage = 3;
 	[SerializeField] float _damageInterval = 0.3f;
 	[SerializeField] int _weaponIndex = 0;
+	
+	PlayerStats source = null;
 	
 	float _cd;
 	
 	void Update()
 	{
+		if(!this.isActiveAndEnabled) return;
 		if(_cd >= 0)
 		{
 			_cd -= Time.deltaTime;
 			if(_cd <= 0)
 			{
-				DamageObjects();
+				col.enabled = false;
 				_cd = _damageInterval;
-			}
-		}
-	}
-	
-	void DamageObjects()
-	{
-		List<InterfaceReference<IDestructable, MonoBehaviour>> tempList = new List<InterfaceReference<IDestructable, MonoBehaviour>>();
-		for (int i = 0; i < destructables.Count; i++)
-		{
-			if(destructables[i] != null)
+			}else
 			{
-				tempList.Add(destructables[i]);
+				col.enabled = true;
 			}
-		}
-		destructables.Clear();
-		destructables = tempList;
-		
-		for (int i = 0; i < destructables.Count; i++)
-		{
-			destructables[i].Value.TakeDamage(_damage, null, _weaponIndex);
+			
 		}
 	}
 	
-	void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter(Collider other)
 	{
-		if(other.transform.TryGetComponent(out IDestructable dest))
+		if(other.TryGetComponent(out PlayerStats player))
 		{
-			destructables.Add(dest as InterfaceReference<IDestructable, MonoBehaviour>);
+			player.TakeDamage(_damage, source, _weaponIndex);
 		}
 	}
 	
-	void OnTriggerExit(Collider other)
+	void OnDisable()
 	{
-		if(other.transform.TryGetComponent(out IDestructable dest))
-		{
-			destructables.Remove(dest as InterfaceReference<IDestructable, MonoBehaviour>);
-		}
+		col.enabled = false;
+		_cd = _damageInterval;
 	}
+	
+	public void SetSource(PlayerStats player) => source = player;
 }

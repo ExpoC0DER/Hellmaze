@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 3522396284126757582}
   - component: {fileID: 8898063072396060074}
   - component: {fileID: 5437054273200564700}
+  - component: {fileID: 3577492258255958002}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -186,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expl_radius: 7
   expl_force: 5
+  explosionDec_poolName: explosion_dec
   _damage: 80
   _weaponIndex: 0
   visual_model: {fileID: 2999625166419164648}
@@ -197,6 +199,24 @@ MonoBehaviour:
       Data4: -1516461321
     Path: event:/environmental_sfx/Explosion
   explosion_part: {fileID: 5204205963485913407}
+--- !u!114 &3577492258255958002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4991949945973130190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6a17a183896a84b911e1fde21700d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolve_rendereres:
+  - {fileID: 487668894709185764}
+  colliders:
+  - {fileID: 2142103150439752225}
+  _destructable:
+  - _underlyingValue: {fileID: 5437054273200564700}
 --- !u!1001 &7543795036265702067
 PrefabInstance:
   m_ObjectHideFlags: 0

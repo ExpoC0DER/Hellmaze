@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3090978939882105591}
   - component: {fileID: 1152970728251667105}
   - component: {fileID: 4706572506411030045}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WeaponPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 17353382131510754}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.6, y: 0.4, z: -0.095461}
+  m_LocalPosition: {x: -9.6, y: 1.4, z: -0.095461}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -125,6 +125,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particle: {fileID: 4665014706805343252}
   visual_object: {fileID: 0}
+  respawnTime: 30
+  pickupSfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   weaponIndex: 1
   ammo: 1
 --- !u!114 &4706572506411030045

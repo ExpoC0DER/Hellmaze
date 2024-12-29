@@ -5,7 +5,7 @@
 			<value>Click_UI_Cancel</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1f912493-20b3-4583-9519-5791d263b764}</destination>
@@ -105,7 +105,6 @@
 	<object class="MixerBusEffectChain" id="{e253fcb9-595f-456b-8154-8eebe5e13dca}">
 		<relationship name="effects">
 			<destination>{8730b842-bce0-4aba-a2d0-d2e29a080657}</destination>
-			<destination>{070f6776-c1c2-4e36-b214-362ba3f36593}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{623809fd-41fa-4794-b005-4b2566666469}" />
@@ -116,5 +115,4 @@
 	</object>
 	<object class="MixerBusFader" id="{7b30cb7b-db92-4506-8296-f504d9c791af}" />
 	<object class="MixerBusFader" id="{8730b842-bce0-4aba-a2d0-d2e29a080657}" />
-	<object class="SpatialiserEffect" id="{070f6776-c1c2-4e36-b214-362ba3f36593}" />
 </objects>

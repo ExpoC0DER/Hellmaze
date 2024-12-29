@@ -94,7 +94,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour
 			characters[i].SetActive(i == index);
 		}
 		
-		for (int i = 0; i < weaponPositions.Count; i++)
+		for (int i = 0; i < weaponsModels.Length; i++)
 		{
 			weaponsModels[i].transform.SetParent(weaponPositions[index].Transforms[i] ,false);
 		}

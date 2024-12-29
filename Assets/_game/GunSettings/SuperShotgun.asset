@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cad91b281b9bc48968fa1da40a06d9, type: 3}
+  m_Name: SuperShotgun
+  m_EditorClassIdentifier: 
+  <Damage>k__BackingField: 21
+  <FiringSpeed>k__BackingField: 0.5
+  <Spread>k__BackingField: 4
+  <ShotsPerFire>k__BackingField: 12
+  <MaxRange>k__BackingField: 50
+  <FiringMode>k__BackingField: 0
+  <ManualSound>k__BackingField:
+    Guid:
+      Data1: 982759427
+      Data2: 1090986591
+      Data3: -1886213970
+      Data4: -1628474641
+    Path: event:/weapon_sfx/Shotgun (fire)
+  <AutomaticSound>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <NoAmmoSound>k__BackingField:
+    Guid:
+      Data1: 1258713384
+      Data2: 1134400089
+      Data3: 355281085
+      Data4: -1736016190
+    Path: event:/weapon_sfx/Click_no_ammo
+  <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.2}
+  <RecoilDuration>k__BackingField: 0.1
+  <RecoilReturnDuration>k__BackingField: 0.15
+  <RecoilEase>k__BackingField: 6
+  <ReturnEase>k__BackingField: 5
+  <RecoilRotation>k__BackingField: {x: -5, y: 2, z: 0}
+  <RotationDuration>k__BackingField: 0.1
+  <RotationReturnDuration>k__BackingField: 0.15

@@ -13,6 +13,7 @@ namespace _game.Scripts
 		[SerializeField] private Transform spawnPoint;
 		[SerializeField] ParticleSystem muzzleFlash_part;
 		[SerializeField] ParticleSystem casing_part;
+		[SerializeField] ParticleSystem particleProjectile_part;
 		[field: SerializeField] public int Ammo { get; set; } = 30;
 		[field: SerializeField] public int MaxAmmo { get; set; } = 120;
 		[field: SerializeField] public float BotInaccuracy { get; set; } = 1;
@@ -44,6 +45,8 @@ namespace _game.Scripts
 				_fireDelay -= Time.deltaTime;
 		}
 
+		public float GetDamage() => _gunSettings.Damage;
+		
 		private void ApplyRecoil()
 		{
 			transform.DOKill(true);
@@ -106,7 +109,7 @@ namespace _game.Scripts
 					if (!_fired)
 					{
 						_fired = true;
-						_automaticSound = FMODHelper.CreateNewInstance(_gunSettings.AutomaticSound);
+						_automaticSound = FMODHelper.CreateNewInstance(_gunSettings.AutomaticSound, transform);
 						_automaticSound.setParameterByName("Parameter 1", 1);
 						_automaticSound.start();
 					}
@@ -147,14 +150,26 @@ namespace _game.Scripts
 				dir = (new Vector3(target.position.x, target.position.y +0.4f, target.position.z) - orig).normalized;
 			}
 			
-			dir = GetShootingSpread_Direction(orig, dir);
-			
+			for (int i = 0; i < _gunSettings.ShotsPerFire; i++)
+			{
+				
+				if(particleProjectile_part)
+				{
+					particleProjectile_part.transform.rotation = Quaternion.LookRotation(dir);
+					particleProjectile_part.Play();
+					break;
+				}else
+				{
+					dir = GetShootingSpread_Direction(orig, dir);
+					ObjectPooler.main.SpawnProjectile(projectilePool_name, spawnPoint.position, Quaternion.LookRotation(dir), Source, _gunSettings.Damage * DamageMultiplier, WeaponIndex); 
+				}
+			}
 			//Debug.DrawRay(orig, dir * _gunSettings.MaxRange, Color.red, 3);
 			
-			ObjectPooler.main.SpawnProjectile(projectilePool_name, spawnPoint.position, Quaternion.LookRotation(spawnPoint.forward), Source, _gunSettings.Damage * DamageMultiplier, WeaponIndex); 
 			
-			muzzleFlash_part.Play();
-			casing_part.Play();
+			
+			if(muzzleFlash_part) muzzleFlash_part.Play();
+			if(casing_part) casing_part.Play();
 			ApplyRecoil();
 		}
 		

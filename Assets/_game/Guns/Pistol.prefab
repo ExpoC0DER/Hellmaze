@@ -137,13 +137,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunSettings: {fileID: 11400000, guid: 6f4119b2148282a4baefbcb86c3a294e, type: 2}
-  _hitPoint: {fileID: 1100017743567450252, guid: 140e256f36677c644b7cfb4967959c27, type: 3}
-  _fleshHitPoint: {fileID: 1100017743567450252, guid: 200025fa33251af4592928576303aeb1, type: 3}
   muzzleFlash_part: {fileID: 6601453013497751717}
   bullet_fire_part: {fileID: 6441952588538628}
   casing_part: {fileID: 4272935777081974610}
-  <Ammo>k__BackingField: 30
-  <MaxAmmo>k__BackingField: 120
+  <Ammo>k__BackingField: 0
+  <MaxAmmo>k__BackingField: 250
   <BotInaccuracy>k__BackingField: 1
   <DamageMultiplier>k__BackingField: 0.5
 --- !u!1001 &3677740301432666264

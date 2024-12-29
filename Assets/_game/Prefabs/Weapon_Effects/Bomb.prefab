@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 4323909919245737441}
   - component: {fileID: 4816191656707188671}
   - component: {fileID: 6116828121892898988}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expl_radius: 5
   expl_force: 3
+  explosionDec_poolName: explosion_dec
   _damage: 0
   _weaponIndex: 0
   visual_model: {fileID: 8683064078722926872}
@@ -341,6 +342,13 @@ MonoBehaviour:
       Data4: 160156971
     Path: event:/environmental_sfx/Explosion small
   explosion_part: {fileID: 2275374944911923403}
+  bounce_sfx:
+    Guid:
+      Data1: 1258713384
+      Data2: 1134400089
+      Data3: 355281085
+      Data4: -1736016190
+    Path: event:/weapon_sfx/Click_no_ammo
   rb: {fileID: 4816191656707188671}
   init_force: 15
   detonation_time: 4

@@ -19851,8 +19851,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.5
+      scalar: 30
+      minScalar: 50
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -19904,8 +19904,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.5
+      scalar: 30
+      minScalar: 50
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -19957,8 +19957,8 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.5
+      scalar: 30
+      minScalar: 50
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -20234,7 +20234,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0.5, z: 0}
+    m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
@@ -23411,7 +23411,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.015
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -24446,7 +24446,7 @@ ParticleSystemRenderer:
   m_VertexStreams: 00010304
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
-  m_Mesh: {fileID: 4300000, guid: e49c959f3097f964e85dde87cf1eca2f, type: 3}
+  m_Mesh: {fileID: 289301614986012343, guid: 74a649b97ea2e8c43aac5bfd85c8229b, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -29635,8 +29635,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
-      minScalar: 0.4
+      scalar: 10
+      minScalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -29688,8 +29688,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
-      minScalar: 0.4
+      scalar: 10
+      minScalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -29741,8 +29741,8 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
-      minScalar: 0.4
+      scalar: 10
+      minScalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -30018,7 +30018,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0.5, z: 0}
+    m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
@@ -33195,7 +33195,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.015
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -34230,7 +34230,7 @@ ParticleSystemRenderer:
   m_VertexStreams: 00010304
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
-  m_Mesh: {fileID: 4300000, guid: e49c959f3097f964e85dde87cf1eca2f, type: 3}
+  m_Mesh: {fileID: 289301614986012343, guid: 74a649b97ea2e8c43aac5bfd85c8229b, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

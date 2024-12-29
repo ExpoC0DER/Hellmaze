@@ -1,5 +1,5 @@
 unity:
-	implementovať sickle ako základnú zbraň
+	*implementovať sickle ako základnú zbraň
 		nastaviť  botov, aby strielali len ak ich zbraň má dostrel (melee musí prísť bližšie)
 	main menu prechod do hry opraviť (singletony delete a nech sa autospawnu pre testovanie)
 	nastaviť aby sa settingy prenášali do hry
@@ -31,7 +31,7 @@ unity:
 	2nd floor (2nd maze?)
 	
 	gamemode destroy the most barrels
-	one player turns into a monster and goes on killing melee ( 1 vs all boss game) (he can... break walls)
+	one player turns into a monster and goes on killing melee (1 vs all boss game) (he can... break walls)
 	team dm
 	dm
 	ctf, spawn flag randomly and make it visible by other players, point is also randomized?
@@ -40,18 +40,37 @@ unity:
 	floor is lava (spawn alot of damagin floor and grappling points, also islands)
 	defend yourselves against army of skeletons (one home spot, respawn map after wave)
 	spawn special gun that is very strong
+	timed ground break into big arena
+	timespliters gamemodes (https://timesplitters.fandom.com/wiki/Arcade_Custom)
+	fortnite storm zone
 	
-		
+	
+	implement guns:		-revolver
+				-sniper rifle
+				-sickle
+				*sticky bomb launcher
+				-shotgun
+				-supershotgun
+				-laser gun
+				*acid blaster
+				
 	
 3d:
+	spas 12
+	dan wesson 357
+	shotgun shell (red)
+		grenade launcher remake
+
+
 	dragunov / sniper rifle model
+
 	laser gun
 	acid gun
+
 	nail gun (minigun?)
 	super shotgun
-	shotgun spas12
-	revolver dan wesson 357
 	sticky bomb launcher
+
 	flamethrower
 	medigun
 	

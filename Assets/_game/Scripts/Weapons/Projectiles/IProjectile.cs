@@ -7,4 +7,5 @@ public interface IProjectile
 	public string PoolName { get; set; }
 	public int WeaponIndex { get; set; }
 	public void Initialize(PlayerStats source, float damage, int weaponIndex, string poolName);
+	public void ReturnToPool();
 }

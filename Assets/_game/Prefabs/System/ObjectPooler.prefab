@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9095076706018900720}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -49,5 +49,11 @@ MonoBehaviour:
   blood_dec: {fileID: 7566360508720918701, guid: 9b72f691c6f84d54ab5edf686f80368c, type: 3}
   blood_gib_dec: {fileID: 7116822887987532374, guid: 383bddef851f5d44db6bb61a93559d34, type: 3}
   explosion_dec: {fileID: 3106187561762992662, guid: 7f4e707939882c242bb890e88fe374a8, type: 3}
+  explosion_small_dec: {fileID: 3106187561762992662, guid: b4f00de86097a904e8383f26e0bdf1fe, type: 3}
   bomb: {fileID: 6391179630769891645, guid: 664e50d4d6ffcee4fbcdb9914515ee02, type: 3}
   rocket: {fileID: 6316960002275436735, guid: 2039f9003c23aed459d92f1956c2fe93, type: 3}
+  stickyBomb: {fileID: 4747874411620784534, guid: 43c9b8e7c3962344a8f0edf77133ebd6, type: 3}
+  bullet: {fileID: 533930167994390179, guid: 3eb8fe701bb77674aa1b93581973a3d5, type: 3}
+  plasmaBall: {fileID: 6316960002275436735, guid: 692b0081ed45f2746b5d8cfe5e736f07, type: 3}
+  acidSplash: {fileID: 6391179630769891645, guid: 02a27a0e7aa964340ad153aff06cdf43, type: 3}
+  drone: {fileID: 6316960002275436735, guid: 094b54b319f98f0488b089d28b6321ed, type: 3}

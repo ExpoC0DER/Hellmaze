@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AYellowpaper;
+using EditorAttributes;
 using UnityEngine;
 using System;
 using _game.Scripts;
@@ -25,6 +26,16 @@ public class WeaponSlots : MonoBehaviour
 	[SerializeField] float innaccuracy = 1;
 	[SerializeField] float damage_multiplier = 0.5f;
 	bool bot_shoot_trigger = false;
+	bool botCanShot = true;
+	
+	
+	public int WeaponToSwitchIndex = 0;
+	[Button]
+	void ForceSwitchWeapon()
+	{
+		weaponsPicked[WeaponToSwitchIndex] = true;
+		SwitchWeapon(WeaponToSwitchIndex);
+	}
 	
 	void Awake()
 	{
@@ -134,6 +145,7 @@ public class WeaponSlots : MonoBehaviour
 	void SwitchWeapon(int weaponIndex)
 	{
 		if(!weaponsPicked[weaponIndex]) return;
+		if(weaponIndex != 0)_currentGun.Value.StopShooting();
 		bool canSwitch;
 		for (int i = 0; i < weaponObjects.Count; i++)
 		{
@@ -179,24 +191,30 @@ public class WeaponSlots : MonoBehaviour
 	
 	public void Bot_Shooting(Transform target)
 	{
-		if(bot_shoot_trigger)
+		/* if(bot_shoot_trigger)
 		{
 			_currentGun.Value.StopShooting();
 			animator.SetBool("Shooting", false);
 			return;
-		}
-		bot_shoot_trigger = true;
-		_currentGun.Value.Shoot(bot_shoot_trigger, target, out bool succesShot);
-		animator.SetBool("Shooting", succesShot && bot_shoot_trigger);
-		Invoke("StopShooting", UnityEngine.Random.Range(0.2f, 0.4f));
+		} */
+		
+		//bot_shoot_trigger = true;
+		_currentGun.Value.Shoot(botCanShot, target, out bool succesShot);
+		animator.SetBool("Shooting", succesShot);
+		
+		//Invoke("StopShooting", UnityEngine.Random.Range(0.2f, 0.4f)); //insert gun firerate here
+		
 		if(!succesShot) // no ammo try other gun
 		{
 			SwitchToWeaponWithAmmo();
 		}
 	}
 	
-	public void StopShooting() => bot_shoot_trigger = false;
-	
+	/* public void StopShooting()
+	{
+		bot_shoot_trigger = false;
+		Debug.Log("bot reset shot");
+	} */
 	
 	public void ThrowAwayWeapon(int weaponIndex)
 	{
@@ -229,12 +247,16 @@ public class WeaponSlots : MonoBehaviour
 	
 	void OnDeath()
 	{
+		botCanShot = false;
+		_currentGun.Value.StopShooting();
+		animator.SetBool("Shooting", false);
 		ResetWeaponsOnDeath();
 		isDead = true;
 	}
 	
 	void OnRespawn()
 	{
+		botCanShot = true;
 		weaponsPicked[0] = true;
 		SwitchWeapon(0);
 		isDead = false;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="DataFile" id="{5ef4d609-66cb-496f-adb9-d57699cca0d2}">
+		<property name="assetPath">
+			<value>Rypák_Matúš_Rocket_Flying.opus</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{40913624-2249-420f-ae29-318554c22436}</destination>
+		</relationship>
+	</object>
+</objects>

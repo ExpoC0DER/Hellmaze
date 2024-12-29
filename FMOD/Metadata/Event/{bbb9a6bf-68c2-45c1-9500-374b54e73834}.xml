@@ -5,7 +5,7 @@
 			<value>Click_UI_Highlight</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1f912493-20b3-4583-9519-5791d263b764}</destination>
@@ -96,7 +96,6 @@
 	<object class="MixerBusEffectChain" id="{1abaf80a-7009-41c8-9088-ddf29119c0a0}">
 		<relationship name="effects">
 			<destination>{822baeda-5c0f-49d1-b8ce-96d3508bb928}</destination>
-			<destination>{79810b3c-acd6-48bb-9a89-613e434e537c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{7239b837-0570-4011-bb32-2c9c68698d23}" />
@@ -107,5 +106,4 @@
 	</object>
 	<object class="MixerBusFader" id="{e04eb602-f54e-4783-b424-31fcc9766cc5}" />
 	<object class="MixerBusFader" id="{822baeda-5c0f-49d1-b8ce-96d3508bb928}" />
-	<object class="SpatialiserEffect" id="{79810b3c-acd6-48bb-9a89-613e434e537c}" />
 </objects>

@@ -120,8 +120,12 @@ PrefabInstance:
       value: WeaponPickup_RPG Variant
       objectReference: {fileID: 0}
     - target: {fileID: 9191491742151795115, guid: a8c8da762613484458c8b3d2182a4ca0, type: 3}
+      propertyPath: ammo
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191491742151795115, guid: a8c8da762613484458c8b3d2182a4ca0, type: 3}
       propertyPath: weaponIndex
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9191491742151795115, guid: a8c8da762613484458c8b3d2182a4ca0, type: 3}
       propertyPath: visual_object

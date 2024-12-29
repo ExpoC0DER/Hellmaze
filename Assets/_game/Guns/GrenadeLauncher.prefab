@@ -256,7 +256,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 8608504730545994491}
   muzzleFlash_part: {fileID: 7012242343401602071}
   casing_part: {fileID: 6087853582631121007}
-  <Ammo>k__BackingField: 10
+  particleProjectile_part: {fileID: 0}
+  <Ammo>k__BackingField: 0
   <MaxAmmo>k__BackingField: 30
   <BotInaccuracy>k__BackingField: 1
   <DamageMultiplier>k__BackingField: 0.5

@@ -2,6 +2,7 @@ using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
 using Unity.AppUI.UI;
+using System;
 
 public class Settings : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class Settings : MonoBehaviour
 	Bus ambientBus;
 	Bus sfxBus;
 	Bus musicBus;
+	
+	
+	
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
@@ -51,6 +55,14 @@ public class Settings : MonoBehaviour
 		{
 			optionTabs[i].SetActive(i == index);
 		}
+	}
+	
+	public int MusicIndex = 1;
+	public event Action OnUpdate_MusicIndex;
+	public void SetMusicIndex(int value)
+	{
+		MusicIndex = value;
+		OnUpdate_MusicIndex?.Invoke();
 	}
 	
 	void OnEnable()

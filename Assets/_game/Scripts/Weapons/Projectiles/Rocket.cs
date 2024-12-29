@@ -42,7 +42,7 @@ public class Rocket : Explosive, IProjectile
 		yield return new WaitForSeconds(detonation_time);
 		Explode();
 		yield return new WaitForSeconds(1);
-		Return();
+		ReturnToPool();
 		
 	}
 	
@@ -52,14 +52,12 @@ public class Rocket : Explosive, IProjectile
 		rb.MovePosition(rb.position + init_force * transform.forward * Time.fixedDeltaTime);
 	}
 	
-	void Return() => ObjectPooler.main.ReturnObject(transform, PoolName);
-	
 	void OnCollisionEnter(Collision other)
 	{
 		if(other.transform == Source.transform && onTrigger == false) return;
 		
 		Explode();
-		Invoke("Return", 1);
+		Invoke("ReturnToPool", 1);
 		
 	}
 	
@@ -72,6 +70,10 @@ public class Rocket : Explosive, IProjectile
 			Invoke("Return", 1);
 		}
 	}  */
+	public void ReturnToPool()
+	{
+		ObjectPooler.main.ReturnObject(transform, PoolName);
+	}
 	
 	void OnEnable()
 	{

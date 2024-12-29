@@ -33,6 +33,9 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	[SerializeField] ParticleSystem blood_part;
 	[SerializeField] ParticleSystem gib_part;
 	
+	[Header("Cheats")]
+	public bool godMode = false;
+	
 	public event Action<float> OnHealthChange;
 	public static event Action<string,int,string> UpdateKillFeed;
 	public event Action OnDeath;
@@ -46,6 +49,8 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	
 	public void TakeDamage(float amount, PlayerStats source, int weaponIndex)
 	{
+		if(godMode) return;
+		
 		Health -= amount;
 		if(!IsDead) blood_part.Play();
 		
@@ -97,7 +102,7 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	}
 	
 	
-	private void Respawn()
+	private void RespawnPlayer()
 	{
 		OnRespawn?.Invoke();
 		if(gibbed)
@@ -119,6 +124,11 @@ public class PlayerStats : MonoBehaviour, IDestructable
 			return;
 		}
 		ResetPlayerPosition();
+	}
+	public void Respawn()
+	{
+		Debug.Log(playerName + " respawned by other source");
+		RespawnPlayer();
 	}
 	
 	void ResetPlayerPosition()

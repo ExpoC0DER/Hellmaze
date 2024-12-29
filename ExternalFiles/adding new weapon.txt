@@ -12,8 +12,13 @@ add this gun to WeaponSlots.cs
 add this gun to PlayerAnimationFunctions
 	-make muzzleflash part and assign it to gun in anim
 
-
+-make pickup prefab
 
 -make viewmodel anim
 -add viewmodel muzzleflash particle and casing fall
 -add hud icon
+
+
+
+
+

@@ -1,5 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
+using _game.Scripts;
 
 public class Bomb : Explosive, IProjectile
 {
@@ -8,6 +11,7 @@ public class Bomb : Explosive, IProjectile
 	[HideInInspector] public string PoolName { get; set; }
 	public int WeaponIndex { get; set; }
 
+	[SerializeField] EventReference bounce_sfx;
 	[SerializeField] Rigidbody rb;
 	[SerializeField] float init_force = 10;
 	[SerializeField] float detonation_time = 5;
@@ -59,6 +63,7 @@ public class Bomb : Explosive, IProjectile
 			}
 		} */
 		base.Explode();
+		Invoke("ReturnToPool", 1);
 	}
 	
 	IEnumerator ExplosiveRoutine()
@@ -67,35 +72,39 @@ public class Bomb : Explosive, IProjectile
 		onTrigger = true;
 		yield return new WaitForSeconds(detonation_time);
 		Explode();
-		yield return new WaitForSeconds(1);
-		Return();
 		
 	}
-	
-	void Return() => ObjectPooler.main.ReturnObject(transform, PoolName);
 	
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.CompareTag("Player") || other.CompareTag("Bot") && onTrigger)
 		{
 			Explode();
-			Invoke("Return", 1);
 		}
 	}
 	
 	void OnCollisionEnter(Collision other)
 	{
+		PlayBounceSound();
 		//Debug.Log("explode on col: " + other.gameObject.tag, other.gameObject);
 		if((other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot")) && onTrigger)
 		{
 			Explode();
-			Invoke("Return", 1);
 		}
+	}
+	
+	void PlayBounceSound()
+	{
+		FMODHelper.PlayNewInstance(bounce_sfx, transform);
 	}
 	
 	void OnEnable()
 	{
 		rb.AddForce(init_force * transform.forward, ForceMode.Impulse);
 		StartCoroutine(ExplosiveRoutine());
+	}
+	public void ReturnToPool()
+	{
+		ObjectPooler.main.ReturnObject(transform, PoolName);
 	}
 }

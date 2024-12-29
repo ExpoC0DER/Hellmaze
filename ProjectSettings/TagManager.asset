@@ -18,8 +18,8 @@ TagManager:
   - Gun
   - GrapplePoint
   - PlayerModel
-  - 
-  - 
+  - Projectile
+  - Pickup
   - 
   - 
   - 

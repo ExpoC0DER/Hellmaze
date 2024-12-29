@@ -7,16 +7,19 @@ public class PlayerDatabase : MonoBehaviour
 	[SerializeField] List<PlayerStats> players = new List<PlayerStats>();
 	
 	
-	void Awake()
+	/* void Awake()
 	{
 		
 		FindAllPlayers();
-	}
-	void Start()
+	} */
+	/* void Start()
 	{
 		GameManager.main.OnSceneLoad += Setup;
 		PickRandomBotNames();
-	}
+	} */
+	
+	public void UpdateDatabase() => FindAllPlayers();
+	public void FirstSetup() => Setup();
 	
 	void Setup()
 	{

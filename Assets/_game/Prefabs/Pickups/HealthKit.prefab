@@ -5131,7 +5131,7 @@ GameObject:
   - component: {fileID: 4958429516043034033}
   - component: {fileID: 4434558064620473741}
   - component: {fileID: 6775065897084139621}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HealthKit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

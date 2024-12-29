@@ -7,6 +7,7 @@ public class Explosive : MonoBehaviour
 {
 	[SerializeField] float expl_radius = 5;
 	[SerializeField] float expl_force = 5;
+	[SerializeField] protected string explosionDec_poolName = "explosion_dec";
 	
 	[SerializeField] protected float _damage;
 	[SerializeField] protected int _weaponIndex;
@@ -33,48 +34,64 @@ public class Explosive : MonoBehaviour
 		
 		if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 0.5f, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
 		{
-			ObjectPooler.main.SpawnPooledObject("explosion_dec", hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+			ObjectPooler.main.SpawnPooledObject(explosionDec_poolName, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
 		}
 		else if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitt, 2, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
 		{
-			ObjectPooler.main.SpawnPooledObject("explosion_dec", hitt.point, Quaternion.LookRotation(hitt.normal), hitt.transform);
+			ObjectPooler.main.SpawnPooledObject(explosionDec_poolName, hitt.point, Quaternion.LookRotation(hitt.normal), hitt.transform);
 		}
 		
 		for (int i = 0; i < cols.Length; i++)
 		{
 			Transform obj = cols[i].transform;
+			Collider _col = cols[i];
+			
+			if(Physics.Raycast(transform.position, (_col.transform.position - transform.position).normalized, out RaycastHit hitInfo))
+			{
+				if(hitInfo.transform != obj)
+				{
+					Debug.Log("explosive didnt hit same object "+ hitInfo.transform.name + " aiming at " + obj.transform.name, hitInfo.transform);
+					LG_tools.DrawPoint(transform.position,60, Color.green);
+					LG_tools.DrawPoint(_col.transform.position,60, Color.red);
+					LG_tools.DrawLine(transform.position, hitInfo.point);
+					//continue;
+				}
+			}else
+			{
+				LG_tools.DrawPoint(transform.position,60, Color.green);
+				LG_tools.DrawPoint(_col.transform.position,60, Color.red);
+				LG_tools.DrawLine(transform.position, hitInfo.point, Color.yellow);
+			}
+			
 			if(obj.TryGetComponent(out Rigidbody rb))
 			{
-				float distanceRatio = Mathf.InverseLerp(0, expl_radius, Vector3.Distance(transform.position, obj.transform.position));
+				float distanceRatio = Mathf.InverseLerp(0, expl_radius, Vector3.Distance(transform.position, _col.ClosestPoint(transform.position)));
 				float force = Mathf.Lerp(expl_force, 0, distanceRatio);
-				Vector3 direction = new Vector3(obj.transform.position.x, obj.transform.position.y + 3, obj.transform.position.z) - transform.position;
-				/* if(obj.TryGetComponent(out EnemyAI enemyAI))
-				{
-					enemyAI.SimulatePhysics();
-				}else if(obj.TryGetComponent(out PlayerController player))
-				{
-					player.SimulatePhysics(direction, force);
-				} */
-				//rb.AddExplosionForce(expl_force, transform.position, expl_radius);
 				
-				rb.AddForce( direction * force, ForceMode.Impulse);
-			
+				if(expl_force != 0)
+				{
+					Vector3 direction = new Vector3(obj.transform.position.x, obj.transform.position.y + 3, obj.transform.position.z) - transform.position;
+					if(obj.TryGetComponent(out EnemyAI enemyAI))
+					{
+						enemyAI.SimulateImpulsePhysics(direction * force);
+					}else if(obj.TryGetComponent(out PlayerController player))
+					{
+						//player.SimulatePhysics(direction, force);
+						player.ApplyForce(direction * force);
+					}else
+					{
+						rb.AddForce( direction * force, ForceMode.Impulse);
+					}
+					//rb.AddExplosionForce(expl_force, transform.position, expl_radius);
+					
+				}
+				
 				if(obj.transform.TryGetComponent(out IDestructable destructable))
 				{
 					float damage = Mathf.Lerp(_damage, 0, distanceRatio);
 					destructable.TakeDamage(damage, _source, _weaponIndex);
 				}
 				
-				/* if(obj.TryGetComponent(out PlayerStats playerStats))
-				{
-					
-					playerStats.TakeDamage
-					//Debug.Log("explosive damage " + -damage);
-				} *//* else if(obj.TryGetComponent(out EnemyAI enemyAI))
-				{
-					enemyAI.TakeDamage(damage, _source.position);
-					Debug.Log("explosive damage bot " + damage);
-				} */
 			}else
 			{
 				continue;

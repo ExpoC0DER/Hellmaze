@@ -93,11 +93,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
       propertyPath: ammo
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
       propertyPath: weaponIndex
-      value: 2
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1152970728251667105, guid: 83388183a59766349a02fc5468c81ea6, type: 3}
       propertyPath: visual_object
