@@ -16,9 +16,6 @@ public class MapSettings : MonoBehaviour
 	public float FloorChangeSpeed = 1;
 	public void SetFloorChangeSpeed(float value) => FloorChangeSpeed = (int)value;
 	public Slider FloorChangeSpeed_Slider;
-	public float gravity = -9.81f;
-	public void SetGravity(float value) => gravity = (int)value;
-	public Slider Gravity_Slider;
 	
 	[Header("Bots")]
 	public int BotCount = 5;
@@ -174,6 +171,26 @@ public class MapSettings : MonoBehaviour
 	public int AmbientParticleIndex = 1;
 	public void SetAmbientParticleIndex(int value) => AmbientParticleIndex = value;
 	public TMP_Dropdown AmbientParticleIndex_Dropdown;
+	public float gravity = -9.81f;
+	public void SetGravity(float value) => gravity = (int)value;
+	public Slider Gravity_Slider;
+	public bool Fog = false;
+	public void SetFog(bool value) => Fog = value;
+	public Toggle Fog_Toggle;
+	public float FogStrength = 70;
+	public void SetFogStrength(float value) => FogStrength = value;
+	public Slider FogStrength_Slider;
+	
+	public float FogColor_r = 0.8f;
+	public void SetFogColorRed(float value) => FogColor_r = value;
+	public Slider FogColor_r_Slider;
+	public float FogColor_g = 0.8f;
+	public void SetFogColoGreen(float value) => FogColor_g = value;
+	public Slider FogColor_g_Slider;
+	public float FogColor_b = 0.8f;
+	public void SetFogColorBlue(float value) => FogColor_b = value;
+	public Slider FogColor_b_Slider;
+	public Image ShowFogColor_Image;
 	
 	//check if changespeed of maze change has effect
 	
@@ -181,6 +198,11 @@ public class MapSettings : MonoBehaviour
 	
 	//set gamemode
 	
+	
+	public void ShowFogColorImage()
+	{
+		ShowFogColor_Image.color = new Color(FogColor_r, FogColor_g, FogColor_b);
+	}
 	
 	public void SetMapPreset(int index)
 	{
@@ -192,41 +214,58 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 0;
 			SkyboxIndex_Dropdown.value = 0;
 			AmbientParticleIndex_Dropdown.value = 1;
+			Fog_Toggle.isOn = false;
+			
 			break;
 			case 1: // snowy
 			TextureIndex_Dropdown.value = 1;
 			SkyboxIndex_Dropdown.value = 7;
 			AmbientParticleIndex_Dropdown.value = 3;
+			Fog_Toggle.isOn = false;
+			
 			break;
 			case 2: // labs
 			TextureIndex_Dropdown.value = 2;
 			SkyboxIndex_Dropdown.value = 2;
 			AmbientParticleIndex_Dropdown.value = 1;
+			Fog_Toggle.isOn = true;
+			FogStrength_Slider.value = 70;
+			
 			break;
 			case 3: //elite corridor
 			TextureIndex_Dropdown.value = 3;
 			SkyboxIndex_Dropdown.value = 6;
 			AmbientParticleIndex_Dropdown.value = 0;
+			Fog_Toggle.isOn = false;
+			
 			break;
 			case 4: //outside niceday
 			TextureIndex_Dropdown.value = 4;
 			SkyboxIndex_Dropdown.value = 4;
 			AmbientParticleIndex_Dropdown.value = 0;
+			Fog_Toggle.isOn = false;
+			
 			break;
 			case 5: //outside badday
 			TextureIndex_Dropdown.value = 4;
 			SkyboxIndex_Dropdown.value = 2;
 			AmbientParticleIndex_Dropdown.value = 2;
+			Fog_Toggle.isOn = false;
+			
 			break;
 			case 6: // metal
 			TextureIndex_Dropdown.value = 5;
 			SkyboxIndex_Dropdown.value = 5;
 			AmbientParticleIndex_Dropdown.value = 4;
+			Fog_Toggle.isOn = false;
+			
 			break;
 			case 7: // hell
 			TextureIndex_Dropdown.value = 6;
 			SkyboxIndex_Dropdown.value = 1;
 			AmbientParticleIndex_Dropdown.value = 4;
+			Fog_Toggle.isOn = false;
+			
 			break;
 		}
 	}

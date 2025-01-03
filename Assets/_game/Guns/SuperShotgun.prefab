@@ -465,6 +465,14 @@ PrefabInstance:
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 674276478122658819, guid: 3bda799cf1370b348a577f0c91256fb5, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 674276478122658819, guid: 3bda799cf1370b348a577f0c91256fb5, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 674276478122658819, guid: 3bda799cf1370b348a577f0c91256fb5, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: 3
       objectReference: {fileID: 0}

@@ -344,11 +344,11 @@ MonoBehaviour:
   explosion_part: {fileID: 2275374944911923403}
   bounce_sfx:
     Guid:
-      Data1: 1258713384
-      Data2: 1134400089
-      Data3: 355281085
-      Data4: -1736016190
-    Path: event:/weapon_sfx/Click_no_ammo
+      Data1: 885392226
+      Data2: 1269557690
+      Data3: 162468234
+      Data4: 1366857579
+    Path: event:/weapon_sfx/Grenade_bounce
   rb: {fileID: 4816191656707188671}
   init_force: 15
   detonation_time: 4

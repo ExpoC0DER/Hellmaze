@@ -96,6 +96,11 @@ public class MapManager : MonoBehaviour
 		}
 		
 		RenderSettings.skybox = skyboxMats[settings.SkyboxIndex];
+		RenderSettings.fog = settings.Fog;
+		RenderSettings.fogMode = FogMode.Linear;
+		RenderSettings.fogStartDistance = 1;
+		RenderSettings.fogEndDistance = 100 - settings.FogStrength;
+		RenderSettings.fogColor = new Color(settings.FogColor_r, settings.FogColor_g, settings.FogColor_b);
 		if(settings.SkyboxIndex == 7) // 7 is index of night
 		{
 			RenderSettings.ambientIntensity = 2.5f;

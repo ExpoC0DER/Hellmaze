@@ -53,18 +53,18 @@ Material:
     m_Floats:
     - _Border: 0
     - _BorderPower: 4.28
-    - _Move: 0
-    - _MoveDistance: 0.194
-    - _MoveNoiseScale: 1
+    - _Move: 0.642
+    - _MoveDistance: 0.44
+    - _MoveNoiseScale: 2.92
     - _NoiseScale: 15
     - _Pixelation: 0.8
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 0
+    - _Speed: 0.1
     - _SpeedBalls: 0
-    - _SurfaceMoveSpeed: 1.2
+    - _SurfaceMoveSpeed: 1
     m_Colors:
-    - _BorderColor: {r: 0.4751377, g: 0, b: 1, a: 0}
-    - _Color: {r: 0.07497215, g: 0, b: 1, a: 0}
+    - _BorderColor: {r: 0.11619663, g: 0, b: 1, a: 0}
+    - _Color: {r: 0, g: 0.24857283, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

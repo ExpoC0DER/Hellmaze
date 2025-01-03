@@ -19,6 +19,7 @@ public class WeaponSlots : MonoBehaviour
 	bool isPlayer = true;
 	bool isDead = false;
 	public event Action<int> OnAmmoChange;
+	public event Action<int> OnWeaponChange;
 	[SerializeField] List<KeyCode> keyBinds;
 	
 	
@@ -160,6 +161,7 @@ public class WeaponSlots : MonoBehaviour
 				OnAmmoChange?.Invoke(_currentGun.Value.Ammo);
 			}  
 		}
+		OnWeaponChange?.Invoke(currentWeaponIndex);
 	}
 	void SwitchToWeaponWithAmmo()
 	{
@@ -243,6 +245,16 @@ public class WeaponSlots : MonoBehaviour
 		{
 			weaponObjects[i].SetActive(false);
 		}
+	}
+	
+	public bool[] GunsThatHaveAmmo()
+	{
+		bool[] gunsThatHaveAmmo = new bool[_guns.Length];
+		for (int i = 0; i < _guns.Length; i++)
+		{
+			gunsThatHaveAmmo[i] = _guns[i].Value.Ammo != 0;
+		}
+		return gunsThatHaveAmmo;
 	}
 	
 	void OnDeath()

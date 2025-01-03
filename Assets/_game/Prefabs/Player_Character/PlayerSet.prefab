@@ -254,7 +254,7 @@ MonoBehaviour:
   - {fileID: 7612522278336746826}
   - {fileID: 1228179561094710979}
   autoSwitch: 1
-  keyBinds: 31000000320000003300000034000000
+  keyBinds: 31000000320000003300000034000000350000003600000037000000380000003900000030000000700000006f000000690000007500000068000000
   innaccuracy: 1
   damage_multiplier: 0.5
   WeaponToSwitchIndex: 0
@@ -2339,6 +2339,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8900756717494646805, guid: f423d2618fd383b4792ac4b2e6124342, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8909918268178293095, guid: f423d2618fd383b4792ac4b2e6124342, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -3144,6 +3148,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4762867068819042787, guid: f392175191b770d49a3cc3024e43b426, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6258954520260943202, guid: f392175191b770d49a3cc3024e43b426, type: 3}
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}

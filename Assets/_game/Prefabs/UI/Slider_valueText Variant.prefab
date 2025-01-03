@@ -130,7 +130,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 242.2682, y: 0, z: 0, w: 0}
+  m_margin: {x: 242.2682, y: 0, z: -52.020477, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -318,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 5404975585748369333}
   text: {fileID: 4923443620865133794}
+  extraText: 
 --- !u!114 &5404975585748369333 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6339828053068337777, guid: 783cb7e767623cb439992b6064a5a271, type: 3}
