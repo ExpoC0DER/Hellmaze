@@ -2020,9 +2020,9 @@ RectTransform:
   - {fileID: 3022815575327326629}
   - {fileID: 2449793803716108151}
   - {fileID: 6027954787839646281}
-  - {fileID: 2744476416201268693}
   - {fileID: 4381374598064475320}
   - {fileID: 9004005522742533987}
+  - {fileID: 2744476416201268693}
   m_Father: {fileID: 2257536917239743176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2058,7 +2058,7 @@ MonoBehaviour:
   MapPreset_Dropdown: {fileID: 1702997496179703228}
   GameMode: 0
   GameMode_Dropdown: {fileID: 5442132084406896536}
-  ObjectiveInfo_text: {fileID: 0}
+  ObjectiveInfo_text: {fileID: 7600641809149949220}
   Pickup_Count: 20
   Pickup_Count_Slider: {fileID: 612839740114080314}
   HealthPickup_Count: 6
@@ -5308,15 +5308,15 @@ PrefabInstance:
       objectReference: {fileID: 3905294100974116938}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Text
-      value: Snow
+      value: Classic
       objectReference: {fileID: 0}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: Snow
+      value: Floor is Lava
       objectReference: {fileID: 0}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
@@ -5329,7 +5329,7 @@ PrefabInstance:
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Image
       value: 
-      objectReference: {fileID: 21300000, guid: d35f019542ceca447a6ef38be7dff18e, type: 3}
+      objectReference: {fileID: 21300000, guid: 12d84206b936130428259a9313c24fb8, type: 3}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Image
       value: 
@@ -17220,7 +17220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5404975585748369333, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_Value
-      value: 2
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5404975585748369333, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
@@ -17352,7 +17352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7830719178039345933, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7830719178039345933, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -17360,7 +17360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7851475042444141467, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7851475042444141467, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -17368,7 +17368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7851475042444141467, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19760,7 +19760,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5404975585748369333, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_Value
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5404975585748369333, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_MaxValue
@@ -19872,7 +19872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7830719178039345933, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.26666668
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7830719178039345933, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -19880,7 +19880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7851475042444141467, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.26666668
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7851475042444141467, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -19888,7 +19888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7851475042444141467, guid: 2d40e2a53628d704bb5ea6405acb694b, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.26666668
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -54,7 +54,6 @@ public class ParticleProjectile : MonoBehaviour
 				{
 					dest.TakeDamage(projectileGun.GetDamage(), projectileGun.Source, projectileGun.WeaponIndex);
 				}
-				
 			}
 		}
 		

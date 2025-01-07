@@ -18,7 +18,7 @@ public class MapSettings : MonoBehaviour
 	public Slider FloorChangeSpeed_Slider;
 	
 	[Header("Bots")]
-	public int BotCount = 5;
+	public int BotCount = 3;
 	public void SetBotCount(float value) => BotCount = (int)value;
 	public Slider BotCount_Slider;
 	public int BotDifficulty = 1;
@@ -27,10 +27,8 @@ public class MapSettings : MonoBehaviour
 	
 	[Header("Preset")]
 	public int MapPreset = 0;
-	public void SetMapPreset(float value) => MapPreset = (int)value;
 	public TMP_Dropdown MapPreset_Dropdown;
 	public int GameMode = 0;
-	public void SetGameMode(int value) => GameMode = value;
 	public TMP_Dropdown GameMode_Dropdown;
 	public TextMeshProUGUI ObjectiveInfo_text;
 	
@@ -206,6 +204,7 @@ public class MapSettings : MonoBehaviour
 	
 	public void SetMapPreset(int index)
 	{
+		MapPreset = index;
 		//add ambiant music when ready
 		//also add object probabilities based on locations
 		switch (index)
@@ -268,6 +267,68 @@ public class MapSettings : MonoBehaviour
 			
 			break;
 		}
+	}
+	
+	public void SetGameMode(int value)
+	{
+		GameMode = value;
+		string objective = "<b>Objective</b>\n";
+		switch(value)
+		{
+			case 0: // classic timed dm
+			GameMode_Classic();
+			objective += "Kill as many enemies as possible within time limit in ever changing maze";
+			break;
+			
+			case 1: // floor is lava
+			GameMode_FloorIsLava();
+			objective += "Kill as many enemies as possible within time limit in ever changing maze. The Floor is Lava!";
+			break;
+			
+			default:
+			GameMode_Classic(); 
+			objective += "Kill as many enemies as possible within time limit in ever changing maze";
+			break;
+		}
+		
+		ObjectiveInfo_text.text = objective;
+	}
+	
+	void GameMode_FloorIsLava()
+	{
+		Wall_prob_Slider.value = 60;
+		FullWall_prob_Slider.value = 10;
+		CrouchSpace_Prob_Slider.value = 0;
+		GrapplingHook_Prob_Slider.value = 30;
+		DestructableWall_Prob_Slider.value = 5;
+		GlassWall_prob_Slider.value = 15;
+		
+		Floor_prob_Slider.value = 40;
+		FullFloor_prob_Slider.value = 5;
+		AcidFloor_prob_Slider.value = 0;
+		LavaFloor_prob_Slider.value = 30;
+		DestructableFloor_prob_Slider.value = 2;
+		GlassFloor_prob_Slider.value = 3;
+		
+		Gravity_Slider.value = -5;
+	}
+	void GameMode_Classic()
+	{
+		Wall_prob_Slider.value = 60;
+		FullWall_prob_Slider.value = 10;
+		CrouchSpace_Prob_Slider.value = 0;
+		GrapplingHook_Prob_Slider.value = 30;
+		DestructableWall_Prob_Slider.value = 5;
+		GlassWall_prob_Slider.value = 15;
+		
+		Floor_prob_Slider.value = 40;
+		FullFloor_prob_Slider.value = 5;
+		AcidFloor_prob_Slider.value = 0;
+		LavaFloor_prob_Slider.value = 30;
+		DestructableFloor_prob_Slider.value = 2;
+		GlassFloor_prob_Slider.value = 3;
+		
+		Gravity_Slider.value = -9.81f;
 	}
 	
 }

@@ -19,7 +19,7 @@ namespace _game.Scripts
 		[SerializeField] private TMP_Text _timerText;
 		//[SerializeField] private TMP_Text _killCountText;
 		[SerializeField] private Button _restartBtn;
-		
+		[SerializeField] private ResultScreen resultScreen;
 		[SerializeField] private Image _crosshair;
 		
 		private int _seconds = 0;
@@ -78,9 +78,10 @@ namespace _game.Scripts
 			{
 				_restartBtn.onClick.AddListener(() =>
 				{
-					SceneManager.LoadScene(0);
+					GameManager.main.LoadScene(0);
 				});
 				_restartBtn.gameObject.SetActive(true);
+				resultScreen.DisplayEndGameResults();
 			}
 		}
 

@@ -569,6 +569,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ce2dde6f5758b4a8d8399763ffaf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField: 70
+  <MaxHealth>k__BackingField: 70
+  <IsDead>k__BackingField: 0
+  isFloor: 0
   die_part: {fileID: 7378308354324175972}
   meshRenderer: {fileID: 6605963732620572557}
   obstacle: {fileID: 3578583983552979547}
@@ -882,6 +886,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ce2dde6f5758b4a8d8399763ffaf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField: 70
+  <MaxHealth>k__BackingField: 70
+  <IsDead>k__BackingField: 0
+  isFloor: 0
   die_part: {fileID: 3205319965670701674}
   meshRenderer: {fileID: 8701350013659336931}
   obstacle: {fileID: 1027532138813113953}

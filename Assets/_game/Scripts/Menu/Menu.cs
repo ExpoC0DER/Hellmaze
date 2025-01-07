@@ -21,7 +21,7 @@ public class Menu : MonoBehaviour
 	{
 		if(main != null)
 		{
-			Destroy(this.gameObject);
+			Destroy(transform.parent.gameObject);
 		}else
 		{
 			main = this;
@@ -111,6 +111,7 @@ public class Menu : MonoBehaviour
 	
 	void Reload()
 	{
+		//Debug.Log("reloaded menu and main menu is " + GameManager.main.isMainMenu);
 		mainmenu_visual.SetActive(GameManager.main.isMainMenu);
 		pausemenu_visual.SetActive(!GameManager.main.isMainMenu);
 		SetButtons();
@@ -118,7 +119,7 @@ public class Menu : MonoBehaviour
 		if(GameManager.main.isMainMenu) SetMainMenu_Functionality();
 	}
 	
-	void OnDisable()
+	void OnDestroy()
 	{
 		GameManager.main.OnSceneLoad -= Reload;
 	}

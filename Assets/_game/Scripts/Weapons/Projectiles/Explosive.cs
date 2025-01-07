@@ -45,7 +45,7 @@ public class Explosive : MonoBehaviour
 		{
 			Transform obj = cols[i].transform;
 			Collider _col = cols[i];
-			
+			/*
 			if(Physics.Raycast(transform.position, (_col.transform.position - transform.position).normalized, out RaycastHit hitInfo))
 			{
 				if(hitInfo.transform != obj)
@@ -61,11 +61,14 @@ public class Explosive : MonoBehaviour
 				LG_tools.DrawPoint(transform.position,60, Color.green);
 				LG_tools.DrawPoint(_col.transform.position,60, Color.red);
 				LG_tools.DrawLine(transform.position, hitInfo.point, Color.yellow);
-			}
+			}*/
+			
+			float distance = Vector3.Distance(transform.position, _col.ClosestPoint(transform.position));
+			float distanceRatio = Mathf.InverseLerp(0, expl_radius, distance);
 			
 			if(obj.TryGetComponent(out Rigidbody rb))
 			{
-				float distanceRatio = Mathf.InverseLerp(0, expl_radius, Vector3.Distance(transform.position, _col.ClosestPoint(transform.position)));
+				
 				float force = Mathf.Lerp(expl_force, 0, distanceRatio);
 				
 				if(expl_force != 0)
@@ -85,18 +88,15 @@ public class Explosive : MonoBehaviour
 					//rb.AddExplosionForce(expl_force, transform.position, expl_radius);
 					
 				}
-				
-				if(obj.transform.TryGetComponent(out IDestructable destructable))
-				{
-					float damage = Mathf.Lerp(_damage, 0, distanceRatio);
-					destructable.TakeDamage(damage, _source, _weaponIndex);
-				}
-				
-			}else
+			}
+			
+			if(obj.transform.TryGetComponent(out IDestructable destructable))
 			{
-				continue;
+				float damage;
+				if(distance <= 1) damage = _damage;
+				else damage = Mathf.Lerp(_damage, 0, distanceRatio);
+				destructable.TakeDamage(damage, _source, _weaponIndex);
 			}
 		}
 	}
-	
 }

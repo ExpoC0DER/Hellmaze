@@ -181,7 +181,7 @@ namespace _game.Scripts
 			UpdateIndicators();
 			if (Application.isPlaying)
 			{
-				print("up");
+				//print("up");
 				UpdateWalls(force: true);
 			}
 		}

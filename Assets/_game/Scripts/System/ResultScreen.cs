@@ -13,6 +13,8 @@ public class ResultScreen : MonoBehaviour
 	
 	List<PlayerScore> playerScores = new List<PlayerScore>();
 	
+	bool endGame = false;
+	
 	void Start()
 	{
 		SwitchResults(false);
@@ -20,6 +22,7 @@ public class ResultScreen : MonoBehaviour
 	
 	void Update()
 	{
+		if(endGame) return;
 		if(Input.GetKeyDown(key))
 		{
 			SwitchResults(true);
@@ -34,6 +37,12 @@ public class ResultScreen : MonoBehaviour
 	{
 		_resultScreen_object.SetActive(on);
 		if(on) RefreshResults();
+	}
+	
+	public void DisplayEndGameResults()
+	{
+		endGame = true;
+		SwitchResults(true);
 	}
 	
 	void RefreshResults()

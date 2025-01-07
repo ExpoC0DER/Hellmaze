@@ -5530,6 +5530,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ce2dde6f5758b4a8d8399763ffaf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField: 70
+  <MaxHealth>k__BackingField: 70
+  <IsDead>k__BackingField: 0
   isFloor: 1
   die_part: {fileID: 6474444536079019518}
   meshRenderer: {fileID: 1855361220806439700}
@@ -5782,6 +5785,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ce2dde6f5758b4a8d8399763ffaf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField: 70
+  <MaxHealth>k__BackingField: 70
+  <IsDead>k__BackingField: 0
   isFloor: 1
   die_part: {fileID: 8168138709802780532}
   meshRenderer: {fileID: 6246800305796460028}

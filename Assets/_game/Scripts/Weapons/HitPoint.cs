@@ -26,7 +26,7 @@ namespace _game.Scripts
 		void OnEnable()
 		{
 			FMODHelper.PlayNewInstance(sfx[Random.Range(0, sfx.Length)], transform.position);
-			Debug.Log(transform.position);
+			//Debug.Log(transform.position);
 		}
 	}
 }

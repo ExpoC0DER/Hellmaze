@@ -96,4 +96,12 @@ public class PlayerDatabase : MonoBehaviour
 		}
 	}
 	
+	public void SetMapGravityToPlayers(float gravity_y)
+	{
+		foreach (PlayerStats player in players)
+		{
+			player.SetPlayerGravity(gravity_y);
+		}
+	}
+	
 }

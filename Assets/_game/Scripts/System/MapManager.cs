@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _game.Scripts;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MapManager : MonoBehaviour
 {
@@ -101,6 +102,7 @@ public class MapManager : MonoBehaviour
 		RenderSettings.fogStartDistance = 1;
 		RenderSettings.fogEndDistance = 100 - settings.FogStrength;
 		RenderSettings.fogColor = new Color(settings.FogColor_r, settings.FogColor_g, settings.FogColor_b);
+		RenderSettings.ambientMode = AmbientMode.Skybox;
 		if(settings.SkyboxIndex == 7) // 7 is index of night
 		{
 			RenderSettings.ambientIntensity = 2.5f;
@@ -114,11 +116,13 @@ public class MapManager : MonoBehaviour
 		}
 		DynamicGI.UpdateEnvironment();
 		
+		
 		SpawnBots();
 		//set bots with difficulty
 		
 		//update playerdatabase
 		GameManager.main.playerDatabase.FirstSetup();
+		GameManager.main.playerDatabase.SetMapGravityToPlayers(settings.gravity);
 	}
 	
 	void SpawnPickups()

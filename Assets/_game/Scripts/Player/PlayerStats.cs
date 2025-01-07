@@ -28,7 +28,7 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	int mapCellScale = 4;
 	int mapCellCount = 20;
 	
-	int[] instaGibWeaponIndexes = {2, 3};
+	int[] instaGibWeaponIndexes = {2, 8, 9, 10, 11, 12, 13, 14};
 	
 	[SerializeField] ParticleSystem blood_part;
 	[SerializeField] ParticleSystem gib_part;
@@ -59,8 +59,12 @@ public class PlayerStats : MonoBehaviour, IDestructable
 		if(Health <= 0 && !IsDead)
 		{
 			Die();
-			UpdateKillFeed?.Invoke(source.playerName, weaponIndex, playerName);
-			source.IncreaseKillCount();
+			if(source)
+			{
+				UpdateKillFeed?.Invoke(source.playerName, weaponIndex, playerName);
+				source.IncreaseKillCount();
+			} 
+			else UpdateKillFeed?.Invoke(playerName, weaponIndex, " ");
 			deaths++;
 		}
 		
@@ -188,6 +192,12 @@ public class PlayerStats : MonoBehaviour, IDestructable
 		if(!isPlayer) return;
 		playerName = name;
 		Debug.Log("event name passed");
+	}
+	
+	public void SetPlayerGravity(float gravity_y)
+	{
+		if(!isPlayer) return;
+		playerController.gravity = gravity_y;
 	}
 	
 	

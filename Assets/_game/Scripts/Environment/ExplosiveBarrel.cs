@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ExplosiveBarrel : Explosive, IDestructable
 {
-	public float Health { get; set; } = 50;
-	public float MaxHealth { get; set; } = 50;
+	[field: SerializeField] public float Health { get; set; } = 50;
+	[field: SerializeField] public float MaxHealth { get; set; } = 50;
 	public bool IsDead  { get; set; } = false;
 
 	public void Die()

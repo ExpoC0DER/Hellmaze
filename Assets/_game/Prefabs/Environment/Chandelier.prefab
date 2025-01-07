@@ -1595,6 +1595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2771943e3abc8e49990d4aead316b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Health>k__BackingField: 30
+  <MaxHealth>k__BackingField: 30
   rb: {fileID: 3189773790933354911}
   damagingFloor: {fileID: 4125058417191956467}
   dmgFloor_col: {fileID: 0}

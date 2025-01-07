@@ -10,7 +10,7 @@ namespace _game.Scripts
 		public PlayerDatabase playerDatabase;
 		public bool isMainMenu {get; private set;} = true;
 		
-		private float _timer = 180f;
+		private float _timer;
 
 		public event Action<float> OnTimerChange;
 		public event Action OnSceneLoad;
@@ -28,21 +28,27 @@ namespace _game.Scripts
 				main = this;
 			}
 			DontDestroyOnLoad(this.gameObject);
-			
 			Time.timeScale = 1;
 		}
 
 		private void Update()
 		{
-			_timer -= Time.deltaTime;
-			OnTimerChange?.Invoke(_timer);
-			if (_timer <= 0)
+			if(_timer >= 0)
 			{
-				Cursor.visible = true;
-				Cursor.lockState = CursorLockMode.None;
-				Time.timeScale = 0;
+				_timer -= Time.deltaTime;
+				OnTimerChange?.Invoke(_timer);
+				if (_timer <= 0)
+				{
+					Cursor.visible = true;
+					Cursor.lockState = CursorLockMode.None;
+					Time.timeScale = 0;
+				}
 			}
+		}
 		
+		public void SetTimer(float gameTime)
+		{
+			_timer = gameTime;
 		}
 		
 		public void LoadScene(string name)
@@ -51,6 +57,7 @@ namespace _game.Scripts
 			SceneManager.LoadScene(name);
 			isMainMenu = name == "MainMenu";
 			OnSceneLoad?.Invoke();
+			SetupGameManager();
 		}
 		public void LoadScene(int index)
 		{
@@ -58,6 +65,14 @@ namespace _game.Scripts
 			SceneManager.LoadScene(index);
 			isMainMenu = index == 0;
 			OnSceneLoad?.Invoke();
+			SetupGameManager();
+		}
+		
+		void SetupGameManager()
+		{
+			Time.timeScale = 1;
+			if(isMainMenu) SetTimer(-1);
+			else SetTimer(120);
 		}
 	}
 }

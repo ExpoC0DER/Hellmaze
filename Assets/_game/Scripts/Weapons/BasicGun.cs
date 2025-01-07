@@ -171,7 +171,7 @@ namespace _game.Scripts
 						if(hit.transform == Source.transform)
 						{
 							orig += orig + dir * 0.15f;
-							Debug.Log("hit self");
+							//Debug.Log("hit self");
 							LG_tools.DrawPoint(orig, 10, Color.red);
 						}else
 						{

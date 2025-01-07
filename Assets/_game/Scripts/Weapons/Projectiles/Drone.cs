@@ -92,18 +92,18 @@ public class Drone :  Explosive, IProjectile, IDestructable
 			if(!attackParticleProjectile.isPlaying)
 			{
 				attackParticleProjectile.Play();
-				Debug.Log("A attack");
+				//Debug.Log("A attack");
 			}
 			seeTarget = true;
-			Debug.Log("A see player");
+			//Debug.Log("A see player");
 		}else
 		{
-			Debug.Log("R not see player");
+			//Debug.Log("R not see player");
 			seeTarget = false;
 			if(attackParticleProjectile.isPlaying)
 			{
 				attackParticleProjectile.Stop();
-				Debug.Log("R no attack");
+				//Debug.Log("R no attack");
 			}
 			if(roamPos != Vector3.zero)
 			{
@@ -114,13 +114,13 @@ public class Drone :  Explosive, IProjectile, IDestructable
 				if(distance < collisionCheckRadius)
 				{
 					roamPos = Vector3.zero;
-					Debug.Log("R close roam elsewhere");
+					//Debug.Log("R close roam elsewhere");
 				}
 				
 			}else
 			{
 				roamPos = GetRandomPos();
-				Debug.Log("R get random pos");
+				//Debug.Log("R get random pos");
 			}
 		}
 		

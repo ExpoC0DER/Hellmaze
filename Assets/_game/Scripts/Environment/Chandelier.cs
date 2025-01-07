@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Chandelier : MonoBehaviour, IDestructable
 {
-	public float Health { get; set; } = 100;
-	public float MaxHealth { get; set; } = 100;
+	[field: SerializeField] public float Health { get; set; } = 100;
+	[field: SerializeField] public float MaxHealth { get; set; } = 100;
 	public bool IsDead { get; set; } = false;
 	
 	[SerializeField] Rigidbody rb;
