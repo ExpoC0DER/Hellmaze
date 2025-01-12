@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using FMODUnity;
+using _game.Scripts;
 public class StickyBomb : Explosive, IProjectile, IDestructable
 {
 	[HideInInspector] public float Damage { get; set; }
@@ -14,7 +15,7 @@ public class StickyBomb : Explosive, IProjectile, IDestructable
 	[SerializeField] Rigidbody rb;
 	[SerializeField] float init_force = 10;
 	[SerializeField] GameObject laserTrigger;
-	
+	[SerializeField] EventReference setup_sound;
 	bool setup = false;
 	
 	public void Initialize(PlayerStats source, float damage, int weaponIndex, string poolName)
@@ -68,11 +69,12 @@ public class StickyBomb : Explosive, IProjectile, IDestructable
 	
 	void OnCollisionEnter(Collision other)
 	{
-		if(!setup)
+		if(!setup && (other.collider.tag != "Player" || other.collider.tag != "Bot"))
 		{
 			rb.isKinematic = true;
 			transform.rotation = Quaternion.LookRotation(other.GetContact(0).normal);
 			laserTrigger.SetActive(true);
+			FMODHelper.PlayNewInstance(setup_sound, transform);
 			setup = true;
 		}
 	}

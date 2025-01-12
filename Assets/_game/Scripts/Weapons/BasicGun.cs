@@ -127,7 +127,7 @@ namespace _game.Scripts
 			noAmmoClicked = false;
 			if (FMODHelper.InstanceIsPlaying(_automaticSound))
 			{
-				_automaticSound.setParameterByName("Parameter 1", 0);
+				_automaticSound.setParameterByName("Parameter 1", 2);
 				_automaticSound.release();
 			}
 			if(muzzleFlash_part) muzzleFlash_part?.Stop();

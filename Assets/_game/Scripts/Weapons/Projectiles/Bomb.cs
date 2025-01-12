@@ -68,7 +68,7 @@ public class Bomb : Explosive, IProjectile
 	
 	IEnumerator ExplosiveRoutine()
 	{
-		yield return new WaitForSeconds(0.3f);
+		yield return new WaitForSeconds(0.1f);
 		onTrigger = true;
 		yield return new WaitForSeconds(detonation_time);
 		Explode();
@@ -77,7 +77,7 @@ public class Bomb : Explosive, IProjectile
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Player") || other.CompareTag("Bot") && onTrigger)
+		if(other.TryGetComponent(out IDestructable dest) && onTrigger)
 		{
 			Explode();
 		}
@@ -87,7 +87,7 @@ public class Bomb : Explosive, IProjectile
 	{
 		PlayBounceSound();
 		//Debug.Log("explode on col: " + other.gameObject.tag, other.gameObject);
-		if((other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot")) && onTrigger)
+		if(other.gameObject.TryGetComponent(out IDestructable dest) && onTrigger)
 		{
 			Explode();
 		}

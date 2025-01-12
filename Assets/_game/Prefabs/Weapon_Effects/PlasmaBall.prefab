@@ -127,11 +127,11 @@ MonoBehaviour:
   visual_model: {fileID: 6755223700321287676}
   _explosion_sfx:
     Guid:
-      Data1: -254724156
-      Data2: 1250325612
-      Data3: 2139301297
-      Data4: 1581390985
-    Path: event:/weapon_sfx/Rocket Launcher (Explosion)
+      Data1: 922128280
+      Data2: 1176756109
+      Data3: 1996937401
+      Data4: -1601149768
+    Path: event:/weapon_sfx/weaponspack/Plasma_explode
   explosion_part: {fileID: 1713912007526751030}
   rb: {fileID: 4314416838752032319}
   init_force: 22

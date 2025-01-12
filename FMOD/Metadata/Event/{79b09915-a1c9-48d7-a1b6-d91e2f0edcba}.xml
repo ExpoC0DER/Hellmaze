@@ -70,9 +70,6 @@
 		<relationship name="modules">
 			<destination>{1f37d3c5-dc43-4c4b-a7a7-9f5409ba55c0}</destination>
 		</relationship>
-		<relationship name="markers">
-			<destination>{87ec2030-c414-4d5c-b576-604e4e6de006}</destination>
-		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f46142af-4a61-4dfe-9124-31289ae4fbed}">
 		<relationship name="effectChain">
@@ -93,7 +90,7 @@
 	<object class="MixerBusPanner" id="{1bb7d1b1-791a-4278-bf0b-016c1f1d152c}" />
 	<object class="SingleSound" id="{1f37d3c5-dc43-4c4b-a7a7-9f5409ba55c0}">
 		<property name="length">
-			<value>2.5861224489795918</value>
+			<value>1.75</value>
 		</property>
 		<relationship name="fadeInCurve">
 			<destination>{e67bc561-37ca-42de-b415-3b834f18462c}</destination>
@@ -117,20 +114,6 @@
 		</relationship>
 		<relationship name="output">
 			<destination>{f46142af-4a61-4dfe-9124-31289ae4fbed}</destination>
-		</relationship>
-	</object>
-	<object class="LoopRegion" id="{87ec2030-c414-4d5c-b576-604e4e6de006}">
-		<property name="position">
-			<value>0.050000000000000003</value>
-		</property>
-		<property name="length">
-			<value>1.7</value>
-		</property>
-		<relationship name="timeline">
-			<destination>{bcaec3d0-1550-4056-8c7b-f725a4f5d4dc}</destination>
-		</relationship>
-		<relationship name="markerTrack">
-			<destination>{f8b7d33e-a26b-421a-bb7b-a3691f830299}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{b3140085-ec35-4cf2-ab8b-7b308c3efe97}">
@@ -187,18 +170,18 @@
 	</object>
 	<object class="AutomationPoint" id="{b2d811d6-8213-4481-a515-45c86f2cbd10}">
 		<property name="position">
-			<value>0.40000000000000002</value>
+			<value>0</value>
 		</property>
 		<property name="value">
 			<value>1</value>
 		</property>
 		<property name="curveShape">
-			<value>0.25471893</value>
+			<value>0.25471887</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{7b1be168-0f9e-4e46-82d2-a7483438ce24}">
 		<property name="position">
-			<value>2.5861224489795918</value>
+			<value>1.75</value>
 		</property>
 		<property name="value">
 			<value>0</value>

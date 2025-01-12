@@ -286,12 +286,21 @@ MonoBehaviour:
   visual_model: {fileID: 6541765103223376535}
   _explosion_sfx:
     Guid:
-      Data1: 2055427326
-      Data2: 1079471654
-      Data3: 732779959
-      Data4: 160156971
-    Path: event:/environmental_sfx/Explosion small
+      Data1: 1595923166
+      Data2: 1108493645
+      Data3: 1407318424
+      Data4: -6485985
+    Path: event:/environmental_sfx/MapObjects/BunkerLight_explode
   explosion_part: {fileID: 6692972867055058752}
+  <Health>k__BackingField: 50
+  <MaxHealth>k__BackingField: 50
+  damage_sfx:
+    Guid:
+      Data1: -136858051
+      Data2: 1246967164
+      Data3: -924900720
+      Data4: 2144779318
+    Path: event:/environmental_sfx/MapObjects/BunkerLight_shot
 --- !u!1 &6541765103223376535
 GameObject:
   m_ObjectHideFlags: 0

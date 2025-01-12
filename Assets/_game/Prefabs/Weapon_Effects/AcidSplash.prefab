@@ -29856,6 +29856,13 @@ MonoBehaviour:
   init_force: 10
   splashObj: {fileID: 5588639735761858699}
   visualObj: {fileID: 141132459046608011}
+  setup_sound:
+    Guid:
+      Data1: 1004118368
+      Data2: 1283792534
+      Data3: 1858824345
+      Data4: 404431986
+    Path: event:/weapon_sfx/weaponspack/AcidBall_splash
 --- !u!1 &7655497377387412364
 GameObject:
   m_ObjectHideFlags: 0

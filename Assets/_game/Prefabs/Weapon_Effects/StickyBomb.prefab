@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expl_radius: 5
   expl_force: 5
+  explosionDec_poolName: explosion_dec
   _damage: 0
   _weaponIndex: 0
   visual_model: {fileID: 2910918633875068861}
@@ -116,6 +117,13 @@ MonoBehaviour:
   rb: {fileID: 1613778736382524389}
   init_force: 10
   laserTrigger: {fileID: 6886810973444169544}
+  setup_sound:
+    Guid:
+      Data1: 957980737
+      Data2: 1097256914
+      Data3: 1636164494
+      Data4: -1008061434
+    Path: event:/weapon_sfx/weaponspack/Tripmine_place
 --- !u!1 &6886810973444169544
 GameObject:
   m_ObjectHideFlags: 0

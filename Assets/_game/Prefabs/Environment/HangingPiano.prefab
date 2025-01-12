@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 1476786316121114418}
   - component: {fileID: 7139506869540012531}
   - component: {fileID: 3364282733931454625}
+  - component: {fileID: 7427466153038166530}
   m_Layer: 0
   m_Name: DamagingFloor
   m_TagString: Untagged
@@ -215,8 +216,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.9999999, y: 1.4064795, z: 0.9999999}
+  m_Center: {x: 0, y: -0.20323914, z: 0}
 --- !u!114 &3364282733931454625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +234,33 @@ MonoBehaviour:
   _damage: 25
   _damageInterval: 0.05
   _weaponIndex: 16
+  damage_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &7427466153038166530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025941938346141955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f189b2f3c3e48cc4d8ac559117e9c035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx:
+    Guid:
+      Data1: -2029896187
+      Data2: 1230133296
+      Data3: 1932537762
+      Data4: -171818163
+    Path: event:/environmental_sfx/MapObjects/PainoFall
+  playOnce: 1
 --- !u!1 &2707342526563451081
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +516,14 @@ MonoBehaviour:
   rb: {fileID: 4768371391003207836}
   damagingFloor: {fileID: 3364282733931454625}
   dmgFloor_col: {fileID: 7139506869540012531}
+  chainBreak_sfx:
+    Guid:
+      Data1: 2024374966
+      Data2: 1216951246
+      Data3: 1917128070
+      Data4: -989353604
+    Path: event:/environmental_sfx/MapObjects/ChainBreak
+  playAudioOnCollision: {fileID: 7427466153038166530}
 --- !u!1 &6769210558090261082
 GameObject:
   m_ObjectHideFlags: 0

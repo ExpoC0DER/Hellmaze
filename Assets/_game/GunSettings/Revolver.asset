@@ -20,11 +20,11 @@ MonoBehaviour:
   <FiringMode>k__BackingField: 0
   <ManualSound>k__BackingField:
     Guid:
-      Data1: -1202842815
-      Data2: 1086773430
-      Data3: -1486765901
-      Data4: -1793374549
-    Path: event:/weapon_sfx/Pistol
+      Data1: -1124436180
+      Data2: 1090811294
+      Data3: -318718025
+      Data4: 681172187
+    Path: event:/weapon_sfx/weaponspack/Revolver_shot
   <AutomaticSound>k__BackingField:
     Guid:
       Data1: -946288374

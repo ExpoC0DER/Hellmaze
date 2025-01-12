@@ -5,7 +5,7 @@
 			<value>Grenade_bounce</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{160c104a-d133-444b-be92-b7492f1308c8}</destination>
@@ -113,6 +113,7 @@
 	<object class="MixerBusEffectChain" id="{2692a2eb-3db8-4268-98c4-c1ebd012171c}">
 		<relationship name="effects">
 			<destination>{719ac66e-78a1-4549-9829-bad18b79fbdb}</destination>
+			<destination>{dc560c73-134c-4054-b439-804b6532a52f}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{c68abe38-ad3e-4e63-a4be-24159e3ed104}" />
@@ -124,5 +125,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{655bb2ba-0868-4574-85db-3d450c5a2a69}" />
 	<object class="MixerBusFader" id="{719ac66e-78a1-4549-9829-bad18b79fbdb}" />
+	<object class="SpatialiserEffect" id="{dc560c73-134c-4054-b439-804b6532a52f}" />
 	<object class="MixerBusFader" id="{1b3049a3-bfdb-4bcd-84a5-e4ec5c4b64ae}" />
 </objects>

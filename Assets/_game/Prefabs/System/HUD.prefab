@@ -2193,6 +2193,20 @@ MonoBehaviour:
   key: 9
   scorePrefab: {fileID: 4501160243537952459, guid: a9d070d8965a8bd47a9167554ffdf5f7, type: 3}
   scoreParent: {fileID: 463207054576556435}
+  matchFinish_sfx:
+    Guid:
+      Data1: -626349888
+      Data2: 1326051500
+      Data3: -394845046
+      Data4: -465828114
+    Path: event:/ambiance_sfx/Results
+  matchStart_sfx:
+    Guid:
+      Data1: 1007918672
+      Data2: 1316645594
+      Data3: 1250247594
+      Data4: -1273106350
+    Path: event:/ambiance_sfx/Time_up
 --- !u!1 &4536559169413758806
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,18 +20,18 @@ MonoBehaviour:
   <FiringMode>k__BackingField: 0
   <ManualSound>k__BackingField:
     Guid:
-      Data1: -1630227071
-      Data2: 1186346894
-      Data3: 361309620
-      Data4: 495927920
-    Path: event:/weapon_sfx/Grenade Launcher (shot)
+      Data1: -973267222
+      Data2: 1262750500
+      Data3: 1783834271
+      Data4: -1139693194
+    Path: event:/weapon_sfx/weaponspack/Drone_launch
   <AutomaticSound>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -973267222
+      Data2: 1262750500
+      Data3: 1783834271
+      Data4: -1139693194
+    Path: event:/weapon_sfx/weaponspack/Drone_launch
   <NoAmmoSound>k__BackingField:
     Guid:
       Data1: -1829521505

@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 1173944469330230430}
   - component: {fileID: 1034633204661907862}
   - component: {fileID: 4125058417191956467}
+  - component: {fileID: 2203968526339487038}
   m_Layer: 0
   m_Name: DamagingFloor
   m_TagString: Untagged
@@ -354,6 +355,33 @@ MonoBehaviour:
   _damage: 25
   _damageInterval: 0.05
   _weaponIndex: 16
+  damage_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &2203968526339487038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000747647724694309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f189b2f3c3e48cc4d8ac559117e9c035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx:
+    Guid:
+      Data1: -1754057822
+      Data2: 1163083080
+      Data3: -575691636
+      Data4: -2109187970
+    Path: event:/environmental_sfx/MapObjects/ChandelierFall
+  playOnce: 1
 --- !u!1 &1409382420753130716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,7 +1627,15 @@ MonoBehaviour:
   <MaxHealth>k__BackingField: 30
   rb: {fileID: 3189773790933354911}
   damagingFloor: {fileID: 4125058417191956467}
-  dmgFloor_col: {fileID: 0}
+  dmgFloor_col: {fileID: 1034633204661907862}
+  chainBreak_sfx:
+    Guid:
+      Data1: 2024374966
+      Data2: 1216951246
+      Data3: 1917128070
+      Data4: -989353604
+    Path: event:/environmental_sfx/MapObjects/ChainBreak
+  playAudioOnCollision: {fileID: 2203968526339487038}
 --- !u!1 &8938389145609645555
 GameObject:
   m_ObjectHideFlags: 0

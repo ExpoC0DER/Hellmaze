@@ -20,18 +20,18 @@ MonoBehaviour:
   <FiringMode>k__BackingField: 1
   <ManualSound>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1064592068
+      Data2: 1192173419
+      Data3: 1734379706
+      Data4: 421525909
+    Path: event:/weapon_sfx/weaponspack/AcidBall_shot
   <AutomaticSound>k__BackingField:
     Guid:
-      Data1: -1630227071
-      Data2: 1186346894
-      Data3: 361309620
-      Data4: 495927920
-    Path: event:/weapon_sfx/Grenade Launcher (shot)
+      Data1: -1064592068
+      Data2: 1192173419
+      Data3: 1734379706
+      Data4: 421525909
+    Path: event:/weapon_sfx/weaponspack/AcidBall_shot
   <NoAmmoSound>k__BackingField:
     Guid:
       Data1: -650306901

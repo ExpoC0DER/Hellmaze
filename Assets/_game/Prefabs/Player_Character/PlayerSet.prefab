@@ -176,6 +176,13 @@ MonoBehaviour:
   _cameraHeadTarget_col: {fileID: 6173771405798141233}
   _camera: {fileID: 51239242934578047}
   _model: {fileID: 0}
+  grapple_sfx:
+    Guid:
+      Data1: 2041616661
+      Data2: 1222091209
+      Data3: 517584545
+      Data4: -1159983569
+    Path: event:/environmental_sfx/Grappling_Hook
   jumpHeight: 2
   gravity: -9.81
   mass: 1
@@ -205,6 +212,13 @@ MonoBehaviour:
   playerController: {fileID: 1246210167618490971}
   blood_part: {fileID: 3517494541087916123}
   gib_part: {fileID: 3036394154421480198}
+  gib_sfx:
+    Guid:
+      Data1: -1097665417
+      Data2: 1317319966
+      Data3: -987569019
+      Data4: 1379384607
+    Path: event:/environmental_sfx/Gib
   godMode: 0
 --- !u!114 &6533229248820790247
 MonoBehaviour:
@@ -1095,7 +1109,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 291824988599342815, guid: f3ae914276a057f439fbb71f069ebd5b, type: 3}
       propertyPath: <Ammo>k__BackingField
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2032052951989867820, guid: f3ae914276a057f439fbb71f069ebd5b, type: 3}
       propertyPath: m_LocalPosition.x

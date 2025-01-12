@@ -5,6 +5,8 @@ using AYellowpaper;
 using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
+using _game.Scripts;
+using FMODUnity;
 
 namespace _game.Scripts
 {
@@ -23,6 +25,8 @@ namespace _game.Scripts
 
 		[SerializeField] private Transform _camera;
 		[SerializeField] private Transform _model;
+		
+		[SerializeField] EventReference grapple_sfx;
 		
 		private bool isDead;
 		
@@ -113,6 +117,7 @@ namespace _game.Scripts
 					{
 						_hitPos = grapplePoint.ArrivalPos;
 						_isGrappling = true;
+						FMODHelper.PlayNewInstance(grapple_sfx, transform);
 					}
 				}
 			}

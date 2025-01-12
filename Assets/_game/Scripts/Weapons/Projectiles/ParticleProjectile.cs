@@ -31,7 +31,7 @@ public class ParticleProjectile : MonoBehaviour
 	
 	PlayerStats GetSource()
 	{
-		PlayerStats player = projectileGun.Source;
+		PlayerStats player = projectileGun?.Source;
 		if(player == null)
 		{
 			player = source;

@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using FMODUnity;
+using FMOD.Studio;
+using _game.Scripts;
 
 public class Drone :  Explosive, IProjectile, IDestructable
 {
@@ -19,6 +22,11 @@ public class Drone :  Explosive, IProjectile, IDestructable
 	[SerializeField] SpriteRenderer profilePic;
 	[SerializeField] ParticleSystem attackParticleProjectile;
 	[SerializeField] ParticleProjectile particleProjectile;
+	
+	[SerializeField] EventReference drone_sfx;
+	[SerializeField] EventReference drone_attack_sfx;
+	private EventInstance droneSound;
+	private EventInstance droneSound_attack;
 	
 	bool seeTarget = false;
 	
@@ -45,12 +53,29 @@ public class Drone :  Explosive, IProjectile, IDestructable
 		Respawn();
 		profilePic.sprite = source.playerProfilePic;
 		particleProjectile.SetupFromProjectile(source, damage * 0.2f, weaponIndex);
+		
+		droneSound = FMODHelper.CreateNewInstance(drone_sfx, transform);
+		droneSound.setParameterByName("Parameter 1", 1);
+		droneSound.start();
+		
 		//Invoke("StartExplosionCor", 0.1f);
 	}
 	
 	public override void Explode()
 	{
 		base.Explode();
+		
+		if (FMODHelper.InstanceIsPlaying(droneSound))
+		{
+			droneSound.setParameterByName("Parameter 1", 2);
+			droneSound.release();
+		}
+		if (FMODHelper.InstanceIsPlaying(droneSound_attack))
+		{
+			droneSound_attack.setParameterByName("Parameter 1", 2);
+			droneSound_attack.release();
+		}
+		
 		Invoke("ReturnToPool", 1);
 	}
 	
@@ -92,6 +117,13 @@ public class Drone :  Explosive, IProjectile, IDestructable
 			if(!attackParticleProjectile.isPlaying)
 			{
 				attackParticleProjectile.Play();
+				if(!FMODHelper.InstanceIsPlaying(droneSound_attack))
+				{
+					droneSound_attack = FMODHelper.CreateNewInstance(drone_attack_sfx, transform);
+					droneSound_attack.setParameterByName("Parameter 1", 1);
+					droneSound_attack.start();
+				}
+				
 				//Debug.Log("A attack");
 			}
 			seeTarget = true;
@@ -103,6 +135,12 @@ public class Drone :  Explosive, IProjectile, IDestructable
 			if(attackParticleProjectile.isPlaying)
 			{
 				attackParticleProjectile.Stop();
+				
+				if(FMODHelper.InstanceIsPlaying(droneSound_attack))
+				{
+					droneSound_attack.setParameterByName("Parameter 1", 2);
+					droneSound_attack.release();
+				}
 				//Debug.Log("R no attack");
 			}
 			if(roamPos != Vector3.zero)
@@ -236,10 +274,10 @@ public class Drone :  Explosive, IProjectile, IDestructable
 		}
 	}
 
-    public void Respawn()
-    {
-        Health = MaxHealth;
+	public void Respawn()
+	{
+		Health = MaxHealth;
 		IsDead = false;
 		onTrigger = false;
-    }
+	}
 }

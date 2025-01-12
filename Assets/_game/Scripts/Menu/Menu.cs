@@ -1,3 +1,4 @@
+using System.Collections;
 using _game.Scripts;
 using FMODUnity;
 using UnityEngine;
@@ -13,9 +14,10 @@ public class Menu : MonoBehaviour
 	
 	[field: SerializeField] public MapSettings mapSettings { get; private set; }
 	[field: SerializeField] public Settings clientSettings { get; private set; }
-	
+	public bool menuLocked = false;
 	public bool isPaused {get; private set; } = false;
 	public static Menu main {get; private set;}
+	
 	
 	void Awake()
 	{
@@ -38,7 +40,7 @@ public class Menu : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			if(!GameManager.main.isMainMenu) PauseMenu();
+			if(!GameManager.main.isMainMenu || !menuLocked) PauseMenu();
 		}
 	}
 	
@@ -111,12 +113,22 @@ public class Menu : MonoBehaviour
 	
 	void Reload()
 	{
-		//Debug.Log("reloaded menu and main menu is " + GameManager.main.isMainMenu);
+		StartCoroutine(ReloadMenu());
+		
+	}
+	
+	IEnumerator ReloadMenu()
+	{
+		yield return new WaitUntil(() => !GameManager.main.loadingScene);
+		menuLocked = false;
+		Debug.Log("reloaded menu and main menu is " + GameManager.main.isMainMenu);
+		
 		mainmenu_visual.SetActive(GameManager.main.isMainMenu);
 		pausemenu_visual.SetActive(!GameManager.main.isMainMenu);
 		SetButtons();
 		menuObject.SetActive(GameManager.main.isMainMenu);
 		if(GameManager.main.isMainMenu) SetMainMenu_Functionality();
+		
 	}
 	
 	void OnDestroy()

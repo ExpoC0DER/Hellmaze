@@ -1,6 +1,9 @@
 using UnityEngine;
 using AYellowpaper;
 using System.Collections.Generic;
+using FMODUnity;
+using FMOD.Studio;
+using _game.Scripts;
 
 public class DamagingFloor : MonoBehaviour
 {
@@ -8,6 +11,8 @@ public class DamagingFloor : MonoBehaviour
 	[SerializeField] float _damage = 3;
 	[SerializeField] float _damageInterval = 0.3f;
 	[SerializeField] int _weaponIndex = 0;
+	
+	[SerializeField] EventReference damage_sfx;
 	
 	PlayerStats source = null;
 	
@@ -36,6 +41,7 @@ public class DamagingFloor : MonoBehaviour
 		if(other.TryGetComponent(out PlayerStats player))
 		{
 			player.TakeDamage(_damage, source, _weaponIndex);
+			if(!damage_sfx.IsNull) FMODHelper.PlayNewInstance(damage_sfx, transform);
 		}
 	}
 	

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2935983127890256833}
   - component: {fileID: 6884988825702157016}
   - component: {fileID: 849416078949396415}
+  - component: {fileID: 581622805474090164}
   m_Layer: 0
   m_Name: box
   m_TagString: Untagged
@@ -75,12 +76,52 @@ MonoBehaviour:
   visual_model: {fileID: 4668199223056540165}
   _explosion_sfx:
     Guid:
-      Data1: 2055427326
-      Data2: 1079471654
-      Data3: 732779959
-      Data4: 160156971
-    Path: event:/environmental_sfx/Explosion small
+      Data1: 377167524
+      Data2: 1229649936
+      Data3: -122347612
+      Data4: 337018233
+    Path: event:/environmental_sfx/MapObjects/ElectricBox_explode
   explosion_part: {fileID: 7439632477248015477}
+  <Health>k__BackingField: 50
+  <MaxHealth>k__BackingField: 50
+  damage_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &581622805474090164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847968232469799632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &4034205354937281406
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +219,7 @@ GameObject:
   - component: {fileID: 1854835136455492742}
   - component: {fileID: 3975068475259244893}
   - component: {fileID: 6769489342500868732}
+  - component: {fileID: 4100536000917907592}
   m_Layer: 0
   m_Name: box (1)
   m_TagString: Untagged
@@ -254,6 +296,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4668199223056540165}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4100536000917907592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668199223056540165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1885301295
+      Data2: 1125136616
+      Data3: -1453061757
+      Data4: 781110061
+    Path: event:/environmental_sfx/MapObjects/ElectricBox_idle
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 10
 --- !u!1 &7616821910671869296
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 30
   <FiringSpeed>k__BackingField: 0.1
-  <Spread>k__BackingField: 2
+  <Spread>k__BackingField: 0
   <ShotsPerFire>k__BackingField: 3
   <MaxRange>k__BackingField: 50
   <FiringMode>k__BackingField: 1
@@ -27,11 +27,11 @@ MonoBehaviour:
     Path: event:/weapon_sfx/Pistol
   <AutomaticSound>k__BackingField:
     Guid:
-      Data1: -1741111629
-      Data2: 1167296844
-      Data3: 1395866517
-      Data4: -80552385
-    Path: event:/weapon_sfx/Rocket Launcher (Fire)
+      Data1: 121239258
+      Data2: 1268137282
+      Data3: 1224792746
+      Data4: -1004233242
+    Path: event:/weapon_sfx/weaponspack/LazerCannon
   <NoAmmoSound>k__BackingField:
     Guid:
       Data1: 1258713384

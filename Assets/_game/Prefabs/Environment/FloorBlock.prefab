@@ -5407,6 +5407,13 @@ MonoBehaviour:
   _damage: 5
   _damageInterval: 0.5
   _weaponIndex: 0
+  damage_sfx:
+    Guid:
+      Data1: 1664787337
+      Data2: 1294894147
+      Data3: 1581116850
+      Data4: -287900364
+    Path: event:/environmental_sfx/MapObjects/Lava_splash
 --- !u!1 &3562353157100307508
 GameObject:
   m_ObjectHideFlags: 0
@@ -5532,12 +5539,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 70
   <MaxHealth>k__BackingField: 70
-  <IsDead>k__BackingField: 0
   isFloor: 1
   die_part: {fileID: 6474444536079019518}
   meshRenderer: {fileID: 1855361220806439700}
   obstacle: {fileID: 8266413628378413373}
   col: {fileID: 3504750006833226204}
+  destroy_sfx:
+    Guid:
+      Data1: 1575811426
+      Data2: 1199958009
+      Data3: -1790282329
+      Data4: -449727810
+    Path: event:/environmental_sfx/MapObjects/WallBreak
 --- !u!208 &8266413628378413373
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -5787,12 +5800,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 70
   <MaxHealth>k__BackingField: 70
-  <IsDead>k__BackingField: 0
   isFloor: 1
   die_part: {fileID: 8168138709802780532}
   meshRenderer: {fileID: 6246800305796460028}
   obstacle: {fileID: 3001594749676316251}
   col: {fileID: 8513587873601660773}
+  destroy_sfx:
+    Guid:
+      Data1: 417260613
+      Data2: 1335084743
+      Data3: -2050348634
+      Data4: 548077327
+    Path: event:/environmental_sfx/MapObjects/Glass_break
 --- !u!208 &3001594749676316251
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -15919,6 +15938,13 @@ MonoBehaviour:
   _damage: 5
   _damageInterval: 0.5
   _weaponIndex: 0
+  damage_sfx:
+    Guid:
+      Data1: 1309231198
+      Data2: 1266202993
+      Data3: 1110134175
+      Data4: -521748416
+    Path: event:/environmental_sfx/MapObjects/Acid_splash
 --- !u!1 &8671977567254560791
 GameObject:
   m_ObjectHideFlags: 0

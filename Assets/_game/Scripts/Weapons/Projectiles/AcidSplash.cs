@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using FMODUnity;
+using _game.Scripts;
 
 public class AcidSplash : MonoBehaviour, IProjectile
 {
@@ -13,6 +15,8 @@ public class AcidSplash : MonoBehaviour, IProjectile
 	
 	[SerializeField] GameObject splashObj;
 	[SerializeField] GameObject visualObj;
+	
+	[SerializeField] EventReference setup_sound;
 	
 	bool setup = false;
 	bool onTrigger = false;
@@ -75,6 +79,7 @@ public class AcidSplash : MonoBehaviour, IProjectile
 	void Setup(PlayerStats player, Vector3 colPoint)
 	{
 		LG_tools.DrawRay(transform.position, transform.forward * 2, Color.green);
+		FMODHelper.PlayNewInstance(setup_sound, transform);
 		rb.isKinematic = true;
 		Vector3 pos = transform.position;
 		Vector3 rot = Vector3.zero;

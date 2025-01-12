@@ -123,6 +123,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 10
+  jump_sfx:
+    Guid:
+      Data1: -1065172916
+      Data2: 1113645513
+      Data3: 1771142587
+      Data4: -1313872256
+    Path: event:/environmental_sfx/MapObjects/JumpPad
 --- !u!114 &4656392969675914285
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34595,6 +34595,13 @@ MonoBehaviour:
   projNumber: 10
   damage: 8
   weaponIndex: 16
+  tube_sfx:
+    Guid:
+      Data1: -1043940782
+      Data2: 1252184849
+      Data3: -69727856
+      Data4: 2019872686
+    Path: event:/environmental_sfx/MapObjects/AcidTubeIdle
 --- !u!208 &4679627633009696628
 NavMeshObstacle:
   m_ObjectHideFlags: 0

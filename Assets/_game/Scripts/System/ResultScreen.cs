@@ -3,6 +3,8 @@ using System.Linq;
 using _game.Scripts;
 using Unity.VisualScripting;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 public class ResultScreen : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class ResultScreen : MonoBehaviour
 	[SerializeField] KeyCode key;
 	[SerializeField] PlayerScore scorePrefab;
 	[SerializeField] Transform scoreParent;
+	[SerializeField] EventReference matchFinish_sfx;
+	[SerializeField] EventReference matchStart_sfx;
 	
 	List<PlayerScore> playerScores = new List<PlayerScore>();
 	
@@ -18,6 +22,7 @@ public class ResultScreen : MonoBehaviour
 	void Start()
 	{
 		SwitchResults(false);
+		FMODHelper.PlayNewInstance(matchStart_sfx, transform);
 	}
 	
 	void Update()
@@ -43,6 +48,8 @@ public class ResultScreen : MonoBehaviour
 	{
 		endGame = true;
 		SwitchResults(true);
+		FMODHelper.PlayNewInstance(matchFinish_sfx, transform);
+		Menu.main.menuLocked = true;
 	}
 	
 	void RefreshResults()

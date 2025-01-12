@@ -1,4 +1,7 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
+using _game.Scripts;
 
 public class Chandelier : MonoBehaviour, IDestructable
 {
@@ -11,6 +14,9 @@ public class Chandelier : MonoBehaviour, IDestructable
 	[SerializeField] Collider dmgFloor_col;
 	Vector3 startPos;
 	
+	[SerializeField] EventReference chainBreak_sfx;
+	[SerializeField] PlayAudioOnCollision playAudioOnCollision;
+	
 	void Start() 
 	{
 		startPos = transform.localPosition;
@@ -18,6 +24,8 @@ public class Chandelier : MonoBehaviour, IDestructable
 	
 	public void Die()
 	{
+		FMODHelper.PlayNewInstance(chainBreak_sfx, transform);
+		
 		IsDead = true;
 		rb.isKinematic = false;
 		damagingFloor.enabled = true;
@@ -41,5 +49,6 @@ public class Chandelier : MonoBehaviour, IDestructable
 		IsDead = false;
 		damagingFloor.enabled = false;
 		dmgFloor_col.enabled = false;
+		playAudioOnCollision.Reset();
 	}
 }

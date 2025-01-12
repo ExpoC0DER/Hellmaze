@@ -571,12 +571,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 70
   <MaxHealth>k__BackingField: 70
-  <IsDead>k__BackingField: 0
   isFloor: 0
   die_part: {fileID: 7378308354324175972}
   meshRenderer: {fileID: 6605963732620572557}
   obstacle: {fileID: 3578583983552979547}
   col: {fileID: 2367326519078816564}
+  destroy_sfx:
+    Guid:
+      Data1: 1575811426
+      Data2: 1199958009
+      Data3: -1790282329
+      Data4: -449727810
+    Path: event:/environmental_sfx/MapObjects/WallBreak
 --- !u!65 &2367326519078816564
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -888,12 +894,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 70
   <MaxHealth>k__BackingField: 70
-  <IsDead>k__BackingField: 0
   isFloor: 0
   die_part: {fileID: 3205319965670701674}
   meshRenderer: {fileID: 8701350013659336931}
   obstacle: {fileID: 1027532138813113953}
   col: {fileID: 9139165093792374251}
+  destroy_sfx:
+    Guid:
+      Data1: 417260613
+      Data2: 1335084743
+      Data3: -2050348634
+      Data4: 548077327
+    Path: event:/environmental_sfx/MapObjects/Glass_break
 --- !u!4 &7532916206624222092 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2303da7ea776f5b4f88ff7d37ed8bdfd, type: 3}

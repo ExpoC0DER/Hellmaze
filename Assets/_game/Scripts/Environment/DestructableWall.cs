@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
+using FMOD.Studio;
+using _game.Scripts;
 
 public class DestructableWall : MonoBehaviour, IDestructable
 {
@@ -13,6 +16,8 @@ public class DestructableWall : MonoBehaviour, IDestructable
 	[SerializeField] MeshRenderer meshRenderer;
 	[SerializeField] NavMeshObstacle obstacle;
 	[SerializeField] Collider col;
+	
+	[SerializeField] EventReference destroy_sfx;
 
 	public void Respawn()
 	{
@@ -24,6 +29,7 @@ public class DestructableWall : MonoBehaviour, IDestructable
 	public void Die()
 	{
 		//meshRenderer.material.SetFloat(Shader.PropertyToID("_Dissolve"), 0f);
+		FMODHelper.PlayNewInstance(destroy_sfx, transform);
 		obstacle.enabled = isFloor;
 		meshRenderer.enabled = false;
 		col.enabled = false;

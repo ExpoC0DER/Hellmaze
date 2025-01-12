@@ -1,4 +1,7 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
+using _game.Scripts;
 
 public class ExplosiveBarrel : Explosive, IDestructable
 {
@@ -6,6 +9,8 @@ public class ExplosiveBarrel : Explosive, IDestructable
 	[field: SerializeField] public float MaxHealth { get; set; } = 50;
 	public bool IsDead  { get; set; } = false;
 
+	[SerializeField] EventReference damage_sfx;
+	
 	public void Die()
 	{
 		base.Explode();
@@ -23,6 +28,7 @@ public class ExplosiveBarrel : Explosive, IDestructable
 	{
 		if(IsDead) return;
 		Health -= amount;
+		if(!damage_sfx.IsNull) FMODHelper.PlayNewInstance(damage_sfx, transform);
 		if(Health <= 0)
 		{
 			base._source = source;

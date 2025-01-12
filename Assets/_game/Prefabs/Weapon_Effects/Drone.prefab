@@ -100,7 +100,6 @@ GameObject:
   - component: {fileID: 3355198521752108628}
   - component: {fileID: 4314416838752032319}
   - component: {fileID: 3041196237636909235}
-  - component: {fileID: 7638519497172355396}
   m_Layer: 9
   m_Name: Drone
   m_TagString: Untagged
@@ -228,37 +227,20 @@ MonoBehaviour:
   profilePic: {fileID: 5825368548733127877}
   attackParticleProjectile: {fileID: 1009646671789632444}
   particleProjectile: {fileID: 1330255364590600409}
---- !u!114 &7638519497172355396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6316960002275436735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
+  drone_sfx:
     Guid:
-      Data1: -1927024641
-      Data2: 1128522885
-      Data3: 925787532
-      Data4: -21323120
-    Path: event:/weapon_sfx/Rocket woosh
-  Event: 
-  EventPlayTrigger: 11
-  EventStopTrigger: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 50
+      Data1: -1399361866
+      Data2: 1091725946
+      Data3: -1915065164
+      Data4: 61381641
+    Path: event:/weapon_sfx/weaponspack/Drone
+  drone_attack_sfx:
+    Guid:
+      Data1: 2070186295
+      Data2: 1194319412
+      Data3: -1723049060
+      Data4: 1468457709
+    Path: event:/weapon_sfx/AK47
 --- !u!1001 &1310216431692235126
 PrefabInstance:
   m_ObjectHideFlags: 0

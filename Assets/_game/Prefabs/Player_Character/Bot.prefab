@@ -530,6 +530,13 @@ MonoBehaviour:
   playerController: {fileID: 0}
   blood_part: {fileID: 7855598899036024690}
   gib_part: {fileID: 6934509354533382298}
+  gib_sfx:
+    Guid:
+      Data1: -1097665417
+      Data2: 1317319966
+      Data3: -987569019
+      Data4: 1379384607
+    Path: event:/environmental_sfx/Gib
   godMode: 0
 --- !u!1001 &5874046210354374492
 PrefabInstance:

@@ -213,6 +213,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 0;
 			SkyboxIndex_Dropdown.value = 0;
 			AmbientParticleIndex_Dropdown.value = 1;
+			Ambiance_Dropdown.value = 1;
 			Fog_Toggle.isOn = false;
 			
 			break;
@@ -220,6 +221,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 1;
 			SkyboxIndex_Dropdown.value = 7;
 			AmbientParticleIndex_Dropdown.value = 3;
+			Ambiance_Dropdown.value = 2;
 			Fog_Toggle.isOn = false;
 			
 			break;
@@ -227,6 +229,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 2;
 			SkyboxIndex_Dropdown.value = 2;
 			AmbientParticleIndex_Dropdown.value = 1;
+			Ambiance_Dropdown.value = 1;
 			Fog_Toggle.isOn = true;
 			FogStrength_Slider.value = 70;
 			
@@ -235,6 +238,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 3;
 			SkyboxIndex_Dropdown.value = 6;
 			AmbientParticleIndex_Dropdown.value = 0;
+			Ambiance_Dropdown.value = 4;
 			Fog_Toggle.isOn = false;
 			
 			break;
@@ -242,6 +246,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 4;
 			SkyboxIndex_Dropdown.value = 4;
 			AmbientParticleIndex_Dropdown.value = 0;
+			Ambiance_Dropdown.value = 3;
 			Fog_Toggle.isOn = false;
 			
 			break;
@@ -249,6 +254,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 4;
 			SkyboxIndex_Dropdown.value = 2;
 			AmbientParticleIndex_Dropdown.value = 2;
+			Ambiance_Dropdown.value = 7;
 			Fog_Toggle.isOn = false;
 			
 			break;
@@ -256,6 +262,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 5;
 			SkyboxIndex_Dropdown.value = 5;
 			AmbientParticleIndex_Dropdown.value = 4;
+			Ambiance_Dropdown.value = 9;
 			Fog_Toggle.isOn = false;
 			
 			break;
@@ -263,6 +270,7 @@ public class MapSettings : MonoBehaviour
 			TextureIndex_Dropdown.value = 6;
 			SkyboxIndex_Dropdown.value = 1;
 			AmbientParticleIndex_Dropdown.value = 4;
+			Ambiance_Dropdown.value = 8;
 			Fog_Toggle.isOn = false;
 			
 			break;

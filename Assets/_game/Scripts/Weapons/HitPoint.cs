@@ -8,6 +8,7 @@ namespace _game.Scripts
 	{
 		[SerializeField] string pool_name;
 		[SerializeField] EventReference[] sfx;
+		bool init = false;
 		void Start()
 		{
 			Invoke("ReturnToPool", 10);
@@ -25,6 +26,11 @@ namespace _game.Scripts
 		
 		void OnEnable()
 		{
+			if(!init)
+			{
+				init = true;
+				return;
+			}
 			FMODHelper.PlayNewInstance(sfx[Random.Range(0, sfx.Length)], transform.position);
 			//Debug.Log(transform.position);
 		}

@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using _game.Scripts;
 using UnityEngine.UI;
 using System.Collections;
+using FMODUnity;
 
 public class PlayerStats : MonoBehaviour, IDestructable
 {
@@ -32,7 +33,7 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	
 	[SerializeField] ParticleSystem blood_part;
 	[SerializeField] ParticleSystem gib_part;
-	
+	[SerializeField] EventReference gib_sfx;
 	[Header("Cheats")]
 	public bool godMode = false;
 	
@@ -163,6 +164,7 @@ public class PlayerStats : MonoBehaviour, IDestructable
 		
 		animatorFunctions.gameObject.SetActive(false);
 		gib_part.Play();
+		FMODHelper.PlayNewInstance(gib_sfx, transform);
 		if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit gibHit, 2, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
 		{
 			ObjectPooler.main.SpawnPooledObject("blood_gib_dec", gibHit.point, Quaternion.LookRotation(gibHit.normal), gibHit.transform);

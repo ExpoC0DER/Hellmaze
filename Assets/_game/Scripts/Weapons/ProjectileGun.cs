@@ -128,7 +128,7 @@ namespace _game.Scripts
 		{
 			if (FMODHelper.InstanceIsPlaying(_automaticSound))
 				{
-					_automaticSound.setParameterByName("Parameter 1", 0);
+					_automaticSound.setParameterByName("Parameter 1", 2);
 					_automaticSound.release();
 				}
 				_fired = false;

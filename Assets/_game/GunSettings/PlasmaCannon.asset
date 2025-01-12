@@ -27,11 +27,11 @@ MonoBehaviour:
     Path: event:/weapon_sfx/Pistol
   <AutomaticSound>k__BackingField:
     Guid:
-      Data1: -1630227071
-      Data2: 1186346894
-      Data3: 361309620
-      Data4: 495927920
-    Path: event:/weapon_sfx/Grenade Launcher (shot)
+      Data1: -2054296248
+      Data2: 1331590102
+      Data3: 1832674751
+      Data4: 871283311
+    Path: event:/weapon_sfx/weaponspack/Plasma_shot
   <NoAmmoSound>k__BackingField:
     Guid:
       Data1: 1258713384

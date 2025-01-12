@@ -215,6 +215,20 @@ MonoBehaviour:
   _maxHeight: 4
   _waitDown: 2
   _waitUp: 5
+  move_sfx:
+    Guid:
+      Data1: -376004288
+      Data2: 1254423163
+      Data3: -88642382
+      Data4: 1775453660
+    Path: event:/environmental_sfx/MapObjects/FallingObject1
+  hit_sfx:
+    Guid:
+      Data1: 1504193333
+      Data2: 1074060207
+      Data3: -1290674793
+      Data4: -1043030498
+    Path: event:/environmental_sfx/MapObjects/ObjectFall
 --- !u!114 &356565037432707327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,3 +373,10 @@ MonoBehaviour:
   _damage: 20
   _damageInterval: 0.05
   _weaponIndex: 16
+  damage_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 

@@ -10,11 +10,13 @@ namespace _game.Scripts
 		public PlayerDatabase playerDatabase;
 		public bool isMainMenu {get; private set;} = true;
 		
-		private float _timer;
+		private float _timer = -1;
 
 		public event Action<float> OnTimerChange;
 		public event Action OnSceneLoad;
 		public event Action OnBeforeSceneLoad;
+		
+		public bool loadingScene = true;
 		
 		public static GameManager main { get; private set; }
 		
@@ -29,6 +31,8 @@ namespace _game.Scripts
 			}
 			DontDestroyOnLoad(this.gameObject);
 			Time.timeScale = 1;
+			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
+			loadingScene = false;
 		}
 
 		private void Update()
@@ -53,17 +57,21 @@ namespace _game.Scripts
 		
 		public void LoadScene(string name)
 		{
+			loadingScene = true;
 			OnBeforeSceneLoad?.Invoke();
 			SceneManager.LoadScene(name);
 			isMainMenu = name == "MainMenu";
+			loadingScene = false;
 			OnSceneLoad?.Invoke();
 			SetupGameManager();
 		}
 		public void LoadScene(int index)
 		{
+			loadingScene = true;
 			OnBeforeSceneLoad?.Invoke();
 			SceneManager.LoadScene(index);
 			isMainMenu = index == 0;
+			loadingScene = false;
 			OnSceneLoad?.Invoke();
 			SetupGameManager();
 		}
