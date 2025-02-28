@@ -1,12 +1,10 @@
 using System;
-using _game.Scripts.Player;
 using AYellowpaper;
 using Unity.Cinemachine;
-using Unity.IO.LowLevel.Unsafe;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace _game.Scripts.NewPlayerTest
+namespace _game.Scripts.Player
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : NetworkBehaviour

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using _game.Scripts.Utils;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
-using Unity.VisualScripting.FullSerializer.Internal.Converters;
 
 namespace _game.Scripts.Controllers_Managers
 {
@@ -17,7 +16,7 @@ namespace _game.Scripts.Controllers_Managers
         private byte[] _hostConnectionData;
         private System.Guid _allocationId;
         private byte[] _allocationIdBytes;
-        public bool IsHost { get; private set; } = false;
+        public bool IsHost { get; private set; }
 
         public string GetAllocationId() { return _allocationId.ToString(); }
         public string GetConnectionData() { return _connectionData.ToString(); }

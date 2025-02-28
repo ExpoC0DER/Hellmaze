@@ -2,7 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
-namespace _game.Scripts
+namespace _game.Scripts.Utils
 {
     public static class FMODHelper
     {

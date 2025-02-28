@@ -5,7 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace _game.Scripts.NewPlayerTest
+namespace _game.Scripts.Player
 {
     public class NetworkPlayerMovement : NetworkBehaviour
     {

@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _game.Scripts.NewPlayerTest;
+using _game.Scripts.Player;
+using _game.Scripts.Utils;
 using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;

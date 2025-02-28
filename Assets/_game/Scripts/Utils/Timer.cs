@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utilities {
+namespace _game.Scripts.Utils {
     public abstract class Timer {
         protected float initialTime;
         protected float Time { get; set; }
