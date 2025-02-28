@@ -25,6 +25,7 @@ namespace _game.Scripts
         private Vector3 _originalPosition;
         private Quaternion _originalRotation;
         private Transform _camera;
+        private IGun _gunImplementation;
 
         private void Start()
         {

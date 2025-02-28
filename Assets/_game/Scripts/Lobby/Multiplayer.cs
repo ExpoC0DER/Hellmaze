@@ -117,9 +117,9 @@ namespace _game.Scripts.Lobby
                     }
                 });
 
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, _connectionType));
+                //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(ref allocation, _connectionType));
 
-                NetworkManager.Singleton.StartHost();
+                //NetworkManager.Singleton.StartHost();
             }
             catch (LobbyServiceException e)
             {
@@ -137,7 +137,7 @@ namespace _game.Scripts.Lobby
                 string relayJoinCode = _currentLobby.Data[KeyJoinCode].Value;
                 JoinAllocation joinAllocation = await JoinAllocation(relayJoinCode);
 
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, _connectionType));
+                //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, _connectionType));
 
                 NetworkManager.Singleton.StartClient();
             }

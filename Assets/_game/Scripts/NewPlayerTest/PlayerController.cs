@@ -21,11 +21,16 @@ namespace _game.Scripts.NewPlayerTest
         [SerializeField] private float _shootDistance;
         [SerializeField] private LayerMask _shootLayerMask;
         [SerializeField] private NetworkObject _hitPoint;
+        [SerializeField] private NetworkObject _gunPrefab;
+        [SerializeField] private Transform _hand;
 
-
-        private IGun _equippedGun;
+        public IGun _equippedGun;
+        public string test;
         private PlayerInput _playerInput;
         private float _cameraAngle;
+
+        private ClientRpcParams _ownerRpcParams;
+
 
         public override void OnNetworkSpawn()
         {
@@ -34,7 +39,16 @@ namespace _game.Scripts.NewPlayerTest
 
             if (IsOwner)
             {
+                _ownerRpcParams = new ClientRpcParams
+                {
+                    Send = new ClientRpcSendParams
+                    {
+                        TargetClientIds = new ulong[] { OwnerClientId }
+                    }
+                };
+                
                 vCam.Priority = 100;
+                SpawnGunServerRpc();
             }
             else
             {
@@ -42,12 +56,36 @@ namespace _game.Scripts.NewPlayerTest
             }
         }
 
+        [ServerRpc]
+        private void SpawnGunServerRpc()
+        {
+            // Create gun and assign it to player
+            NetworkObject newHotpoint = Instantiate(_gunPrefab);
+            newHotpoint.transform.SetPositionAndRotation(_hand.position, _hand.rotation);
+            newHotpoint.Spawn();
+            newHotpoint.TrySetParent(gameObject);
+            newHotpoint.ChangeOwnership(OwnerClientId);
+            
+            // Tell player to equip it
+            SetEquippedGunClientRpc(newHotpoint.NetworkObjectId, _ownerRpcParams);
+        }
+
+        [ClientRpc]
+        private void SetEquippedGunClientRpc(ulong id, ClientRpcParams clientRpcParams = default)
+        {
+            if (!IsOwner)
+                return;
+            
+            _equippedGun = NetworkManager.SpawnManager.SpawnedObjects[id].GetComponent<IGun>();
+        }
+
+
         private void Start()
         {
             _playerInput = new PlayerInput();
             _playerInput.Enable();
 
-            _equippedGun = _gun1.Value;
+            //_equippedGun = _gun1.Value;
 
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -78,7 +116,16 @@ namespace _game.Scripts.NewPlayerTest
         private void HandleShooting()
         {
             if (IsClient && IsLocalPlayer)
+            {
+                //if (_equippedGun != null)
                 _equippedGun?.TryShoot(_playerInput.OnFoot.Shoot.inProgress, _camTransform);
+                // else
+                // {
+                //     _equippedGun = GetComponentInChildren<IGun>();
+                //     test = _equippedGun.Damage.ToString();
+                //     _equippedGun?.TryShoot(_playerInput.OnFoot.Shoot.inProgress, _camTransform);
+                // }
+            }
         }
 
         public void TakeDamage(float damage)

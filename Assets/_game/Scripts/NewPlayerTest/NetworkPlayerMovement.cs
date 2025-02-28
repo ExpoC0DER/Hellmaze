@@ -154,7 +154,7 @@ namespace _game.Scripts.NewPlayerTest
             _tickDeltaTime += Time.deltaTime;
             if (_tickDeltaTime > TICK_RATE)
             {
-                if (_serverTransformState.Value.HasStartedMoving)
+                if (_serverTransformState.Value is { HasStartedMoving: true }) // (_serverTransformState.Value.HasStartedMoving)
                 {
                     transform.position = _serverTransformState.Value.Position;
                     transform.rotation = _serverTransformState.Value.Rotation;

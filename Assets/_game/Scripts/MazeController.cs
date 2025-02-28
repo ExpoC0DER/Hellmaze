@@ -12,7 +12,9 @@ namespace _game.Scripts
         [SerializeField] private Transform _wallPrefab;
         [SerializeField] private MazeNode _mazeNodePrefab;
         [SerializeField, Range(0, 30)]
-        private int _mazeSize;
+        private int _mazeSizeX;
+        [SerializeField, Range(0, 30)]
+        private int _mazeSizeY;
         [SerializeField, OnValueChanged(nameof(UpdateIndicators))]
         private bool _showIndicators;
         [SerializeField]
@@ -49,15 +51,15 @@ namespace _game.Scripts
         private void CreateMaze()
         {
             DeleteChildren();
-            _maze = new MazeNode[_mazeSize, _mazeSize];
+            _maze = new MazeNode[_mazeSizeX, _mazeSizeY];
 
-            for(int x = 0; x < _mazeSize; x++)
+            for(int x = 0; x < _mazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSize; y++)
+                for(int y = 0; y < _mazeSizeY; y++)
                 {
-                    MazeNode temp = Instantiate(_mazeNodePrefab, new Vector3((x - _mazeSize / 2) * 4, 0, (y - _mazeSize / 2) * 4), Quaternion.identity, transform);
-                    temp.State = x == _mazeSize - 1 ? MNState.Down : MNState.Right;
-                    if (x == _mazeSize - 1 && y == 0)
+                    MazeNode temp = Instantiate(_mazeNodePrefab, new Vector3((x - _mazeSizeX / 2) * 4, 0, (y - _mazeSizeY / 2) * 4), Quaternion.identity, transform);
+                    temp.State = x == _mazeSizeX - 1 ? MNState.Down : MNState.Right;
+                    if (x == _mazeSizeX - 1 && y == 0)
                     {
                         temp.State = MNState.Empty;
                         _originPos = (x, y);
@@ -72,9 +74,9 @@ namespace _game.Scripts
                 }
             }
 
-            for(int x = 0; x < _mazeSize; x++)
+            for(int x = 0; x < _mazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSize; y++)
+                for(int y = 0; y < _mazeSizeY; y++)
                 {
                     if (CanMove((x - 1, y)))
                     {
@@ -187,9 +189,9 @@ namespace _game.Scripts
 
         private void UpdateIndicators()
         {
-            for(int x = 0; x < _mazeSize; x++)
+            for(int x = 0; x < _mazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSize; y++)
+                for(int y = 0; y < _mazeSizeY; y++)
                 {
                     _maze[x, y].SetIndicators(_showIndicators);
                 }
@@ -286,9 +288,9 @@ namespace _game.Scripts
 
         private void UpdateWalls(bool force = false)
         {
-            for(int x = 0; x < _mazeSize; x++)
+            for(int x = 0; x < _mazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSize; y++)
+                for(int y = 0; y < _mazeSizeY; y++)
                 {
                     if (_maze[x, y].State is MNState.Left)
                     {
@@ -332,10 +334,10 @@ namespace _game.Scripts
 
         private bool CanMove((int x, int y) position)
         {
-            if (position.x < 0 || position.x >= _mazeSize)
+            if (position.x < 0 || position.x >= _mazeSizeX)
                 return false;
 
-            if (position.y < 0 || position.y >= _mazeSize)
+            if (position.y < 0 || position.y >= _mazeSizeY)
                 return false;
 
             return true;
