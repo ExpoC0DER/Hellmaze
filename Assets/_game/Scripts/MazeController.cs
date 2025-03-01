@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using EditorAttributes;
+using JetBrains.Annotations;
+using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace _game.Scripts
 {
-    public class MazeController : MonoBehaviour
+    public class MazeController : NetworkBehaviour
     {
         [SerializeField] private Transform _wallPrefab;
         [SerializeField] private MazeNode _mazeNodePrefab;
@@ -21,6 +23,7 @@ namespace _game.Scripts
         private float _clockSpeed;
 
         private MazeNode[,] _maze;
+        private MNState[,] _mnStates;
         private (int x, int y) _originPos;
         private (int x, int y) _previousPos;
 
@@ -28,17 +31,21 @@ namespace _game.Scripts
         private (int x, int y) _previousPos2;
 
         [Button]
-        private void Start()
+        public override void OnNetworkSpawn()
         {
-            StopAllCoroutines();
             CreateMaze();
+
+            if (!IsServer)
+                return;
+
+            StopAllCoroutines();
             StartCoroutine(nameof(MoveOriginClock));
         }
 
-        [Button]
+        [Button, UsedImplicitly]
         private void Stop() { StopAllCoroutines(); }
 
-        [Button("Create Maze")]
+        [Button("Create Maze"), UsedImplicitly]
         private void CreateMazeBtn() { CreateMaze(); }
 
         private IEnumerator MoveOriginClock()
@@ -52,18 +59,20 @@ namespace _game.Scripts
         {
             DeleteChildren();
             _maze = new MazeNode[_mazeSizeX, _mazeSizeY];
+            _mnStates = new MNState[_mazeSizeX, _mazeSizeY];
 
             for(int x = 0; x < _mazeSizeX; x++)
             {
                 for(int y = 0; y < _mazeSizeY; y++)
                 {
                     MazeNode temp = Instantiate(_mazeNodePrefab, new Vector3((x - _mazeSizeX / 2) * 4, 0, (y - _mazeSizeY / 2) * 4), Quaternion.identity, transform);
-                    temp.State = x == _mazeSizeX - 1 ? MNState.Down : MNState.Right;
+                    MNState tempState = x == _mazeSizeX - 1 ? MNState.Down : MNState.Right;
                     if (x == _mazeSizeX - 1 && y == 0)
                     {
-                        temp.State = MNState.Empty;
+                        tempState = MNState.Empty;
                         _originPos = (x, y);
                     }
+                    temp.State = tempState;
 
                     // if (y == _mazeSize - 1 && x == 0)
                     // {
@@ -71,6 +80,7 @@ namespace _game.Scripts
                     //     _originPos2 = (x, y);
                     // }
                     _maze[x, y] = temp;
+                    _mnStates[x, y] = tempState;
                 }
             }
 
@@ -230,14 +240,14 @@ namespace _game.Scripts
             }
             while (!CanMove(newPos) || newPos == _originPos || newPos == _previousPos);
 
-            _maze[newPos.x, newPos.y].State = MNState.Empty;
+            _mnStates[newPos.x, newPos.y] = MNState.Empty;
             if (newPos.x == _originPos.x)
             {
-                _maze[_originPos.x, _originPos.y].State = newPos.y > _originPos.y ? MNState.Up : MNState.Down;
+                _mnStates[_originPos.x, _originPos.y] = newPos.y > _originPos.y ? MNState.Up : MNState.Down;
             }
             if (newPos.y == _originPos.y)
             {
-                _maze[_originPos.x, _originPos.y].State = newPos.x > _originPos.x ? MNState.Right : MNState.Left;
+                _mnStates[_originPos.x, _originPos.y] = newPos.x > _originPos.x ? MNState.Right : MNState.Left;
             }
 
             _previousPos = _originPos;
@@ -283,6 +293,55 @@ namespace _game.Scripts
             //
             // _previousPos2 = _originPos2;
             // _originPos2 = newPos2;
+            print(_mnStates.Rank + " Local states");
+            UpdateWallsClientRpc(FlattenMazeStates(_mnStates), _mazeSizeX, _mazeSizeY);
+        }
+
+        private MNState[] FlattenMazeStates(MNState[,] mazeStates)
+        {
+            int width = mazeStates.GetLength(0);
+            int height = mazeStates.GetLength(1);
+            MNState[] flattenedGrid = new MNState[width * height];
+
+            for(int x = 0; x < width; x++)
+            {
+                for(int y = 0; y < height; y++)
+                {
+                    flattenedGrid[x * height + y] = mazeStates[x, y];
+                }
+            }
+
+            return flattenedGrid;
+        }
+
+        private MNState[,] UnFlattenMazeStates(MNState[] flattenedMazeStates, int width, int height)
+        {
+            MNState[,] unFlattenedMazeStates = new MNState[width, height];
+
+            for(int x = 0; x < width; x++)
+            {
+                for(int y = 0; y < height; y++)
+                {
+                    unFlattenedMazeStates[x, y] = flattenedMazeStates[x * height + y];
+                }
+            }
+
+            return unFlattenedMazeStates;
+        }
+
+        [Rpc(SendTo.ClientsAndHost)]
+        private void UpdateWallsClientRpc(MNState[] flattenedMazeStates, int width, int height)
+        {
+            MNState[,] mazeStates = UnFlattenMazeStates(flattenedMazeStates, width, height);
+
+            for(int x = 0; x < mazeStates.GetLength(0); x++)
+            {
+                for(int y = 0; y < mazeStates.GetLength(1); y++)
+                {
+                    print(x + " " + y);
+                    _maze[x, y].State = mazeStates[x, y];
+                }
+            }
             UpdateWalls();
         }
 
