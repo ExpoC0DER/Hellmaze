@@ -10,7 +10,6 @@ public class SolidMapObject : MonoBehaviour
 	[SerializeField] InterfaceReference<IDestructable, MonoBehaviour>[] _destructable;
 	
 	
-	
 	public void Respawn(Vector3 position, Quaternion rotation)
 	{
 		StartCoroutine(RespawnCor(position,rotation));

@@ -46,6 +46,8 @@ namespace _game.Scripts
 		private bool _lastStateUp = true, _lastStateDown = true, _lastStateRight = true, _lastStateLeft = true;
 		private static readonly int Dissolve1 = Shader.PropertyToID("_Dissolve");
 
+		private bool isLocked = false;
+		
 		IEnumerator Start()
 		{
 			yield return new WaitUntil(() => Menu.main != null);
@@ -204,6 +206,8 @@ namespace _game.Scripts
 
 		private int RandomWall()
 		{
+			if(isLocked) return -1;
+			
 			int x = Random.Range(0, 100);
 			
 			if (x >= _noWallRange.x && x < _noWallRange.y)
@@ -294,7 +298,30 @@ namespace _game.Scripts
 			//Debug.Log("setup full " + _fullWallRange + "\n" + "no " + _noWallRange + "\n" + "bottom " + _bottomHoleRange + "\n" + "top  " + _topHoleRange +  "\n" + "break " + _breakableWallRange + "\n" + "glass " + _glassWallRange);
 			//Debug.Log("settings full " + settings.FullWall_prob + "\n" + "yes " + (int)settings.Wall_prob + "\n" + "bottom " + (int)settings.CrouchSpace_Prob + "\n" + "top  " + (int)settings.GrapplingHook_Prob +  "\n" + "break " + (int)settings.DestructableWall_Prob + "\n" + "glass " + (int)settings.GlassWall_prob);
 		}
+		
+		public void LockWall()
+		{
+		    isLocked = true;
+		    foreach (var wall in _wallsDown)
+		    {
+		        wall.SetActive(false);
+		    }
+		    foreach (var wall in _wallsLeft)
+		    {
+		        wall.SetActive(false);
+		    }
+		    foreach (var wall in _wallsRight)
+		    {
+		        wall.SetActive(false);
+		    }
+		    foreach (var wall in _wallsUp)
+		    {
+		        wall.SetActive(false);
+		    }
+		}
 	}
+	
+	
 	
 	
 

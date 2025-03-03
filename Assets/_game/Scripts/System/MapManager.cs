@@ -14,6 +14,7 @@ public class MapManager : MonoBehaviour
 	[Header("Gameplay")]
 	[SerializeField] Transform BotPrefab;
 	//set bot difficulty 0-noob, 1-casual, 2-expert
+	[SerializeField] GameObject[] gameModeObjects;
 	
 	Queue<Transform> lastUsedSpawnPositions = new Queue<Transform>();
 	
@@ -116,6 +117,10 @@ public class MapManager : MonoBehaviour
 		}
 		DynamicGI.UpdateEnvironment();
 		
+		for (int i = 0; i < gameModeObjects.Length; i++)
+		{
+			gameModeObjects[i].SetActive(settings.GameMode == i);
+		}
 		
 		SpawnBots();
 		//set bots with difficulty
@@ -137,6 +142,8 @@ public class MapManager : MonoBehaviour
 			
 		}
 	}
+	
+	public int GetMapSize() => settings.MazeSize;
 	
 	void SpawnBots()
 	{

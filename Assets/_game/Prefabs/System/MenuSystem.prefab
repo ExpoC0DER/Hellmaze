@@ -6848,7 +6848,7 @@ PrefabInstance:
       objectReference: {fileID: 3905294100974116938}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Text
@@ -6860,7 +6860,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: Snow
+      value: Capture the Flag
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: Ray Laser
       objectReference: {fileID: 0}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Image
@@ -6873,11 +6877,11 @@ PrefabInstance:
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Image
       value: 
-      objectReference: {fileID: 21300000, guid: d35f019542ceca447a6ef38be7dff18e, type: 3}
+      objectReference: {fileID: 21300000, guid: 12d84206b936130428259a9313c24fb8, type: 3}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Image
       value: 
-      objectReference: {fileID: 21300000, guid: d35f019542ceca447a6ef38be7dff18e, type: 3}
+      objectReference: {fileID: 21300000, guid: 12d84206b936130428259a9313c24fb8, type: 3}
     - target: {fileID: 4777598311204702282, guid: 8188674cb80163744b508fbfdcebf02d, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 2

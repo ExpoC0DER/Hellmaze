@@ -17,6 +17,10 @@ public class MapSettings : MonoBehaviour
 	public void SetFloorChangeSpeed(float value) => FloorChangeSpeed = (int)value;
 	public Slider FloorChangeSpeed_Slider;
 	
+	/* [Header("GameMode")]
+	public bool[] GameModes;
+	public void SetGameModes(int index, bool setUp) => GameModes[index] = setUp;
+ */
 	[Header("Bots")]
 	public int BotCount = 3;
 	public void SetBotCount(float value) => BotCount = (int)value;
