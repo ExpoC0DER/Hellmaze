@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cad91b281b9bc48968fa1da40a06d9, type: 3}
+  m_Name: AcidBlaster
+  m_EditorClassIdentifier: 
+  <Damage>k__BackingField: 10
+  <FiringSpeed>k__BackingField: 0.3
+  <Spread>k__BackingField: 0
+  <ShotsPerFire>k__BackingField: 1
+  <MaxRange>k__BackingField: 50
+  <FiringMode>k__BackingField: 1
+  <ManualSound>k__BackingField:
+    Guid:
+      Data1: -1064592068
+      Data2: 1192173419
+      Data3: 1734379706
+      Data4: 421525909
+    Path: event:/weapon_sfx/weaponspack/AcidBall_shot
+  <AutomaticSound>k__BackingField:
+    Guid:
+      Data1: -1064592068
+      Data2: 1192173419
+      Data3: 1734379706
+      Data4: 421525909
+    Path: event:/weapon_sfx/weaponspack/AcidBall_shot
+  <NoAmmoSound>k__BackingField:
+    Guid:
+      Data1: -650306901
+      Data2: 1084326519
+      Data3: 267054241
+      Data4: 1819966761
+    Path: event:/weapon_sfx/No_Ammo_Click_AK47
+  <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.35}
+  <RecoilDuration>k__BackingField: 0.1
+  <RecoilReturnDuration>k__BackingField: 0.15
+  <RecoilEase>k__BackingField: 6
+  <ReturnEase>k__BackingField: 5
+  <RecoilRotation>k__BackingField: {x: -2, y: 0, z: 0}
+  <RotationDuration>k__BackingField: 0.1
+  <RotationReturnDuration>k__BackingField: 0.15

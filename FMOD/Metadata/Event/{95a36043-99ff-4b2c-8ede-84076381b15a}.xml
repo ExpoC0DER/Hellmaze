@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{95a36043-99ff-4b2c-8ede-84076381b15a}">
 		<property name="name">
-			<value>New Event</value>
+			<value>Sniper rifle</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{7963491e-8306-4ff9-9f5f-0846162189d4}</destination>
+			<destination>{160c104a-d133-444b-be92-b7492f1308c8}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{cac9c595-b72d-46f6-82b5-d557e345e652}</destination>
@@ -27,6 +27,9 @@
 		</relationship>
 		<relationship name="timeline">
 			<destination>{47a9ef6c-6a44-4dde-8015-a6b17d87ba7d}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{cdf20623-a8bb-41b5-ab51-3c049e40da47}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixer" id="{cac9c595-b72d-46f6-82b5-d557e345e652}">
@@ -50,7 +53,7 @@
 			<destination>{616a836f-15a5-46f2-8b6c-eb7784a68094}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{cf5fad9e-b5e5-4eb0-ae78-c53c83167454}</destination>
+			<destination>{69cd2c96-84c2-4dc0-8fb3-412bd9fee2de}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{39d5c97f-6890-47a2-a0b9-adb47cafbe62}" />
@@ -91,9 +94,11 @@
 	<object class="MixerBusEffectChain" id="{2334297d-c65c-45ff-a26e-cb59b4d47db9}">
 		<relationship name="effects">
 			<destination>{1cb1b2da-5923-49ae-9587-4d8a09da99d4}</destination>
+			<destination>{37997a50-c98a-4c5d-8aa4-589e207c9e6e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ad63e510-bce7-4e34-a0dd-c6abd773b2f0}" />
 	<object class="MixerBusFader" id="{d61a208e-bebb-463c-a23a-9fb2bbd30bac}" />
 	<object class="MixerBusFader" id="{1cb1b2da-5923-49ae-9587-4d8a09da99d4}" />
+	<object class="ObjectSpatialiserEffect" id="{37997a50-c98a-4c5d-8aa4-589e207c9e6e}" />
 </objects>

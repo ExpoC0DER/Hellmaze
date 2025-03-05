@@ -1,0 +1,27 @@
+unity:
+	-prototyp multiplayeru (lobby, movement, shooting)
+
+	-nový gamemode (floor is lava, ctf)
+	-implementovať random spawning pickupov
+	-nastavenia mapy (veľkosť, pickupy)
+	-kozmetické nastavenia mapy (ambient noise, music, particles, skybox)
+	-explosive barrel
+	-damaging floor (kyselina, láva)
+	-padací blok
+	-shader kyseliny
+3d:	
+	-brokovnica Spas12
+	-revolver DanWesson.357
+	-sniper rifle
+	
+	-scientist
+2d:	
+	-ikony zbraní
+	-ikony pre kill feed (samovražda, explosívny sud, utopenie)
+	-ikony typov nábojov (rakety, granáty pre granátomet)
+	-vylepšenie loga	
+	-spritesheet oheň
+Audio:
+	-4 variácie hudby, techno + metal
+	-sfx odrážanie granátu
+	-sfx fučanie rakety keď letí

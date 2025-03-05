@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9095076706018900720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6348330201302374430}
+  - component: {fileID: 6531398212063525263}
+  m_Layer: 0
+  m_Name: ObjectPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6348330201302374430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095076706018900720}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6531398212063525263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095076706018900720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17bc2873c6647374492ebe009cd95056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunShot_dec: {fileID: 3043473785704593007, guid: 140e256f36677c644b7cfb4967959c27, type: 3}
+  blood_part: {fileID: 3043473785704593007, guid: 200025fa33251af4592928576303aeb1, type: 3}
+  blood_dec: {fileID: 7566360508720918701, guid: 9b72f691c6f84d54ab5edf686f80368c, type: 3}
+  blood_gib_dec: {fileID: 7116822887987532374, guid: 383bddef851f5d44db6bb61a93559d34, type: 3}
+  explosion_dec: {fileID: 3106187561762992662, guid: 7f4e707939882c242bb890e88fe374a8, type: 3}
+  explosion_small_dec: {fileID: 3106187561762992662, guid: b4f00de86097a904e8383f26e0bdf1fe, type: 3}
+  bomb: {fileID: 6391179630769891645, guid: 664e50d4d6ffcee4fbcdb9914515ee02, type: 3}
+  rocket: {fileID: 6316960002275436735, guid: 2039f9003c23aed459d92f1956c2fe93, type: 3}
+  stickyBomb: {fileID: 4747874411620784534, guid: 43c9b8e7c3962344a8f0edf77133ebd6, type: 3}
+  bullet: {fileID: 533930167994390179, guid: 3eb8fe701bb77674aa1b93581973a3d5, type: 3}
+  plasmaBall: {fileID: 6316960002275436735, guid: 692b0081ed45f2746b5d8cfe5e736f07, type: 3}
+  acidSplash: {fileID: 6391179630769891645, guid: 02a27a0e7aa964340ad153aff06cdf43, type: 3}
+  drone: {fileID: 6316960002275436735, guid: 094b54b319f98f0488b089d28b6321ed, type: 3}

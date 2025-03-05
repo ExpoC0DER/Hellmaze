@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Floor
   - GrapplePoint
+  - Bot
+  - Targets
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - UI
   - Gun
   - GrapplePoint
-  - 
-  - 
-  - 
+  - PlayerModel
+  - Projectile
+  - Pickup
   - 
   - 
   - 
@@ -42,6 +44,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Hud
+    uniqueID: 3265146435
+    locked: 0
+  - name: Menu
+    uniqueID: 3298654253
     locked: 0
   m_RenderingLayers:
   - Default

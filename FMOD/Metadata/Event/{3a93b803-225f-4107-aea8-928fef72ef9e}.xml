@@ -5,10 +5,10 @@
 			<value>Shotgun (fire)</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
-			<destination>{7963491e-8306-4ff9-9f5f-0846162189d4}</destination>
+			<destination>{160c104a-d133-444b-be92-b7492f1308c8}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{6f898ca6-c1b8-4945-a530-591ff9e178de}</destination>
@@ -53,7 +53,7 @@
 			<destination>{e04edfc0-5763-4bd1-8efd-2a6e2eaf8963}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{cf5fad9e-b5e5-4eb0-ae78-c53c83167454}</destination>
+			<destination>{69cd2c96-84c2-4dc0-8fb3-412bd9fee2de}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{69699599-06dd-432a-a1c4-7f5d26cee586}" />
@@ -91,9 +91,11 @@
 	<object class="MixerBusEffectChain" id="{93808445-d206-4438-8f31-b72baab485af}">
 		<relationship name="effects">
 			<destination>{44c74ee5-8a42-4251-ad54-62a7447dac60}</destination>
+			<destination>{5aa61c3d-4096-40c4-9a05-ac7ad0d89746}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{cb82eb76-46ee-41a0-bfb6-6276389ba167}" />
 	<object class="MixerBusFader" id="{8e80dc2e-2249-48bf-a6b6-c761f0e7a640}" />
 	<object class="MixerBusFader" id="{44c74ee5-8a42-4251-ad54-62a7447dac60}" />
+	<object class="SpatialiserEffect" id="{5aa61c3d-4096-40c4-9a05-ac7ad0d89746}" />
 </objects>

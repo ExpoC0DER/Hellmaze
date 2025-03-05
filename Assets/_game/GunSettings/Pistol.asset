@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 35
-  <FiringSpeed>k__BackingField: 1
-  <Spread>k__BackingField: 0
+  <FiringSpeed>k__BackingField: 0.1
+  <Spread>k__BackingField: 0.2
+  <ShotsPerFire>k__BackingField: 1
+  <MaxRange>k__BackingField: 50
   <FiringMode>k__BackingField: 0
   <ManualSound>k__BackingField:
     Guid:
@@ -22,7 +24,7 @@ MonoBehaviour:
       Data2: 1086773430
       Data3: -1486765901
       Data4: -1793374549
-    Path: event:/Pistol
+    Path: event:/weapon_sfx/Pistol
   <AutomaticSound>k__BackingField:
     Guid:
       Data1: 0
@@ -30,6 +32,13 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  <NoAmmoSound>k__BackingField:
+    Guid:
+      Data1: 1258713384
+      Data2: 1134400089
+      Data3: 355281085
+      Data4: -1736016190
+    Path: event:/weapon_sfx/Click_no_ammo
   <RecoilKickback>k__BackingField: {x: 0, y: 0, z: -0.2}
   <RecoilDuration>k__BackingField: 0.1
   <RecoilReturnDuration>k__BackingField: 0.15

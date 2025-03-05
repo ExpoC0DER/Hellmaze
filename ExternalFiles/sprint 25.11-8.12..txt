@@ -1,0 +1,47 @@
+Code :		*projectile based weapon system
+		*implementácia granátometu
+		*implementácia raketometu
+		spawnovanie mŕtvol
+	      	*upratanie options UI
+		*player controller tweaks
+
+3D :		model granátometu
+		model raketometu
+		model granátu
+		*model rakety
+		model kosáku
+		model gibs (part of flesh, bones and organs)
+
+2D :		muzzle flash particle (sprite sheet)
+		smoke particle (sprite sheet)
+		bulletohole decal (sprite sheet)
+		crosshair (sprite sheet)
+
+Audio:		*click sfx (no ammo)
+		*weapon pickup sfx
+		*explosion sfx
+		-ui button click sfx (3 variants)
+		*rocket launcher shoot sfx
+		-grenade launcher shoot sfx
+		-hit wall sfx
+		-hit character sfx
+
+
+
+
+/////////////////////////
+
+*make person not be able to shoot himself
+*some audio does not play, fmod throws warning errors
+
+		
+80
+142
+660
+325
+11-(12) 11x25 = 275
+=1482
+
+
+Témou teoreticko-aplikačnej práce je navrhnúť a implementovať prototyp digitálnej hry v prostredí virtuálnej reality pomocou herného enginu Unity. Cieľom práce je na základe teoretických východísk a analýzy existujúcich hier, navrhnúť a implementovať prototyp digitálnej hry. Táto hra je zameraná na využití herných mechaník a herného dizajnu, pre dosiahnutie čo najviac užívateľsky prívetivého používania, ktoré rieši bežné problémy virtuálnej reality ako je nevoľnosť z pohybu a taktiež využíva výhody, ktoré virtuálna realita prináša ako je silnejšia imerzia a intuitívnejšia interaktivita. Teoretická časť sa zaoberá analyzovaním herných mechaník v existujúcich hrách pre virtuálnu realitu, objasnenie jednotlivých problémov a výhod, ktoré virtuálna realita prináša a riešení týchto problémov. Súčasťou práce je aj otestovanie prototypu na vhodnej vzorke hráčov a vyhodnotiť hrateľnosť, účinnosť herných mechaník riešiť problémy virtuálnej reality alebo stavať na jej výhodách a celkový hráčsky zážitok, na základe hráčskej spätnej väzby. 
+
