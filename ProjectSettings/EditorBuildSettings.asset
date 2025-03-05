@@ -6,11 +6,41 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_game/Scenes/Init.unity
+    guid: 0978ff21cbadf3047953a413e21b7db0
+  - enabled: 1
+    path: Assets/_game/Scenes/Loading.unity
+    guid: d1fa4618db01f144586bc071149e156b
+  - enabled: 1
+    path: Assets/_game/Scenes/MainMenu.unity
+    guid: 923701f9f3f6939498eaa02b6ffb5a2b
+  - enabled: 1
+    path: Assets/_game/Scenes/GameLobby.unity
+    guid: 3e9f7256fea2dba4dbfa3e6b3e1373cb
+  - enabled: 1
+    path: Assets/_game/Scenes/Blue.unity
+    guid: 47b88317c661aad498306a69872495f5
+  - enabled: 1
+    path: Assets/_game/Scenes/Green.unity
+    guid: adf299ea323238c41b4679d352e4a36e
+  - enabled: 1
+    path: Assets/_game/Scenes/Red.unity
+    guid: 236eb1fb1038c064595e82d52875b571
+  - enabled: 0
+    path: Assets/_game/Scenes/Lobby.unity
+    guid: bbfddfb16bd8a824e9a9f450c4601d85
+  - enabled: 1
+    path: Assets/_game/Scenes/NetworkTest.unity
+    guid: 5b07c5d259d48a1449979eee9dd525d2
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 034da9862ef3cd843ba1cb8fc30b8b9c
   - enabled: 1
     path: Assets/Scenes/Maze.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/NGO_Minimal_Setup/NGO_Setup.unity
+    guid: 9833d004224062e42aab6739a42eecf3
   - enabled: 1
     path: Assets/Scenes/LGscene.unity
     guid: 7825e6770498d3e4f9da4d5b22e65e4a

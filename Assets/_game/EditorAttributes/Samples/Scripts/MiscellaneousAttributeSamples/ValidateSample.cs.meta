@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6ccb8493e6f3bfa47b50e10e5f465676
+guid: 210b67360c2b6a948bcb3c891bbf2d52
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -11,8 +11,8 @@ MonoImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 269285
-  packageName: EditorAttributes
-  packageVersion: 2.4.1
-  assetPath: Assets/EditorAttributes/Samples/Scripts/MiscellaneousAttributeSamples/ValidateSample.cs
-  uploadId: 702642
+  productId: 167903
+  packageName: PlayerPrefs Editor
+  packageVersion: 1.2.2
+  assetPath: Assets/PlayerPrefsEditor/Editor/Dialogs/TextValidator.cs
+  uploadId: 554724
