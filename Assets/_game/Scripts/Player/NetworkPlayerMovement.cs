@@ -94,7 +94,7 @@ namespace _game.Scripts.Player
             }
         }
 
-        private void TeleportPlayer(TransformState state)
+        public void TeleportPlayer(TransformState state)
         {
             _cc.enabled = false;
             transform.position = state.Position;
@@ -103,7 +103,7 @@ namespace _game.Scripts.Player
 
             for(int i = 0; i < _transformStates.Length; i++)
             {
-                if (_transformStates[i].Tick == state.Tick)
+                if (_transformStates[i] != null && _transformStates[i].Tick == state.Tick)
                 {
                     _transformStates[i] = state;
                     break;
@@ -217,8 +217,25 @@ namespace _game.Scripts.Player
 
         private void RotatePlayer(Vector2 lookInput)
         {
-            _vCamTransform.RotateAround(_vCamTransform.position, _vCamTransform.right, -lookInput.y * _turnSpeed * TICK_RATE);
+            RotateCameraClamped(_vCamTransform, lookInput, -80f, 80f, _turnSpeed * TICK_RATE);
+            //_vCamTransform.RotateAround(_vCamTransform.position, _vCamTransform.right, -lookInput.y * _turnSpeed * TICK_RATE);
             transform.RotateAround(transform.position, transform.up, lookInput.x * _turnSpeed * TICK_RATE);
+        }
+
+        private static void RotateCameraClamped(Transform cameraTransform, Vector2 input, float minAngle, float maxAngle, float speed)
+        {
+            // Get current X rotation
+            Vector3 angles = cameraTransform.localEulerAngles;
+            angles.x += -input.y * speed;
+
+            // Convert to range -180 to 180 for proper clamping
+            if (angles.x > 180f) angles.x -= 360f;
+
+            // Clamp rotation
+            angles.x = Mathf.Clamp(angles.x, minAngle, maxAngle);
+
+            // Apply clamped rotation
+            cameraTransform.localEulerAngles = angles;
         }
 
         [ServerRpc]

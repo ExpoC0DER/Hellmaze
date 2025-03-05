@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _game.Scripts.Utils;
 using EditorAttributes;
 using JetBrains.Annotations;
 using Unity.Netcode;
@@ -9,14 +10,14 @@ using Random = UnityEngine.Random;
 
 namespace _game.Scripts
 {
-    public class MazeController : NetworkBehaviour
+    public class MazeController : NetworkSingleton<MazeController>
     {
         [SerializeField] private Transform _wallPrefab;
         [SerializeField] private MazeNode _mazeNodePrefab;
-        [SerializeField, Range(0, 30)]
-        private int _mazeSizeX;
-        [SerializeField, Range(0, 30)]
-        private int _mazeSizeY;
+        [field: SerializeField, Range(0, 30)]
+        public int MazeSizeX { get; private set; }
+        [field: SerializeField, Range(0, 30)]
+        public int MazeSizeY { get; private set; }
         [SerializeField, OnValueChanged(nameof(UpdateIndicators))]
         private bool _showIndicators;
         [SerializeField]
@@ -30,7 +31,6 @@ namespace _game.Scripts
         private (int x, int y) _originPos2;
         private (int x, int y) _previousPos2;
 
-        [Button]
         public override void OnNetworkSpawn()
         {
             CreateMaze();
@@ -58,16 +58,16 @@ namespace _game.Scripts
         private void CreateMaze()
         {
             DeleteChildren();
-            _maze = new MazeNode[_mazeSizeX, _mazeSizeY];
-            _mnStates = new MNState[_mazeSizeX, _mazeSizeY];
+            _maze = new MazeNode[MazeSizeX, MazeSizeY];
+            _mnStates = new MNState[MazeSizeX, MazeSizeY];
 
-            for(int x = 0; x < _mazeSizeX; x++)
+            for(int x = 0; x < MazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSizeY; y++)
+                for(int y = 0; y < MazeSizeY; y++)
                 {
-                    MazeNode temp = Instantiate(_mazeNodePrefab, new Vector3((x - _mazeSizeX / 2) * 4, 0, (y - _mazeSizeY / 2) * 4), Quaternion.identity, transform);
-                    MNState tempState = x == _mazeSizeX - 1 ? MNState.Down : MNState.Right;
-                    if (x == _mazeSizeX - 1 && y == 0)
+                    MazeNode temp = Instantiate(_mazeNodePrefab, new Vector3((x - MazeSizeX / 2) * 4, 0, (y - MazeSizeY / 2) * 4), Quaternion.identity, transform);
+                    MNState tempState = x == MazeSizeX - 1 ? MNState.Down : MNState.Right;
+                    if (x == MazeSizeX - 1 && y == 0)
                     {
                         tempState = MNState.Empty;
                         _originPos = (x, y);
@@ -84,9 +84,9 @@ namespace _game.Scripts
                 }
             }
 
-            for(int x = 0; x < _mazeSizeX; x++)
+            for(int x = 0; x < MazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSizeY; y++)
+                for(int y = 0; y < MazeSizeY; y++)
                 {
                     if (CanMove((x - 1, y)))
                     {
@@ -199,9 +199,9 @@ namespace _game.Scripts
 
         private void UpdateIndicators()
         {
-            for(int x = 0; x < _mazeSizeX; x++)
+            for(int x = 0; x < MazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSizeY; y++)
+                for(int y = 0; y < MazeSizeY; y++)
                 {
                     _maze[x, y].SetIndicators(_showIndicators);
                 }
@@ -293,8 +293,7 @@ namespace _game.Scripts
             //
             // _previousPos2 = _originPos2;
             // _originPos2 = newPos2;
-            print(_mnStates.Rank + " Local states");
-            UpdateWallsClientRpc(FlattenMazeStates(_mnStates), _mazeSizeX, _mazeSizeY);
+            UpdateWallsClientRpc(FlattenMazeStates(_mnStates), MazeSizeX, MazeSizeY);
         }
 
         private MNState[] FlattenMazeStates(MNState[,] mazeStates)
@@ -338,7 +337,6 @@ namespace _game.Scripts
             {
                 for(int y = 0; y < mazeStates.GetLength(1); y++)
                 {
-                    print(x + " " + y);
                     _maze[x, y].State = mazeStates[x, y];
                 }
             }
@@ -347,9 +345,9 @@ namespace _game.Scripts
 
         private void UpdateWalls(bool force = false)
         {
-            for(int x = 0; x < _mazeSizeX; x++)
+            for(int x = 0; x < MazeSizeX; x++)
             {
-                for(int y = 0; y < _mazeSizeY; y++)
+                for(int y = 0; y < MazeSizeY; y++)
                 {
                     if (_maze[x, y].State is MNState.Left)
                     {
@@ -393,10 +391,10 @@ namespace _game.Scripts
 
         private bool CanMove((int x, int y) position)
         {
-            if (position.x < 0 || position.x >= _mazeSizeX)
+            if (position.x < 0 || position.x >= MazeSizeX)
                 return false;
 
-            if (position.y < 0 || position.y >= _mazeSizeY)
+            if (position.y < 0 || position.y >= MazeSizeY)
                 return false;
 
             return true;

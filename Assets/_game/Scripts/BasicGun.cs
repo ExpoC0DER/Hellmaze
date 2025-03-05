@@ -133,7 +133,7 @@ namespace _game.Scripts
 
                 if (raycastHit.transform.TryGetComponent(out PlayerController playerController))
                 {
-                    playerController.TakeDamage(damage);
+                    playerController.TakeDamage(damage, OwnerClientId);
                 }
             }
             ApplyRecoilClientRpc();
