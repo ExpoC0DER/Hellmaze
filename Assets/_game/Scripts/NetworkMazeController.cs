@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace _game.Scripts
 {
-    public class MazeController : NetworkSingleton<MazeController>
+    public class NetworkMazeController : NetworkSingleton<NetworkMazeController>
     {
         [SerializeField] private Transform _wallPrefab;
         [SerializeField] private MazeNode _mazeNodePrefab;

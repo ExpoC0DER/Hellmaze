@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _game.Scripts
 {
-    public interface IGun
+    public interface IGunOld
     {
         public float Damage { get; set; }
         public int Ammo { get; set; }
