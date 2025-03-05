@@ -573,7 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769325416}
   - component: {fileID: 1769325415}
-  - component: {fileID: 1769325414}
+  - component: {fileID: 1769325417}
   m_Layer: 0
   m_Name: MazeController
   m_TagString: Untagged
@@ -581,25 +581,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1769325414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769325413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 815f34880caa1b14797d4254bdb228c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  _wallPrefab: {fileID: 5819281089417418960, guid: 1c81eaed406f96d488e17c9e59b4a379, type: 3}
-  _mazeNodePrefab: {fileID: 4708317600001989318, guid: cf6a8fe5c71b73646bb1ec6af65cfbcc, type: 3}
-  <MazeSizeX>k__BackingField: 8
-  <MazeSizeY>k__BackingField: 8
-  _showIndicators: 0
-  _clockSpeed: 1
 --- !u!114 &1769325415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,6 +621,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1769325417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769325413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff9756869e39d249a2595af096ea212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  _wallPrefab: {fileID: 5819281089417418960, guid: 1c81eaed406f96d488e17c9e59b4a379, type: 3}
+  _mazeNodePrefab: {fileID: 4708317600001989318, guid: cf6a8fe5c71b73646bb1ec6af65cfbcc, type: 3}
+  <MazeSizeX>k__BackingField: 8
+  <MazeSizeY>k__BackingField: 8
+  _showIndicators: 0
+  _clockSpeed: 1
 --- !u!1 &1851406697
 GameObject:
   m_ObjectHideFlags: 0

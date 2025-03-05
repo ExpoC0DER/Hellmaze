@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 4184063643941073853}
   - component: {fileID: 3601692781694320195}
   - component: {fileID: 925669326114245426}
-  - component: {fileID: 7913875861555826613}
+  - component: {fileID: 5654677058804695803}
   - component: {fileID: 1888618278223602503}
   m_Layer: 0
   m_Name: NewPlayer
@@ -507,7 +507,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7913875861555826613
+--- !u!114 &5654677058804695803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -516,25 +516,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5257421903241848603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdd4cb967f5f5b1439a64095c1e66f9c, type: 3}
+  m_Script: {fileID: 11500000, guid: aa1250391787e0c4291d60906e3f72e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   _health:
     m_InternalValue: 100
   _gun1:
-    _underlyingValue: {fileID: 6949401026619736375}
+    _underlyingValue: {fileID: 0}
   _gun2:
     _underlyingValue: {fileID: 0}
-  _minMaxRotationX: {x: 90, y: -90}
+  _minMaxRotationX: {x: 0, y: 0}
   _camTransform: {fileID: 4921538726787301369}
   _networkMovement: {fileID: 1888618278223602503}
-  _shootDistance: 100
+  _shootDistance: 10
   _shootLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  _hitPoint: {fileID: 2835503321813008562, guid: 140e256f36677c644b7cfb4967959c27, type: 3}
-  _gunPrefab: {fileID: -8032973168669257438, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
+  _hitPoint: {fileID: 2835503321813008562, guid: 41893c3278f18104396ff17a324711f0, type: 3}
+  _gunPrefab: {fileID: -8032973168669257438, guid: 020425026f46f5144b15f447426b047b, type: 3}
   _hand: {fileID: 2580047935691687406}
   _killFeed: {fileID: 5569288835322001894}
   test: 
@@ -836,17 +836,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
---- !u!114 &6949401026619736375 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 291824988599342815, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
-  m_PrefabInstance: {fileID: 7241223248991246312}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e7d7505e805dd49828b5ba531605e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8669063459508290244 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2032052951989867820, guid: fff8d6418f50b47448fb73506617b79a, type: 3}
