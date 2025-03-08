@@ -213,11 +213,11 @@ namespace _game.Scripts
 			if (x >= _noWallRange.x && x < _noWallRange.y)
 				return -1;
 			if (x >= _fullWallRange.x && x < _fullWallRange.y)
-				return 0;
+				return Random.Range(0,4);
 			if (x >= _bottomHoleRange.x && x < _bottomHoleRange.y)
-				return 1;
+				return Random.Range(4,7);
 			if (x >= _topHoleRange.x && x < _topHoleRange.y)
-				return 2;
+				return Random.Range(7,9);
 			if (x >= _glassWallRange.x && x < _glassWallRange.y)
 				return 3;
 			if (x >= _breakableWallRange.x && x < _breakableWallRange.y)

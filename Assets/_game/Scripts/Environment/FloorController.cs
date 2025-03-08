@@ -106,15 +106,16 @@ public class FloorController : MonoBehaviour
 			if (x >= noFloorRange.x && x < noFloorRange.y && floorPos > 0)
 				return 0;
 			if (x >= fullFloorRange.x && x < fullFloorRange.y)
-				return 1;
+				if(floorPos == 0) return 1;
+				else return Random.Range(1,5);
 			if (x >= acidFloorRange.x && x < acidFloorRange.y)
-				return 2;
-			if (x >= lavaFloorRange.x && x < lavaFloorRange.y)
-				return 3;
-			if (x >= destructibleFloorRange.x && x < destructibleFloorRange.y && floorPos > 0)
-				return 4;
-			if (x >= glassFloorRange.x && x < glassFloorRange.y && floorPos > 0)
 				return 5;
+			if (x >= lavaFloorRange.x && x < lavaFloorRange.y)
+				return 6;
+			if (x >= destructibleFloorRange.x && x < destructibleFloorRange.y && floorPos > 0)
+				return 7;
+			if (x >= glassFloorRange.x && x < glassFloorRange.y && floorPos > 0)
+				return 8;
 			
 
 			return 1;

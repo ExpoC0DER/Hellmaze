@@ -108,7 +108,7 @@ public class Menu : MonoBehaviour
 	
 	public void StartGame()
 	{
-		GameManager.main.LoadScene(1);
+		GameManager.main.LoadScene("Maze");
 	}
 	
 	void Reload()
