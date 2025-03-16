@@ -1,3 +1,4 @@
+using _game.Scripts;
 using UnityEngine;
 
 public class WeaponSway : MonoBehaviour
@@ -17,8 +18,9 @@ public class WeaponSway : MonoBehaviour
 		 
 		if(isOn)
 		{
-			mouseX = Input.GetAxisRaw("Mouse X") * swayMultiplier;
-			mouseY = Input.GetAxisRaw("Mouse Y") * swayMultiplier;
+			inputLook = GameManager.main.playerControlls.Player.Look.ReadValue<Vector2>();
+			mouseX = inputLook.x * swayMultiplier;
+			mouseY = inputLook.y * swayMultiplier;
 		}
 		
 		Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);

@@ -24,15 +24,19 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 6e2a2b7926245e04fac1fc85ee6ad95e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses:
   - MOTIONVECTORS
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -51,7 +55,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _CastShadows: 1
+    - _Cull: 2
     - _Density: 20
+    - _DstBlend: 10
+    - _Fill: 0.5
     - _FlowSpeed: 1
     - _Glow: 0.512
     - _MaxPixelation: 523
@@ -63,12 +75,24 @@ Material:
     - _Pixelation: 0.75
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _RippleSpeed: 20
     - _RippleThickness: 4.8
+    - _SrcBlend: 1
+    - _Surface: 1
+    - _Wobble: 0
+    - _WobbleX: 0
+    - _WobbleZ: 0
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
     - _BackColor: {r: 0, g: 1, b: 0.07450986, a: 0}
     - _FlowDirection: {r: 0, g: 1, b: 0, a: 0}
+    - _SideColorTint: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 0}
     - _TexColor: {r: 0.136121, g: 0.5396226, b: 0, a: 0}
     - _Tilling: {r: 1, g: 1, b: 0, a: 0}
+    - _TopColorTint: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

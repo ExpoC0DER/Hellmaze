@@ -2,14 +2,15 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 namespace _game.Scripts
 {
 	public class GameManager : MonoBehaviour
 	{
+		public InputSystem_Actions playerControlls;
 		public PlayerDatabase playerDatabase;
 		public bool isMainMenu {get; private set;} = true;
-		
 		private float _timer = -1;
 
 		public event Action<float> OnTimerChange;
@@ -33,6 +34,7 @@ namespace _game.Scripts
 			Time.timeScale = 1;
 			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
 			loadingScene = false;
+			playerControlls = new InputSystem_Actions();
 		}
 
 		private void Update()
@@ -48,6 +50,16 @@ namespace _game.Scripts
 					Time.timeScale = 0;
 				}
 			}
+		}
+		
+		void OnEnable()
+		{
+			playerControlls.Enable();
+		}
+		
+		void OnDisable()
+		{
+			playerControlls?.Disable();
 		}
 		
 		public void SetTimer(float gameTime)

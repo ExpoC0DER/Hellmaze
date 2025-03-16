@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Diagnostics;
 using AYellowpaper;
 using EditorAttributes;
 using UnityEngine;
@@ -38,6 +37,9 @@ namespace _game.Scripts
 		private float _speed;
 		private bool _isGrounded;
 		private bool _isGrappling;
+		private Vector2 _moveInput;
+		private bool _grappleInput = false;
+		private bool _jumpInput = false;
 
 		[Header("Jump / Physics Settings")]
 		public float jumpHeight = 2.0f;
@@ -83,6 +85,30 @@ namespace _game.Scripts
 			}
 		}
 		
+		void OnEnable()
+		{
+			GameManager.main.playerControlls.Player.Sprint.started += x => isRunning = true;
+			GameManager.main.playerControlls.Player.Sprint.canceled += x => isRunning = false;
+			GameManager.main.playerControlls.Player.Crouch.started += x => _CrouchInput = true;
+			GameManager.main.playerControlls.Player.Crouch.canceled += x => _CrouchInput = false;
+			GameManager.main.playerControlls.Player.SecondaryAttack.started += x => _grappleInput = true;
+			GameManager.main.playerControlls.Player.SecondaryAttack.canceled += x => _grappleInput = false;
+			GameManager.main.playerControlls.Player.Jump.started += x => _jumpInput = true;
+			GameManager.main.playerControlls.Player.Jump.canceled += x => _jumpInput = false;
+		}
+		
+		void OnDisable()
+		{
+			GameManager.main.playerControlls.Player.Sprint.started -= x => isRunning = true;
+			GameManager.main.playerControlls.Player.Sprint.canceled -= x => isRunning = false;
+			GameManager.main.playerControlls.Player.Crouch.started -= x => _CrouchInput = true;
+			GameManager.main.playerControlls.Player.Crouch.canceled -= x => _CrouchInput = false;
+			GameManager.main.playerControlls.Player.SecondaryAttack.started -= x => _grappleInput = true;
+			GameManager.main.playerControlls.Player.SecondaryAttack.canceled -= x => _grappleInput = false;
+			GameManager.main.playerControlls.Player.Jump.started -= x => _jumpInput = true;
+			GameManager.main.playerControlls.Player.Jump.canceled -= x => _jumpInput = false;
+		}
+		
 		void OnDeath()
 		{
 			SetDeathCamPhysics(true);
@@ -107,23 +133,30 @@ namespace _game.Scripts
 		
 		private Vector3 _hitPos;
 
+		
+		
 		private void HandleGrapple()
 		{
-			if (!_isGrappling && Input.GetMouseButtonDown(1))
+			
+			if (_grappleInput && !_isGrappling) // && Input.GetMouseButtonDown(1)
 			{
 				if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 30, Physics.AllLayers, QueryTriggerInteraction.Collide))
 				{
+					Debug.Log("trying to grapple, what did I hit " + hit.transform.name, hit.transform);
+					
 					if (hit.transform.TryGetComponent(out GrapplePoint grapplePoint))
 					{
+						Debug.Log("trying to grapple, COMPONENT FOUND");
 						_hitPos = grapplePoint.ArrivalPos;
 						_isGrappling = true;
 						FMODHelper.PlayNewInstance(grapple_sfx, transform);
 					}
 				}
 			}
-
-			if (_isGrappling)
+			
+			if(_isGrappling)
 			{
+				Debug.Log("trying to grapple, GRappling now");
 				isCrouching = false;
 				isSliding = false;
 				isRunning = false;
@@ -158,7 +191,7 @@ namespace _game.Scripts
 			Vector3 right = transform.TransformDirection(Vector3.right);
 
 			// Press Left Shift to run
-			isRunning = Input.GetKey(KeyCode.LeftShift);
+			//isRunning = Input.GetKey(KeyCode.LeftShift);
 			_animator.SetBool("IsSprinting", isRunning);
 			if (_canMove)
 			{
@@ -184,8 +217,9 @@ namespace _game.Scripts
 				_targetSpeed = 0;
 			}
 
-			float speedX = Input.GetAxis("Vertical");
-			float speedY = Input.GetAxis("Horizontal");
+			_moveInput = GameManager.main.playerControlls.Player.Move.ReadValue<Vector2>();
+			float speedX = _moveInput.y;//Input.GetAxis("Vertical");
+			float speedY = _moveInput.x;//Input.GetAxis("Horizontal");
 			_animator.SetFloat(SpeedX, speedY);
 			_animator.SetFloat(SpeedY, speedX);
 			//_animator.SetBool(IsWalking, Mathf.Abs(speedX) > 0.1f || Mathf.Abs(speedY) > 0.1f);
@@ -205,7 +239,7 @@ namespace _game.Scripts
 		private void HandleJump()
 		{
 			// Jump if grounded and jump button pressed
-			if (_isGrounded && Input.GetButtonDown("Jump"))
+			if (_jumpInput && _isGrounded && !_isGrappling) // && Input.GetButtonDown("Jump")
 			{
 				_animator.SetTrigger("Jump");
 				velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -257,6 +291,7 @@ namespace _game.Scripts
 		public float slideCooldown = 2.0f;
 		private float lastSlideTime;
 
+		private bool _CrouchInput = false;
 		private bool isCrouching = false;
 		private bool isSliding = false;
 		private float slideTimer;
@@ -267,9 +302,10 @@ namespace _game.Scripts
 		private static readonly int SpeedY = Animator.StringToHash("SpeedY");
 		private static readonly int IsRunning = Animator.StringToHash("IsRunning");
 
+		
 		private void HandleCrouchAndSlide()
 		{
-			if (Input.GetKeyDown(KeyCode.LeftControl) && _speed > (_walkSpeed + _runSpeed) / 2 && !isSliding && Time.time >= lastSlideTime + slideCooldown)
+			if (_CrouchInput && _speed > (_walkSpeed + _runSpeed) / 2 && !isSliding && Time.time >= lastSlideTime + slideCooldown) //Input.GetKeyDown(KeyCode.LeftControl) && 
 			{
 				// Start slide
 				isSliding = true;
@@ -280,7 +316,7 @@ namespace _game.Scripts
 				_animator.SetFloat("SlideAnim", UnityEngine.Random.Range(0f,1f));
 				//Debug.Log("started SLIDE");
 			}
-
+			
 			if (isSliding)
 			{
 				slideTimer -= Time.deltaTime;
@@ -295,7 +331,7 @@ namespace _game.Scripts
 				}
 			}
 
-			if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && !isCrouching)
+			if (_CrouchInput && !isSliding && !isCrouching) //Input.GetKeyDown(KeyCode.LeftControl) && 
 			{
 				//Debug.Log("started Crouch");
 				// Crouch
@@ -304,7 +340,7 @@ namespace _game.Scripts
 				_characterController.center = new Vector3(0, crouchHeight / 2, 0);
 				_cameraHeadTarget.transform.localPosition = new Vector3(0, crouchHeight * 0.8f, 0);
 			}
-			else if (Input.GetKeyUp(KeyCode.LeftControl) && isCrouching)
+			else if (!_CrouchInput && isCrouching) //Input.GetKeyUp(KeyCode.LeftControl) && 
 			{
 				// End crouch
 				isCrouching = false;

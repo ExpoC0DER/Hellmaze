@@ -60,11 +60,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4522573661234027594, guid: 0c4c7dfb606d2814ba02fd5dcc75e49a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8716580242138515175, guid: 0c4c7dfb606d2814ba02fd5dcc75e49a, type: 3}
       propertyPath: m_Name
       value: AcidBlaster
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7359464825270902571, guid: 0c4c7dfb606d2814ba02fd5dcc75e49a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -36,12 +36,26 @@ public class Menu : MonoBehaviour
 		GameManager.main.OnSceneLoad += Reload;
 		Reload();
 	}
-	void Update()
+	
+	void OnEnable()
 	{
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			if(!GameManager.main.isMainMenu || !menuLocked) PauseMenu();
-		}
+		StartCoroutine(AssignInput_WhenReady());
+	}
+	
+	IEnumerator AssignInput_WhenReady()
+	{
+		yield return new WaitUntil(() => GameManager.main != null);
+	    GameManager.main.playerControlls.Player.Pause.performed += x => PauseInput();
+	}
+	
+	void OnDisable()
+	{
+		GameManager.main.playerControlls.Player.Pause.performed -= x => PauseInput();
+	}
+	
+	void PauseInput()
+	{
+	    if(!GameManager.main.isMainMenu || !menuLocked) PauseMenu();
 	}
 	
 	void SetButtons()

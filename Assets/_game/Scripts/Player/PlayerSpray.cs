@@ -1,16 +1,18 @@
+using _game.Scripts;
 using UnityEngine;
 
 public class PlayerSpray : MonoBehaviour
 {
 	[SerializeField] Transform spray_obj;
-	[SerializeField] KeyCode key = KeyCode.T;
 	
-	void Update()
+	void OnEnable()
 	{
-		if(Input.GetKeyDown(key))
-		{
-			UseSpray();
-		}
+		GameManager.main.playerControlls.Player.Spray.performed += x => UseSpray();
+	}
+	
+	void OnDisable()
+	{
+		GameManager.main.playerControlls.Player.Spray.performed -= x => UseSpray();
 	}
 	
 	void UseSpray()

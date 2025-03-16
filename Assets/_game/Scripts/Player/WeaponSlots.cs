@@ -28,8 +28,10 @@ public class WeaponSlots : MonoBehaviour
 	[SerializeField] float damage_multiplier = 0.5f;
 	bool bot_shoot_trigger = false;
 	bool botCanShot = true;
-	
-	
+	bool _shootInput = false;
+	float scrollCd = 0;
+	float scrollCd_Time = 0.1f;
+		
 	public int WeaponToSwitchIndex = 0;
 	[Button]
 	void ForceSwitchWeapon()
@@ -62,10 +64,20 @@ public class WeaponSlots : MonoBehaviour
 		playerStats.OnRespawn += OnRespawn;
 	}
 	
+	void OnEnable()
+	{
+		GameManager.main.playerControlls.Player.Attack.started += x => _shootInput = true;
+		GameManager.main.playerControlls.Player.Attack.canceled += x => _shootInput = false;
+		
+	}
+	
 	void OnDisable()
 	{
 		playerStats.OnDeath -= OnDeath;
 		playerStats.OnRespawn -= OnRespawn;
+		
+		GameManager.main.playerControlls.Player.Attack.started -= x => _shootInput = true;
+		GameManager.main.playerControlls.Player.Attack.canceled -= x => _shootInput = false;
 	}
 	
 	void Update()
@@ -73,10 +85,13 @@ public class WeaponSlots : MonoBehaviour
 		if(!isPlayer) return;
 		if(Menu.main.isPaused) return;
 		if(isDead) return;
-		
-		HandleInput();
-		HandleShooting();
-		HandleScrollWheelInput();
+		if(scrollCd >= 0)
+		{
+		    scrollCd -= Time.deltaTime;
+		}
+		//HandleInput();
+		HandleShooting(_shootInput);
+		HandleScrollWheelInput(GameManager.main.playerControlls.Player.WeaponSelect.ReadValue<Vector2>().y);
 	}
 	
 	void HandleInput()
@@ -90,15 +105,18 @@ public class WeaponSlots : MonoBehaviour
 		}
 	}
 	
-	void HandleScrollWheelInput()
+	void HandleScrollWheelInput(float input)
 	{
-		float scroll = Input.GetAxis("Mouse ScrollWheel");
+		if(scrollCd > 0) return;
+		float scroll = input;//Input.GetAxis("Mouse ScrollWheel");
 		if(scroll > 0)
 		{
+			Debug.Log("Scroll Next to " + ScrollToNextWeapon() + " from " + currentWeaponIndex);
 			SwitchWeapon(ScrollToNextWeapon());
 		}
 		else if(scroll < 0)
 		{
+			Debug.Log("Scroll Back to " + ScrollToPreviousWeapon() + " from " + currentWeaponIndex);
 			SwitchWeapon(ScrollToPreviousWeapon());
 		}
 	}
@@ -114,7 +132,8 @@ public class WeaponSlots : MonoBehaviour
 			if(weaponsPicked[i]) return i;
 			if(i == weaponsPicked.Length - 1) i = 0;
 		}
-		return weaponIndex;
+		return 0;
+		//return weaponIndex;
 	}
 	
 	int ScrollToPreviousWeapon()
@@ -128,7 +147,9 @@ public class WeaponSlots : MonoBehaviour
 			if(weaponsPicked[i]) return i;
 			if(i == 0) i = weaponsPicked.Length -1;
 		}
-		return weaponIndex;
+		
+		return 0;
+		//return weaponIndex;
 	}
 	
 		
@@ -145,6 +166,7 @@ public class WeaponSlots : MonoBehaviour
 	
 	void SwitchWeapon(int weaponIndex)
 	{
+		
 		if(!weaponsPicked[weaponIndex]) return;
 		if(weaponIndex != 0)_currentGun.Value.StopShooting();
 		bool canSwitch;
@@ -162,6 +184,7 @@ public class WeaponSlots : MonoBehaviour
 			}  
 		}
 		OnWeaponChange?.Invoke(currentWeaponIndex);
+		scrollCd = scrollCd_Time;
 	}
 	void SwitchToWeaponWithAmmo()
 	{
@@ -182,9 +205,9 @@ public class WeaponSlots : MonoBehaviour
 		}
 	}
 	
-	private void HandleShooting()
+	private void HandleShooting(bool input)
 	{
-		bool triggered = Input.GetMouseButton(0);
+		bool triggered = input;//Input.GetMouseButton(0);
 		_currentGun.Value.Shoot(triggered, null, out bool succesShot);
 		if (succesShot) OnAmmoChange?.Invoke(_currentGun.Value.Ammo);
 		animator.SetBool("Shooting", succesShot && triggered);

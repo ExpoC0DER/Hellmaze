@@ -9,7 +9,6 @@ using FMOD.Studio;
 public class ResultScreen : MonoBehaviour
 {
 	[SerializeField] GameObject _resultScreen_object;
-	[SerializeField] KeyCode key;
 	[SerializeField] PlayerScore scorePrefab;
 	[SerializeField] Transform scoreParent;
 	[SerializeField] EventReference matchFinish_sfx;
@@ -25,17 +24,22 @@ public class ResultScreen : MonoBehaviour
 		FMODHelper.PlayNewInstance(matchStart_sfx, transform);
 	}
 	
-	void Update()
+	void OnEnable()
+	{
+		GameManager.main.playerControlls.Player.ResultScreen.started += x => ResultScreenInput(true);
+		GameManager.main.playerControlls.Player.ResultScreen.canceled += x => ResultScreenInput(false);
+	}
+	
+	void OnDisable()
+	{
+		GameManager.main.playerControlls.Player.ResultScreen.started -= x => ResultScreenInput(true);
+		GameManager.main.playerControlls.Player.ResultScreen.canceled -= x => ResultScreenInput(false);
+	}
+	
+	void ResultScreenInput(bool on)
 	{
 		if(endGame) return;
-		if(Input.GetKeyDown(key))
-		{
-			SwitchResults(true);
-		}
-		if(Input.GetKeyUp(key))
-		{
-			SwitchResults(false);
-		}
+		SwitchResults(on);
 	}
 	
 	void SwitchResults(bool on)
