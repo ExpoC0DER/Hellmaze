@@ -5,7 +5,7 @@
 			<value>StoneCorridor</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5aad9025-40c5-44a3-b775-81b2c0a9a3d6}</destination>
@@ -30,6 +30,9 @@
 		</relationship>
 		<relationship name="timeline">
 			<destination>{9eba4918-58ee-4ea3-b872-04b84c9d34e9}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{cdf20623-a8bb-41b5-ab51-3c049e40da47}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixer" id="{b6a6d471-d864-4ed3-a5e5-6b4af72ea08a}">
@@ -56,11 +59,18 @@
 	<object class="EventAutomatableProperties" id="{b711e1bf-5874-4cbb-aca3-20d6cd0fb0bf}" />
 	<object class="MarkerTrack" id="{8d62b700-c3f4-46c0-ab48-9f5ef446e5cb}" />
 	<object class="GroupTrack" id="{81b85c4f-1bea-416d-b7d8-71d29140f5a3}">
+		<relationship name="modules">
+			<destination>{0a8d0733-0ffc-4aa0-aab8-96211b8927fc}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{648f4076-ada3-4d56-bc04-82481d411a7b}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{9eba4918-58ee-4ea3-b872-04b84c9d34e9}" />
+	<object class="Timeline" id="{9eba4918-58ee-4ea3-b872-04b84c9d34e9}">
+		<relationship name="modules">
+			<destination>{0a8d0733-0ffc-4aa0-aab8-96211b8927fc}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{54a170cb-8454-40c5-91da-d11d338bc4c0}">
 		<relationship name="effectChain">
 			<destination>{c1269d91-2431-43e2-a4b8-04ae2b44c12c}</destination>
@@ -78,6 +88,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{3b37a362-10e6-4d62-9033-fc16df36ed1d}" />
+	<object class="SingleSound" id="{0a8d0733-0ffc-4aa0-aab8-96211b8927fc}">
+		<property name="length">
+			<value>120</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{d0f4a111-cd3b-491c-80c6-51a3c7f06ff9}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{648f4076-ada3-4d56-bc04-82481d411a7b}">
 		<property name="name">
 			<value>Audio 1</value>

@@ -134,10 +134,13 @@ public class MapManager : MonoBehaviour
 	{
 		for (int i = 0; i < pickup_prefabs.Length; i++)
 		{
-			for (int g = 0; g <= GetPickupCount(i); g++)
+			/* int pickupCount = GetPickupCount(i);
+			if(pickupCount <= 0) continue; */
+			for (int g = 0; g <= GetPickupCount(i) -1; g++)
 			{
 				Transform pickup = Instantiate(pickup_prefabs[i], GetSpawnPos(0.5f), Quaternion.identity);
 				pickupsInScene.Add(pickup);
+				Debug.Log("spawned pickup: " + pickup.name);
 			}
 			
 		}

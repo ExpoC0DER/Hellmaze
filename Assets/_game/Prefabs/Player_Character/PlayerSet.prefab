@@ -170,6 +170,7 @@ MonoBehaviour:
   _runSpeed: 9
   _grappleSpeed: 20
   _acceleration: 10
+  accelerate_mp: 7
   _animator: {fileID: 3970541140265662068}
   _cameraHeadTarget: {fileID: 6284394218959673756}
   _cameraHeadTarget_rb: {fileID: 4646224168320654895}

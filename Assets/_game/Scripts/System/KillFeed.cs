@@ -12,6 +12,8 @@ public class KillFeed : MonoBehaviour
 	
 	public void AddKillLog(string killerName, int weaponIndex, string victimName)
 	{
+		//Debug.Log("killer: " + killerName + " wepIndex: " + weaponIndex + " victim: " + victimName + " currentLogIndex: " + currentLog_index);
+		
 		KillFeedLog killLog = killLogs[currentLog_index];
 		Sprite weaponIcon;
 		
@@ -28,7 +30,7 @@ public class KillFeed : MonoBehaviour
 		killLog.transform.SetSiblingIndex(killLogs.Length - 1);
 		
 		currentLog_index++;
-		if(currentLog_index >= weaponIcons.Length) currentLog_index = 0;
+		if(currentLog_index >= killLogs.Length) currentLog_index = 0;
 	}
 	
 	private void OnEnable()

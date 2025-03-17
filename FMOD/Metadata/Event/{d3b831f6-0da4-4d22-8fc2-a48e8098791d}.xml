@@ -5,7 +5,7 @@
 			<value>WoodenHall</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5aad9025-40c5-44a3-b775-81b2c0a9a3d6}</destination>
@@ -30,6 +30,9 @@
 		</relationship>
 		<relationship name="timeline">
 			<destination>{de11afac-5c9f-4f10-8681-05cdd1824017}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{cdf20623-a8bb-41b5-ab51-3c049e40da47}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixer" id="{a85d991f-10b4-406f-9791-948d7f7eae99}">
@@ -56,11 +59,18 @@
 	<object class="EventAutomatableProperties" id="{36d594ba-cdd1-4a82-ae8b-edae3d1966d4}" />
 	<object class="MarkerTrack" id="{9c8c55b6-17b2-40d0-8052-4056878bf42f}" />
 	<object class="GroupTrack" id="{13679ba1-0424-4227-98ec-e24aa79e0f00}">
+		<relationship name="modules">
+			<destination>{b320b962-6077-4a82-b41c-4a46bc10d562}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{426d29bc-6b71-4f12-a542-70686673248c}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{de11afac-5c9f-4f10-8681-05cdd1824017}" />
+	<object class="Timeline" id="{de11afac-5c9f-4f10-8681-05cdd1824017}">
+		<relationship name="modules">
+			<destination>{b320b962-6077-4a82-b41c-4a46bc10d562}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{65672ec7-0294-447d-8b22-e073ba87385e}">
 		<relationship name="effectChain">
 			<destination>{7ff3407b-c0a7-4ef4-b18e-7f3eb438f43b}</destination>
@@ -78,6 +88,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ae251350-4d86-4ec0-9c45-5d27750067ed}" />
+	<object class="SingleSound" id="{b320b962-6077-4a82-b41c-4a46bc10d562}">
+		<property name="length">
+			<value>120</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{07fada2f-a282-4442-9be0-040eb53934ef}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{426d29bc-6b71-4f12-a542-70686673248c}">
 		<property name="name">
 			<value>Audio 1</value>

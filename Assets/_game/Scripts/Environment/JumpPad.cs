@@ -22,9 +22,14 @@ public class JumpPad : MonoBehaviour
 		{
 			if(other.TryGetComponent(out EnemyAI enemyAI))
 			{
-				enemyAI.SimulateImpulsePhysics(Vector3.up * force * 0.5f);
+				enemyAI.SimulateImpulsePhysics(GetRandomBotDirection() * force * 0.5f);
 				FMODHelper.PlayNewInstance(jump_sfx, transform);
 			}
 		}
+	}
+	
+	Vector3 GetRandomBotDirection()
+	{
+	    return new Vector3(Random.Range(0.2f, 1), 1, Random.Range(0.2f, 1));
 	}
 }

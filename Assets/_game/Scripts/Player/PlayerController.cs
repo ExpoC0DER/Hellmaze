@@ -17,6 +17,7 @@ namespace _game.Scripts
 		[SerializeField] private float _runSpeed = 12f;
 		[SerializeField] private float _grappleSpeed = 20f;
 		[SerializeField] private float _acceleration;
+		[SerializeField] float accelerate_mp = 1f;
 		[SerializeField] private Animator _animator;
 		[SerializeField] private Transform _cameraHeadTarget;
 		[SerializeField] private Rigidbody _cameraHeadTarget_rb;
@@ -40,6 +41,8 @@ namespace _game.Scripts
 		private Vector2 _moveInput;
 		private bool _grappleInput = false;
 		private bool _jumpInput = false;
+		float speedX;
+		float speedY;
 
 		[Header("Jump / Physics Settings")]
 		public float jumpHeight = 2.0f;
@@ -218,8 +221,23 @@ namespace _game.Scripts
 			}
 
 			_moveInput = GameManager.main.playerControlls.Player.Move.ReadValue<Vector2>();
-			float speedX = _moveInput.y;//Input.GetAxis("Vertical");
-			float speedY = _moveInput.x;//Input.GetAxis("Horizontal");
+			
+			/* if(_moveInput.x == 0 && speedY != 0)
+			{
+			    //deaccelerate speedY
+			    speedY = Mathf.Lerp(speedY, _moveInput.x, Time.deltaTime * deaccelerate_mp);
+			}else if(_moveInput.x != 0 && speedY == 0)
+			{
+			    //accelerate speedY
+			    speedY = Mathf.Lerp(speedY, _moveInput.x, Time.deltaTime * accelerate_mp);
+			} */
+			
+			speedY = Mathf.Lerp(speedY, _moveInput.x, Time.deltaTime * accelerate_mp);
+			speedX = Mathf.Lerp(speedX, _moveInput.y, Time.deltaTime * accelerate_mp);
+			
+			//speedX = _moveInput.y;//Input.GetAxis("Vertical");
+			//speedY = _moveInput.x;//Input.GetAxis("Horizontal");
+			
 			_animator.SetFloat(SpeedX, speedY);
 			_animator.SetFloat(SpeedY, speedX);
 			//_animator.SetBool(IsWalking, Mathf.Abs(speedX) > 0.1f || Mathf.Abs(speedY) > 0.1f);
