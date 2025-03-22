@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/_game/Scenes/Loading.unity
     guid: d1fa4618db01f144586bc071149e156b
   - enabled: 1
-    path: Assets/_game/Scenes/MainMenu.unity
+    path: Assets/_game/Scenes/MainMenuTest.unity
     guid: 923701f9f3f6939498eaa02b6ffb5a2b
   - enabled: 1
     path: Assets/_game/Scenes/GameLobby.unity
@@ -26,23 +26,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_game/Scenes/Red.unity
     guid: 236eb1fb1038c064595e82d52875b571
-  - enabled: 0
-    path: Assets/_game/Scenes/Lobby.unity
-    guid: bbfddfb16bd8a824e9a9f450c4601d85
   - enabled: 1
     path: Assets/_game/Scenes/NetworkTest.unity
     guid: 5b07c5d259d48a1449979eee9dd525d2
-  - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
+  - enabled: 1
+    path: Assets/_game/Scenes/MainMenu.unity
     guid: 034da9862ef3cd843ba1cb8fc30b8b9c
   - enabled: 1
-    path: Assets/Scenes/Maze.unity
+    path: Assets/_game/Scenes/Maze.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/NGO_Minimal_Setup/NGO_Setup.unity
     guid: 9833d004224062e42aab6739a42eecf3
   - enabled: 1
-    path: Assets/Scenes/LGscene.unity
+    path: Assets/_game/Scenes/LGscene.unity
     guid: 7825e6770498d3e4f9da4d5b22e65e4a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
