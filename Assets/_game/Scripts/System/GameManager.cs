@@ -1,98 +1,94 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
+using UnityUtils;
 
-namespace _game.Scripts
+namespace _game.Scripts.System
 {
-	public class GameManager : MonoBehaviour
-	{
-		public InputSystem_Actions playerControlls;
-		public PlayerDatabase playerDatabase;
-		public bool isMainMenu {get; private set;} = true;
-		private float _timer = -1;
+    public class GameManager : Singleton<GameManager>
+    {
+        public InputSystem_Actions playerControlls;
+        public PlayerDatabase playerDatabase;
 
-		public event Action<float> OnTimerChange;
-		public event Action OnSceneLoad;
-		public event Action OnBeforeSceneLoad;
-		
-		public bool loadingScene = true;
-		
-		public static GameManager main { get; private set; }
-		
-		void Awake()
-		{
-			if(main != null)
-			{
-				Destroy(this.gameObject);
-			}else
-			{
-				main = this;
-			}
-			DontDestroyOnLoad(this.gameObject);
-			Time.timeScale = 1;
-			isMainMenu = SceneManager.GetActiveScene().name == "MainMenu";
-			loadingScene = false;
-			playerControlls = new InputSystem_Actions();
-		}
+        private float _timer = -1;
 
-		private void Update()
-		{
-			if(_timer >= 0)
-			{
-				_timer -= Time.deltaTime;
-				OnTimerChange?.Invoke(_timer);
-				if (_timer <= 0)
-				{
-					Cursor.visible = true;
-					Cursor.lockState = CursorLockMode.None;
-					Time.timeScale = 0;
-				}
-			}
-		}
-		
-		void OnEnable()
-		{
-			playerControlls.Enable();
-		}
-		
-		void OnDisable()
-		{
-			playerControlls?.Disable();
-		}
-		
-		public void SetTimer(float gameTime)
-		{
-			_timer = gameTime;
-		}
-		
-		public void LoadScene(string name)
-		{
-			loadingScene = true;
-			OnBeforeSceneLoad?.Invoke();
-			SceneManager.LoadScene(name);
-			isMainMenu = name == "MainMenu";
-			loadingScene = false;
-			OnSceneLoad?.Invoke();
-			SetupGameManager();
-		}
-		public void LoadScene(int index)
-		{
-			loadingScene = true;
-			OnBeforeSceneLoad?.Invoke();
-			SceneManager.LoadScene(index);
-			isMainMenu = index == 0;
-			loadingScene = false;
-			OnSceneLoad?.Invoke();
-			SetupGameManager();
-		}
-		
-		void SetupGameManager()
-		{
-			Time.timeScale = 1;
-			if(isMainMenu) SetTimer(-1);
-			else SetTimer(120);
-		}
-	}
+        public event Action<float> OnTimerChange;
+        public event Action OnSceneLoad;
+        public event Action OnBeforeSceneLoad;
+
+        public bool loadingScene = true;
+
+        public bool GamePaused { get; private set; }
+        public bool GameEnded { get; set; }
+
+        public void SetGamePaused(bool value)
+        {
+            if (value)
+            {
+                Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            Time.timeScale = 1;
+            loadingScene = false;
+            playerControlls = new InputSystem_Actions();
+        }
+
+        private void Update()
+        {
+            if (_timer >= 0)
+            {
+                _timer -= Time.deltaTime;
+                OnTimerChange?.Invoke(_timer);
+                if (_timer <= 0)
+                {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Time.timeScale = 0;
+                }
+            }
+        }
+
+        void OnEnable() { playerControlls.Enable(); }
+
+        void OnDisable() { playerControlls?.Disable(); }
+
+        private void SetTimer(float gameTime) { _timer = gameTime; }
+
+        public void LoadScene(string name)
+        {
+            loadingScene = true;
+            OnBeforeSceneLoad?.Invoke();
+            SceneManager.LoadScene(name);
+            loadingScene = false;
+            OnSceneLoad?.Invoke();
+            SetupGameManager();
+        }
+        public void LoadScene(int index)
+        {
+            loadingScene = true;
+            OnBeforeSceneLoad?.Invoke();
+            SceneManager.LoadScene(index);
+            loadingScene = false;
+            OnSceneLoad?.Invoke();
+            SetupGameManager();
+        }
+
+        private void SetupGameManager()
+        {
+            Time.timeScale = 1;
+            SetTimer(120);
+        }
+    }
 }

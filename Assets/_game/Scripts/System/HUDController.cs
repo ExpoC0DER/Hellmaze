@@ -1,4 +1,5 @@
 using System;
+using _game.Scripts.System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,7 +38,7 @@ namespace _game.Scripts
 
 		void Start()
 		{
-			GameManager.main.OnTimerChange += SetTimerText;
+			GameManager.Instance.OnTimerChange += SetTimerText;
 		}
 		
 		private void SetHealthText(float health)
@@ -78,7 +79,7 @@ namespace _game.Scripts
 			{
 				_restartBtn.onClick.AddListener(() =>
 				{
-					GameManager.main.LoadScene(0);
+					GameManager.Instance.LoadScene(0);
 				});
 				_restartBtn.gameObject.SetActive(true);
 				resultScreen.DisplayEndGameResults();
@@ -104,7 +105,7 @@ namespace _game.Scripts
 		{
 			_playerStats.OnHealthChange -= SetHealthText;
 			_weapons.OnAmmoChange -= SetAmmoText;
-			GameManager.main.OnTimerChange -= SetTimerText;
+			GameManager.Instance.OnTimerChange -= SetTimerText;
 			GameSettings.SetCrosshair -= SetCrosshair;
 			//PlayerStats.OnDeath -= UpdateKillCount;
 		}

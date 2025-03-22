@@ -4,6 +4,7 @@ using EditorAttributes;
 using UnityEngine;
 using System;
 using _game.Scripts;
+using _game.Scripts.System;
 
 public class WeaponSlots : MonoBehaviour
 {
@@ -63,27 +64,29 @@ public class WeaponSlots : MonoBehaviour
 		playerStats.OnDeath += OnDeath;
 		playerStats.OnRespawn += OnRespawn;
 	}
-	
-	void OnEnable()
+
+	private void OnEnable()
 	{
-		GameManager.main.playerControlls.Player.Attack.started += x => _shootInput = true;
-		GameManager.main.playerControlls.Player.Attack.canceled += x => _shootInput = false;
+		GameManager.Instance.playerControlls.Player.Attack.started += x => _shootInput = true;
+		GameManager.Instance.playerControlls.Player.Attack.canceled += x => _shootInput = false;
 		
 	}
-	
-	void OnDisable()
+
+	private void OnDisable()
 	{
 		playerStats.OnDeath -= OnDeath;
 		playerStats.OnRespawn -= OnRespawn;
 		
-		GameManager.main.playerControlls.Player.Attack.started -= x => _shootInput = true;
-		GameManager.main.playerControlls.Player.Attack.canceled -= x => _shootInput = false;
+		
+		// TODO: Redo subscribing as you cannot unsubscribe anonymous delegate
+		// GameManager.Instance.playerControlls.Player.Attack.started -= x => _shootInput = true;
+		// GameManager.Instance.playerControlls.Player.Attack.canceled -= x => _shootInput = false;
 	}
 	
 	void Update()
 	{
 		if(!isPlayer) return;
-		if(Menu.main.isPaused) return;
+		if(GameManager.Instance.GamePaused) return;
 		if(isDead) return;
 		if(scrollCd >= 0)
 		{
@@ -91,7 +94,7 @@ public class WeaponSlots : MonoBehaviour
 		}
 		//HandleInput();
 		HandleShooting(_shootInput);
-		HandleScrollWheelInput(GameManager.main.playerControlls.Player.WeaponSelect.ReadValue<Vector2>().y);
+		HandleScrollWheelInput(GameManager.Instance.playerControlls.Player.WeaponSelect.ReadValue<Vector2>().y);
 	}
 	
 	void HandleInput()

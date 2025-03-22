@@ -1,4 +1,5 @@
 using _game.Scripts;
+using _game.Scripts.System;
 using UnityEngine;
 
 public class WeaponSway : MonoBehaviour
@@ -18,7 +19,7 @@ public class WeaponSway : MonoBehaviour
 		 
 		if(isOn)
 		{
-			inputLook = GameManager.main.playerControlls.Player.Look.ReadValue<Vector2>();
+			inputLook = GameManager.Instance.playerControlls.Player.Look.ReadValue<Vector2>();
 			mouseX = inputLook.x * swayMultiplier;
 			mouseY = inputLook.y * swayMultiplier;
 		}

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using _game.Scripts.Definitions;
+using _game.Scripts.System;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -33,12 +35,14 @@ public class FloorController : MonoBehaviour
 	List<Vector2Int> mapObjectProbs = new List<Vector2Int>();
 	Dictionary<SolidMapObject, Transform> objectToFloors = new Dictionary<SolidMapObject, Transform>();
 	
-	MapSettings settings;
+	MapSettings _mapSettings;
 	
 	public void SetFloorAndStart()
-	{
-		settings = Menu.main.mapSettings;
-		floorSize = settings.MazeSize;
+	{		
+		string mapSettingsJson = PlayerPrefs.GetString("MapSettings", null);
+		_mapSettings = string.IsNullOrEmpty(mapSettingsJson) ? new MapSettings() : JsonUtility.FromJson<MapSettings>(mapSettingsJson);
+
+		floorSize = _mapSettings.MazeSize;
 		SetObjectProbabilities();
 		SetFloorProbabilities();
 		CreateFloor();
@@ -161,17 +165,17 @@ public class FloorController : MonoBehaviour
 		int lastMax = 0;
 			
 		fullFloorRange.x = 0;
-		fullFloorRange.y = lastMax += (int)settings.FullFloor_prob;
+		fullFloorRange.y = lastMax += (int)_mapSettings.FullFloorProb;
 		acidFloorRange.x = fullFloorRange.y;
-		acidFloorRange.y = lastMax += (int)settings.AcidFloor_prob;
+		acidFloorRange.y = lastMax += (int)_mapSettings.AcidFloorProb;
 		lavaFloorRange.x = acidFloorRange.y;
-		lavaFloorRange.y = lastMax += (int)settings.LavaFloor_prob;
+		lavaFloorRange.y = lastMax += (int)_mapSettings.LavaFloorProb;
 		destructibleFloorRange.x = lavaFloorRange.y;
-		destructibleFloorRange.y = lastMax += (int)settings.DestructableFloor_prob;
+		destructibleFloorRange.y = lastMax += (int)_mapSettings.DestructableFloorProb;
 		glassFloorRange.x = destructibleFloorRange.y;
-		glassFloorRange.y = lastMax += (int)settings.GlassFloor_prob;
+		glassFloorRange.y = lastMax += (int)_mapSettings.GlassFloorProb;
 		
-		noFloorRange.x = (int)settings.Floor_prob;
+		noFloorRange.x = (int)_mapSettings.FloorProb;
 		noFloorRange.y = 100;
 	}
 	
@@ -209,16 +213,16 @@ public class FloorController : MonoBehaviour
 	{
 		switch (index)
 		{
-			case 0: return (int)settings.Stomper_Prob;
-			case 1: return (int)settings.ExplosiveBarrel_Prob;
-			case 2: return (int)settings.Stairs_Prob;
-			case 3: return (int)settings.Jumppad_Prob;
-			case 4: return (int)settings.Chandelier_Prob;
-			case 5: return (int)settings.HangPiano_Prob;
-			case 6: return (int)settings.AcidTube_Prob;
-			case 7: return (int)settings.BunkerLiht_Prob;
-			case 8: return (int)settings.Electricbox_Prob;
-			default: return (int)settings.Stomper_Prob;
+			case 0: return (int)_mapSettings.StomperProb;
+			case 1: return (int)_mapSettings.ExplosiveBarrelProb;
+			case 2: return (int)_mapSettings.StairsProb;
+			case 3: return (int)_mapSettings.JumppadProb;
+			case 4: return (int)_mapSettings.ChandelierProb;
+			case 5: return (int)_mapSettings.HangPianoProb;
+			case 6: return (int)_mapSettings.AcidTubeProb;
+			case 7: return (int)_mapSettings.BunkerLihtProb;
+			case 8: return (int)_mapSettings.ElectricboxProb;
+			default: return (int)_mapSettings.StomperProb;
 		}
 	}
 	
@@ -293,7 +297,7 @@ public class FloorController : MonoBehaviour
 	void SpawnRandomObject(Transform floor)
 	{
 		float objectProb = Random.Range(0f,100f);
-		if(objectProb > settings.Object_Prob) return;
+		if(objectProb > _mapSettings.ObjectProb) return;
 		
 		int pickedIndex = 0;
 		for (int i = 0; i < mapObjectProbs.Count; i++)

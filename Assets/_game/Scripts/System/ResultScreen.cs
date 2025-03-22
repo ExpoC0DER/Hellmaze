@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _game.Scripts;
+using _game.Scripts.System;
 using Unity.VisualScripting;
 using UnityEngine;
 using FMODUnity;
@@ -15,9 +16,7 @@ public class ResultScreen : MonoBehaviour
 	[SerializeField] EventReference matchStart_sfx;
 	
 	List<PlayerScore> playerScores = new List<PlayerScore>();
-	
-	bool endGame = false;
-	
+
 	void Start()
 	{
 		SwitchResults(false);
@@ -26,19 +25,20 @@ public class ResultScreen : MonoBehaviour
 	
 	void OnEnable()
 	{
-		GameManager.main.playerControlls.Player.ResultScreen.started += x => ResultScreenInput(true);
-		GameManager.main.playerControlls.Player.ResultScreen.canceled += x => ResultScreenInput(false);
+		GameManager.Instance.playerControlls.Player.ResultScreen.started += x => ResultScreenInput(true);
+		GameManager.Instance.playerControlls.Player.ResultScreen.canceled += x => ResultScreenInput(false);
 	}
 	
 	void OnDisable()
 	{
-		GameManager.main.playerControlls.Player.ResultScreen.started -= x => ResultScreenInput(true);
-		GameManager.main.playerControlls.Player.ResultScreen.canceled -= x => ResultScreenInput(false);
+		// TODO: redo subscribing as you cannot unsubscribe anonymous delegate
+		// GameManager.Instance.playerControlls.Player.ResultScreen.started -= x => ResultScreenInput(true);
+		// GameManager.Instance.playerControlls.Player.ResultScreen.canceled -= x => ResultScreenInput(false);
 	}
 	
 	void ResultScreenInput(bool on)
 	{
-		if(endGame) return;
+		if(GameManager.Instance.GameEnded) return;
 		SwitchResults(on);
 	}
 	
@@ -50,15 +50,14 @@ public class ResultScreen : MonoBehaviour
 	
 	public void DisplayEndGameResults()
 	{
-		endGame = true;
+		GameManager.Instance.GameEnded = true;
 		SwitchResults(true);
 		FMODHelper.PlayNewInstance(matchFinish_sfx, transform);
-		Menu.main.menuLocked = true;
 	}
 	
 	void RefreshResults()
 	{
-		List<PlayerStats> players = GameManager.main.playerDatabase.GetPlayerList();
+		List<PlayerStats> players = GameManager.Instance.playerDatabase.GetPlayerList();
 		
 		if(playerScores.Count > players.Count) // playerScores is more than players => delete a remaining playerScores
 		{
