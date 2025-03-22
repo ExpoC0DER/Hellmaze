@@ -5,6 +5,7 @@ using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
 using _game.Scripts;
+using _game.Scripts.System;
 using FMODUnity;
 
 namespace _game.Scripts
@@ -87,30 +88,31 @@ namespace _game.Scripts
 				HandleRotation();
 			}
 		}
-		
-		void OnEnable()
+
+		private void OnEnable()
 		{
-			GameManager.main.playerControlls.Player.Sprint.started += x => isRunning = true;
-			GameManager.main.playerControlls.Player.Sprint.canceled += x => isRunning = false;
-			GameManager.main.playerControlls.Player.Crouch.started += x => _CrouchInput = true;
-			GameManager.main.playerControlls.Player.Crouch.canceled += x => _CrouchInput = false;
-			GameManager.main.playerControlls.Player.SecondaryAttack.started += x => _grappleInput = true;
-			GameManager.main.playerControlls.Player.SecondaryAttack.canceled += x => _grappleInput = false;
-			GameManager.main.playerControlls.Player.Jump.started += x => _jumpInput = true;
-			GameManager.main.playerControlls.Player.Jump.canceled += x => _jumpInput = false;
+			GameManager.Instance.playerControlls.Player.Sprint.started += x => isRunning = true;
+			GameManager.Instance.playerControlls.Player.Sprint.canceled += x => isRunning = false;
+			GameManager.Instance.playerControlls.Player.Crouch.started += x => _CrouchInput = true;
+			GameManager.Instance.playerControlls.Player.Crouch.canceled += x => _CrouchInput = false;
+			GameManager.Instance.playerControlls.Player.SecondaryAttack.started += x => _grappleInput = true;
+			GameManager.Instance.playerControlls.Player.SecondaryAttack.canceled += x => _grappleInput = false;
+			GameManager.Instance.playerControlls.Player.Jump.started += x => _jumpInput = true;
+			GameManager.Instance.playerControlls.Player.Jump.canceled += x => _jumpInput = false;
 		}
-		
-		void OnDisable()
-		{
-			GameManager.main.playerControlls.Player.Sprint.started -= x => isRunning = true;
-			GameManager.main.playerControlls.Player.Sprint.canceled -= x => isRunning = false;
-			GameManager.main.playerControlls.Player.Crouch.started -= x => _CrouchInput = true;
-			GameManager.main.playerControlls.Player.Crouch.canceled -= x => _CrouchInput = false;
-			GameManager.main.playerControlls.Player.SecondaryAttack.started -= x => _grappleInput = true;
-			GameManager.main.playerControlls.Player.SecondaryAttack.canceled -= x => _grappleInput = false;
-			GameManager.main.playerControlls.Player.Jump.started -= x => _jumpInput = true;
-			GameManager.main.playerControlls.Player.Jump.canceled -= x => _jumpInput = false;
-		}
+
+		// TODO: redo subscribing as you cannot unsubscribe anonymous delagate
+		// private void OnDisable()
+		// {
+		// 	GameManager.Instance.playerControlls.Player.Sprint.started -= x => isRunning = true;
+		// 	GameManager.Instance.playerControlls.Player.Sprint.canceled -= x => isRunning = false;
+		// 	GameManager.Instance.playerControlls.Player.Crouch.started -= x => _CrouchInput = true;
+		// 	GameManager.Instance.playerControlls.Player.Crouch.canceled -= x => _CrouchInput = false;
+		// 	GameManager.Instance.playerControlls.Player.SecondaryAttack.started -= x => _grappleInput = true;
+		// 	GameManager.Instance.playerControlls.Player.SecondaryAttack.canceled -= x => _grappleInput = false;
+		// 	GameManager.Instance.playerControlls.Player.Jump.started -= x => _jumpInput = true;
+		// 	GameManager.Instance.playerControlls.Player.Jump.canceled -= x => _jumpInput = false;
+		// }
 		
 		void OnDeath()
 		{
@@ -220,7 +222,7 @@ namespace _game.Scripts
 				_targetSpeed = 0;
 			}
 
-			_moveInput = GameManager.main.playerControlls.Player.Move.ReadValue<Vector2>();
+			_moveInput = GameManager.Instance.playerControlls.Player.Move.ReadValue<Vector2>();
 			
 			/* if(_moveInput.x == 0 && speedY != 0)
 			{

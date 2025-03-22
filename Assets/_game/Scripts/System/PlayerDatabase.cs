@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _game.Scripts;
+using _game.Scripts.System;
 using UnityEngine;
 
 public class PlayerDatabase : MonoBehaviour
@@ -28,7 +29,7 @@ public class PlayerDatabase : MonoBehaviour
 	}
 	
 	private void OnDisable() {
-		GameManager.main.OnSceneLoad -= Setup;
+		GameManager.Instance.OnSceneLoad -= Setup;
 	}
 	
 	public PlayerStats GetPlayerByName(string name)

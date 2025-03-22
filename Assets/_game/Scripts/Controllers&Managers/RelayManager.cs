@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using _game.Scripts.Utils;
 using Unity.Services.Relay;
@@ -14,7 +15,7 @@ namespace _game.Scripts.Controllers_Managers
         private byte[] _key;
         private byte[] _connectionData;
         private byte[] _hostConnectionData;
-        private System.Guid _allocationId;
+        private Guid _allocationId;
         private byte[] _allocationIdBytes;
         public bool IsHost { get; private set; }
 
