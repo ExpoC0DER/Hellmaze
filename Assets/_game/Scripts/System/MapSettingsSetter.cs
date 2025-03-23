@@ -9,7 +9,7 @@ namespace _game.Scripts.System
     public class MapSettingsSetter : MonoBehaviour
     {
         [Header("Maze")]
-        private MapSettings _mapSettings = new MapSettings();
+        private readonly MapSettings _mapSettings = new MapSettings();
 
         public void SetMapSize(float value) => _mapSettings.MazeSize = (int)value;
         public Slider MapSize_Slider;
@@ -34,9 +34,7 @@ namespace _game.Scripts.System
         public TMP_Dropdown BotDifficulty_Dropdown;
 
         [Header("Preset")]
-        public int MapPreset = 0;
         public TMP_Dropdown MapPreset_Dropdown;
-        public int GameMode = 0;
         public TMP_Dropdown GameMode_Dropdown;
         public TextMeshProUGUI ObjectiveInfo_text;
 
@@ -188,154 +186,108 @@ namespace _game.Scripts.System
         public void SetFogColorBlue(float value) => _mapSettings.SetFogColor(b: value);
         public Slider FogColor_b_Slider;
 
-        private void OnDisable() { PlayerPrefs.SetString("MapSettings", JsonUtility.ToJson(_mapSettings)); }
-
-        //check if changespeed of maze change has effect
-
-        //set bot difficulty
-
-        //set gamemode
-
-
         public Image ShowFogColor_Image;
         public void ShowFogColorImage() { ShowFogColor_Image.color = _mapSettings.FogColor; }
 
+        [Header("Visual Presets")]
+        [SerializeField] private MapPreset _stoneHallVisuals;
+        [SerializeField] private MapPreset _snowyVisuals;
+        [SerializeField] private MapPreset _labsVisuals;
+        [SerializeField] private MapPreset _eliteCorridorVisuals;
+        [SerializeField] private MapPreset _outsideNiceDayVisuals;
+        [SerializeField] private MapPreset _outsideBadDayVisuals;
+        [SerializeField] private MapPreset _metalVisuals;
+        [SerializeField] private MapPreset _hellVisuals;
+
+        [Header("GameMode Presets")]
+        [SerializeField] private MapPreset _classic;
+        [SerializeField] private MapPreset _floorIsLava;
+
+
+        private void OnDisable() { PlayerPrefs.SetString("MapSettings", JsonUtility.ToJson(_mapSettings)); }
+
         public void SetMapPreset(int index)
         {
-            MapPreset = index;
+            _mapSettings.MapPreset = index;
             //add ambiant music when ready
             //also add object probabilities based on locations
             switch (index)
             {
                 case 0: //stone hall
-                    TextureIndex_Dropdown.value = 0;
-                    SkyboxIndex_Dropdown.value = 0;
-                    AmbientParticleIndex_Dropdown.value = 1;
-                    Ambiance_Dropdown.value = 1;
-                    Fog_Toggle.isOn = false;
-
+                    SetVisuals(_stoneHallVisuals);
                     break;
                 case 1: // snowy
-                    TextureIndex_Dropdown.value = 1;
-                    SkyboxIndex_Dropdown.value = 7;
-                    AmbientParticleIndex_Dropdown.value = 3;
-                    Ambiance_Dropdown.value = 2;
-                    Fog_Toggle.isOn = false;
-
+                    SetVisuals(_snowyVisuals);
                     break;
                 case 2: // labs
-                    TextureIndex_Dropdown.value = 2;
-                    SkyboxIndex_Dropdown.value = 2;
-                    AmbientParticleIndex_Dropdown.value = 1;
-                    Ambiance_Dropdown.value = 1;
-                    Fog_Toggle.isOn = true;
-                    FogStrength_Slider.value = 70;
-
+                    SetVisuals(_labsVisuals);
                     break;
                 case 3: //elite corridor
-                    TextureIndex_Dropdown.value = 3;
-                    SkyboxIndex_Dropdown.value = 6;
-                    AmbientParticleIndex_Dropdown.value = 0;
-                    Ambiance_Dropdown.value = 4;
-                    Fog_Toggle.isOn = false;
-
+                    SetVisuals(_eliteCorridorVisuals);
                     break;
                 case 4: //outside niceday
-                    TextureIndex_Dropdown.value = 4;
-                    SkyboxIndex_Dropdown.value = 4;
-                    AmbientParticleIndex_Dropdown.value = 0;
-                    Ambiance_Dropdown.value = 3;
-                    Fog_Toggle.isOn = false;
-
+                    SetVisuals(_outsideNiceDayVisuals);
                     break;
                 case 5: //outside badday
-                    TextureIndex_Dropdown.value = 4;
-                    SkyboxIndex_Dropdown.value = 2;
-                    AmbientParticleIndex_Dropdown.value = 2;
-                    Ambiance_Dropdown.value = 7;
-                    Fog_Toggle.isOn = false;
-
+                    SetVisuals(_outsideBadDayVisuals);
                     break;
                 case 6: // metal
-                    TextureIndex_Dropdown.value = 5;
-                    SkyboxIndex_Dropdown.value = 5;
-                    AmbientParticleIndex_Dropdown.value = 4;
-                    Ambiance_Dropdown.value = 9;
-                    Fog_Toggle.isOn = false;
-
+                    SetVisuals(_metalVisuals);
                     break;
                 case 7: // hell
-                    TextureIndex_Dropdown.value = 6;
-                    SkyboxIndex_Dropdown.value = 1;
-                    AmbientParticleIndex_Dropdown.value = 4;
-                    Ambiance_Dropdown.value = 8;
-                    Fog_Toggle.isOn = false;
-
+                    SetVisuals(_hellVisuals);
                     break;
             }
         }
-
+        
         public void SetGameMode(int value)
         {
             _mapSettings.GameMode = value;
-            string objective = "<b>Objective</b>\n";
             switch (value)
             {
                 case 0: // classic timed dm
-                    GameMode_Classic();
-                    objective += "Kill as many enemies as possible within time limit in ever changing maze";
+                    SetGameModePreset(_classic);
                     break;
 
                 case 1: // floor is lava
-                    GameMode_FloorIsLava();
-                    objective += "Kill as many enemies as possible within time limit in ever changing maze. The Floor is Lava!";
+                    SetGameModePreset(_floorIsLava);
                     break;
 
                 default:
-                    GameMode_Classic();
-                    objective += "Kill as many enemies as possible within time limit in ever changing maze";
+                    SetGameModePreset(_classic);
                     break;
             }
-
-            ObjectiveInfo_text.text = objective;
         }
-
-        void GameMode_FloorIsLava()
+        
+        private void SetVisuals(MapPreset visualPreset)
         {
-            Wall_prob_Slider.value = 60;
-            FullWall_prob_Slider.value = 10;
-            CrouchSpace_Prob_Slider.value = 0;
-            GrapplingHook_Prob_Slider.value = 30;
-            DestructableWall_Prob_Slider.value = 5;
-            GlassWall_prob_Slider.value = 15;
-
-            Floor_prob_Slider.value = 40;
-            FullFloor_prob_Slider.value = 5;
-            AcidFloor_prob_Slider.value = 0;
-            LavaFloor_prob_Slider.value = 30;
-            DestructableFloor_prob_Slider.value = 2;
-            GlassFloor_prob_Slider.value = 3;
-
-            Gravity_Slider.value = -5;
+            TextureIndex_Dropdown.value = visualPreset.MapSettings.TextureIndex;
+            SkyboxIndex_Dropdown.value = visualPreset.MapSettings.SkyboxIndex;
+            AmbientParticleIndex_Dropdown.value = visualPreset.MapSettings.AmbientParticleIndex;
+            Ambiance_Dropdown.value = visualPreset.MapSettings.Ambiance;
+            Fog_Toggle.isOn = visualPreset.MapSettings.Fog;
+            FogStrength_Slider.value = visualPreset.MapSettings.FogStrength;
         }
-        void GameMode_Classic()
+
+        private void SetGameModePreset(MapPreset gameModePreset)
         {
-            Wall_prob_Slider.value = 60;
-            FullWall_prob_Slider.value = 10;
-            CrouchSpace_Prob_Slider.value = 0;
-            GrapplingHook_Prob_Slider.value = 30;
-            DestructableWall_Prob_Slider.value = 5;
-            GlassWall_prob_Slider.value = 15;
+            Wall_prob_Slider.value = gameModePreset.MapSettings.WallProb;
+            FullWall_prob_Slider.value = gameModePreset.MapSettings.FullWallProb;
+            CrouchSpace_Prob_Slider.value = gameModePreset.MapSettings.CrouchSpaceProb;
+            GrapplingHook_Prob_Slider.value = gameModePreset.MapSettings.GrapplingHookProb;
+            DestructableWall_Prob_Slider.value = gameModePreset.MapSettings.DestructableWallProb;
+            GlassWall_prob_Slider.value = gameModePreset.MapSettings.GlassWallProb;
 
-            Floor_prob_Slider.value = 40;
-            FullFloor_prob_Slider.value = 5;
-            AcidFloor_prob_Slider.value = 0;
-            LavaFloor_prob_Slider.value = 30;
-            DestructableFloor_prob_Slider.value = 2;
-            GlassFloor_prob_Slider.value = 3;
+            Floor_prob_Slider.value = gameModePreset.MapSettings.FloorProb;
+            FullFloor_prob_Slider.value = gameModePreset.MapSettings.FullFloorProb;
+            AcidFloor_prob_Slider.value = gameModePreset.MapSettings.AcidFloorProb;
+            LavaFloor_prob_Slider.value = gameModePreset.MapSettings.LavaFloorProb;
+            DestructableFloor_prob_Slider.value = gameModePreset.MapSettings.DestructableFloorProb;
+            GlassFloor_prob_Slider.value = gameModePreset.MapSettings.GlassFloorProb;
 
-            Gravity_Slider.value = -9.81f;
+            Gravity_Slider.value = gameModePreset.MapSettings.Gravity;
+            
+            ObjectiveInfo_text.text = gameModePreset.MapSettings.Objective;
         }
-
     }
 }
