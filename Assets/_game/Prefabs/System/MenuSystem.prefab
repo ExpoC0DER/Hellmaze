@@ -2290,6 +2290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323a2ef61e9e08c4ab91a3c63499b030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuScene: 0
   tabs:
   - {fileID: 8913534229755828924}
   - {fileID: 8750128537241531869}
@@ -2345,9 +2346,6 @@ MonoBehaviour:
       Data3: -1175719538
       Data4: -479936598
     Path: event:/pickup_sfx/Ammo pickup 1
-  <mapSettings>k__BackingField: {fileID: 7145513815339250386}
-  <clientSettings>k__BackingField: {fileID: 2313192598223664433}
-  menuLocked: 0
 --- !u!210 &8984118559406649063
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -2828,120 +2826,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aedb8187f6c7ad4ea26171e4f81afe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MazeSize: 11
   MapSize_Slider: {fileID: 734818853521193510}
-  Floors: 1
   Floors_Slider: {fileID: 2901349358863539073}
-  WallChangeSpeed: 0.3
   WallChangeSpeed_Slider: {fileID: 5859507219720520609}
-  FloorChangeSpeed: 1
   FloorChangeSpeed_Slider: {fileID: 6691869913247370256}
-  BotCount: 5
   BotCount_Slider: {fileID: 1291795143194931990}
-  BotDifficulty: 1
   BotDifficulty_Dropdown: {fileID: 5789728035954781233}
-  MapPreset: 0
   MapPreset_Dropdown: {fileID: 1702997496179703228}
-  GameMode: 0
   GameMode_Dropdown: {fileID: 5442132084406896536}
   ObjectiveInfo_text: {fileID: 7600641809149949220}
-  Pickup_Count: 20
   Pickup_Count_Slider: {fileID: 612839740114080314}
-  HealthPickup_Count: 6
   HealthPickup_Count_Slider: {fileID: 5403405039410967482}
-  PistolPickup_Count: 1
   PistolPickup_Count_Slider: {fileID: 5632743454702271289}
-  RevolverPickup_Count: 1
   RevolverPickup_Count_Slider: {fileID: 6796291707543662371}
-  AkPickup_Count: 1
   AkPickup_Count_Slider: {fileID: 4927365626212374188}
-  MinigunPickup_Count: 1
   MinigunPickup_Count_Slider: {fileID: 4120026748110603389}
-  ShotgunPickup_Count: 1
   ShotgunPickup_Count_Slider: {fileID: 8416830739414285348}
-  SupershotgunPickup_Count: 1
   SupershotgunPickup_Count_Slider: {fileID: 7103154248267225266}
-  SniperRiflePickup_Count: 1
   SniperRiflePickup_Count_Slider: {fileID: 3641021964195784940}
-  RPGPickup_Count: 1
   RPGPickup_Count_Slider: {fileID: 5075217308491920938}
-  GrenadeLauncherPickup_Count: 1
   GrenadeLauncherPickup_Count_Slider: {fileID: 6111909459902015258}
-  StickybombLauncherPickup_Count: 1
   StickybombLauncherPickup_Count_Slider: {fileID: 92663710083908337}
-  LazergunPickup_Count: 1
   LazergunPickup_Count_Slider: {fileID: 2586583042193706972}
-  AcidBlasterPickup_Count: 1
   AcidBlasterPickup_Count_Slider: {fileID: 6967519458486812338}
-  PlasmagunPickup_Count: 1
   PlasmagunPickup_Count_Slider: {fileID: 3269327349075175375}
-  DroneLauncherPickup_Count: 1
   DroneLauncherPickup_Count_Slider: {fileID: 1789471866227578767}
-  Object_Prob: 70
   Object_Prob_Slider: {fileID: 5278866479689609583}
-  ExplosiveBarrel_Prob: 12
   ExplosiveBarrel_Prob_Slider: {fileID: 9215381324365798829}
-  Stomper_Prob: 7
   Stomper_Prob_Slider: {fileID: 3812249711848207631}
-  Stairs_Prob: 7
   Stairs_Prob_Slider: {fileID: 6607493765795558499}
-  Jumppad_Prob: 10
   Jumppad_Prob_Slider: {fileID: 4194720440815615317}
-  Chandelier_Prob: 5
   Chandelier_Prob_Slider: {fileID: 3940618004426847905}
-  HangPiano_Prob: 4
   HangPiano_Prob_Slider: {fileID: 5191989135122268701}
-  AcidTube_Prob: 7
   AcidTube_Prob_Slider: {fileID: 1914163462768065352}
-  BunkerLiht_Prob: 10
   BunkerLiht_Prob_Slider: {fileID: 5104736081387862301}
-  Electricbox_Prob: 8
   Electricbox_Prob_Slider: {fileID: 6167041661185277462}
-  GrapplingHook_Prob: 10
   GrapplingHook_Prob_Slider: {fileID: 1774618206044512568}
-  CrouchSpace_Prob: 10
   CrouchSpace_Prob_Slider: {fileID: 5171206021720238957}
-  DestructableWall_Prob: 7
   DestructableWall_Prob_Slider: {fileID: 9001691810758946478}
-  GlassWall_prob: 7
   GlassWall_prob_Slider: {fileID: 6488366575215574274}
-  Wall_prob: 70
   Wall_prob_Slider: {fileID: 4852260217103187429}
-  FullWall_prob: 36
   FullWall_prob_Slider: {fileID: 8705180781331137043}
-  LavaFloor_prob: 7
   LavaFloor_prob_Slider: {fileID: 1694988707671109315}
-  AcidFloor_prob: 7
   AcidFloor_prob_Slider: {fileID: 5721998561613219517}
-  GlassFloor_prob: 8
   GlassFloor_prob_Slider: {fileID: 2548916125493725869}
-  DestructableFloor_prob: 8
   DestructableFloor_prob_Slider: {fileID: 1605901132351509195}
-  Floor_prob: 70
   Floor_prob_Slider: {fileID: 7348260370510239759}
-  FullFloor_prob: 40
   FullFloor_prob_Slider: {fileID: 5905668069297229830}
-  Ambiance: 1
   Ambiance_Dropdown: {fileID: 6365106095410688739}
-  TextureIndex: 0
   TextureIndex_Dropdown: {fileID: 3361692233938962863}
-  SkyboxIndex: 0
   SkyboxIndex_Dropdown: {fileID: 6476508504995944377}
-  AmbientParticleIndex: 1
   AmbientParticleIndex_Dropdown: {fileID: 1937694468683759989}
-  gravity: -9.81
   Gravity_Slider: {fileID: 2859770221691116750}
-  Fog: 0
   Fog_Toggle: {fileID: 3064047522271844655}
-  FogStrength: 70
   FogStrength_Slider: {fileID: 5271494919047353958}
-  FogColor_r: 0.8
   FogColor_r_Slider: {fileID: 4666344052672074422}
-  FogColor_g: 0.8
   FogColor_g_Slider: {fileID: 7148017456826812716}
-  FogColor_b: 0.8
   FogColor_b_Slider: {fileID: 3573516403868498431}
   ShowFogColor_Image: {fileID: 8077896089593739414}
+  _stoneHallVisuals: {fileID: 11400000, guid: de7078c23c6e1784eb9787686a96b4da, type: 2}
+  _snowyVisuals: {fileID: 11400000, guid: bf0e913f37078884c846591ef9df7215, type: 2}
+  _labsVisuals: {fileID: 11400000, guid: 352a37d22a27cd74f977abd775c38b6a, type: 2}
+  _eliteCorridorVisuals: {fileID: 11400000, guid: 144a63bf33184f941b6da3dfcd7ef9a4, type: 2}
+  _outsideNiceDayVisuals: {fileID: 11400000, guid: ceb543a9b1141384c9239efb88ea858e, type: 2}
+  _outsideBadDayVisuals: {fileID: 11400000, guid: 88fab2ee08aa15b4199569e511443d8e, type: 2}
+  _metalVisuals: {fileID: 11400000, guid: 1e3d246e5dd7ef84ab6cfe9a8d3f80fe, type: 2}
+  _hellVisuals: {fileID: 11400000, guid: 2c9ce4fb4b6d0c44399702ec4ea27715, type: 2}
+  _classic: {fileID: 11400000, guid: 8b4aa1ddb38156942a538a7eb7502f0c, type: 2}
+  _floorIsLava: {fileID: 11400000, guid: d80db058e4b380243b35fb051d81a015, type: 2}
 --- !u!1 &6624259559105366405
 GameObject:
   m_ObjectHideFlags: 0

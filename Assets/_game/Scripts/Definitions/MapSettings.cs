@@ -1,6 +1,8 @@
 ﻿using System;
+using EditorAttributes;
 using TMPro;
 using UnityEngine;
+using Void = EditorAttributes.Void;
 
 namespace _game.Scripts.Definitions
 {
@@ -24,7 +26,7 @@ namespace _game.Scripts.Definitions
         [field: SerializeField] public int GameMode { get; set; } = 0;
 
 
-        [field: Header("Items & Objects")]
+        [field: Header("Pickups")]
         [field: SerializeField] public float PickupCount { get; set; } = 20;
         [field: SerializeField] public float HealthPickupCount { get; set; } = 6;
         [field: SerializeField] public float PistolPickupCount { get; set; } = 1;
@@ -41,6 +43,9 @@ namespace _game.Scripts.Definitions
         [field: SerializeField] public float AcidBlasterPickupCount { get; set; } = 1;
         [field: SerializeField] public float PlasmagunPickupCount { get; set; } = 1;
         [field: SerializeField] public float DroneLauncherPickupCount { get; set; } = 1;
+
+
+        [field: Header("Objects")]
         [field: SerializeField] public float ObjectProb { get; set; } = 70;
         [field: SerializeField] public float ExplosiveBarrelProb { get; set; } = 12;
         [field: SerializeField] public float StomperProb { get; set; } = 7;
@@ -51,12 +56,18 @@ namespace _game.Scripts.Definitions
         [field: SerializeField] public float AcidTubeProb { get; set; } = 7;
         [field: SerializeField] public float BunkerLihtProb { get; set; } = 10;
         [field: SerializeField] public float ElectricboxProb { get; set; } = 8;
+
+
+        [field: Header("Walls")]
         [field: SerializeField] public float GrapplingHookProb { get; set; } = 10;
         [field: SerializeField] public float CrouchSpaceProb { get; set; } = 10;
         [field: SerializeField] public float DestructableWallProb { get; set; } = 7;
         [field: SerializeField] public float GlassWallProb { get; set; } = 7;
         [field: SerializeField] public float WallProb { get; set; } = 70;
         [field: SerializeField] public float FullWallProb { get; set; } = 36;
+
+
+        [field: Header("Floors")]
         [field: SerializeField] public float LavaFloorProb { get; set; } = 7;
         [field: SerializeField] public float AcidFloorProb { get; set; } = 7;
         [field: SerializeField] public float GlassFloorProb { get; set; } = 8;
@@ -69,16 +80,20 @@ namespace _game.Scripts.Definitions
         [field: SerializeField] public int Ambiance { get; set; } = 1;
 
 
-        [field: Header("Miscellaneous")]
+        [field: Header("Physics")]
+        [field: SerializeField] public float Gravity { get; set; } = -9.81f;
+
+
+        [field: Header("Visuals")]
+        [field: SerializeField, TextArea] public string Objective { get; set; } = "<b>Objective</b>\n Kill as many enemies as possible within time limit in ever changing maze";
         [field: SerializeField] public int TextureIndex { get; set; } = 0;
         [field: SerializeField] public int SkyboxIndex { get; set; } = 0;
         [field: SerializeField] public int AmbientParticleIndex { get; set; } = 1;
-        [field: SerializeField] public float Gravity { get; set; } = -9.81f;
         [field: SerializeField] public bool Fog { get; set; } = false;
         [field: SerializeField] public float FogStrength { get; set; } = 70;
         [field: SerializeField] public Color FogColor { get; set; } = new Color(0.8f, 0.8f, 0.8f);
-        
-        
+
+
         public void SetFogColor(float? r = null, float? g = null, float? b = null)
         {
             Vector4 tempColor = FogColor;

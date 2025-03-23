@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c08a56377b9ec498bb53e6bc7e98ad, type: 3}
+  m_Name: EliteCorridorVisuals
+  m_EditorClassIdentifier: 
+  <MapSettings>k__BackingField:
+    <MazeSize>k__BackingField: 11
+    <Floors>k__BackingField: 1
+    <WallChangeSpeed>k__BackingField: 0.3
+    <FloorChangeSpeed>k__BackingField: 1
+    <BotCount>k__BackingField: 3
+    <BotDifficulty>k__BackingField: 1
+    <MapPreset>k__BackingField: 0
+    <GameMode>k__BackingField: 0
+    <PickupCount>k__BackingField: 20
+    <HealthPickupCount>k__BackingField: 6
+    <PistolPickupCount>k__BackingField: 1
+    <RevolverPickupCount>k__BackingField: 1
+    <AkPickupCount>k__BackingField: 1
+    <MinigunPickupCount>k__BackingField: 1
+    <ShotgunPickupCount>k__BackingField: 1
+    <SupershotgunPickupCount>k__BackingField: 1
+    <SniperRiflePickupCount>k__BackingField: 1
+    <RpgPickupCount>k__BackingField: 1
+    <GrenadeLauncherPickupCount>k__BackingField: 1
+    <StickybombLauncherPickupCount>k__BackingField: 1
+    <LazergunPickupCount>k__BackingField: 1
+    <AcidBlasterPickupCount>k__BackingField: 1
+    <PlasmagunPickupCount>k__BackingField: 1
+    <DroneLauncherPickupCount>k__BackingField: 1
+    <ObjectProb>k__BackingField: 70
+    <ExplosiveBarrelProb>k__BackingField: 12
+    <StomperProb>k__BackingField: 7
+    <StairsProb>k__BackingField: 7
+    <JumppadProb>k__BackingField: 10
+    <ChandelierProb>k__BackingField: 5
+    <HangPianoProb>k__BackingField: 4
+    <AcidTubeProb>k__BackingField: 7
+    <BunkerLihtProb>k__BackingField: 10
+    <ElectricboxProb>k__BackingField: 8
+    <GrapplingHookProb>k__BackingField: 10
+    <CrouchSpaceProb>k__BackingField: 10
+    <DestructableWallProb>k__BackingField: 7
+    <GlassWallProb>k__BackingField: 7
+    <WallProb>k__BackingField: 70
+    <FullWallProb>k__BackingField: 36
+    <LavaFloorProb>k__BackingField: 7
+    <AcidFloorProb>k__BackingField: 7
+    <GlassFloorProb>k__BackingField: 8
+    <DestructableFloorProb>k__BackingField: 8
+    <FloorProb>k__BackingField: 70
+    <FullFloorProb>k__BackingField: 40
+    <Ambiance>k__BackingField: 4
+    <Gravity>k__BackingField: -9.81
+    <Objective>k__BackingField: <b>Objective</b>\n Kill as many enemies as possible
+      within time limit in ever changing maze
+    <TextureIndex>k__BackingField: 4
+    <SkyboxIndex>k__BackingField: 6
+    <AmbientParticleIndex>k__BackingField: 0
+    <Fog>k__BackingField: 0
+    <FogStrength>k__BackingField: 70
+    <FogColor>k__BackingField: {r: 0.8, g: 0.8, b: 0.8, a: 1}
