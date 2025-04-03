@@ -2,6 +2,8 @@ using System;
 using EditorAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,6 +13,8 @@ namespace _game.Scripts.Controllers_Managers
     {
         [SerializeField] private Button _hostButton;
         [SerializeField] private Button _joinButton;
+        [SerializeField] private Button _rejoinButton;
+        [SerializeField] private Button _leaveButton;
         [SerializeField] private Button _submitCodeButton;
 
         [SerializeField] private TMP_InputField _lobbyCodeInput;
@@ -20,10 +24,33 @@ namespace _game.Scripts.Controllers_Managers
 
         [SerializeField, SceneDropdown] private string _lobbyScene;
 
-        private void Start()
+        private async void Start()
         {
             _selectionScreen.SetActive(true);
             _joinScreen.SetActive(false);
+
+            if (await GameLobbyManager.Instance.HasActiveLobbies())
+            {
+                _rejoinButton.gameObject.SetActive(true);
+                _rejoinButton.onClick.AddListener(OnRejoinButtonClicked);
+
+                _leaveButton.gameObject.SetActive(true);
+                _leaveButton.onClick.AddListener(OnLeaveButtonClicked);
+            }
+        }
+
+        private async void OnRejoinButtonClicked()
+        {
+            bool succeeded = await GameLobbyManager.Instance.RejoinGame();
+            if (succeeded)
+                SceneManager.LoadSceneAsync(_lobbyScene);
+        }
+
+        private async void OnLeaveButtonClicked()
+        {
+            bool succeeded = await GameLobbyManager.Instance.LeaveAllLobbies();
+            if (succeeded)
+                print("Left all lobbies.");
         }
 
         private async void OnHostClicked()
@@ -32,9 +59,7 @@ namespace _game.Scripts.Controllers_Managers
             bool success = await GameLobbyManager.Instance.CreateLobby();
 
             if (success)
-            {
                 SceneManager.LoadSceneAsync(_lobbyScene);
-            }
         }
 
         private void OnJoinClicked()

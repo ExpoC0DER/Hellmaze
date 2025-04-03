@@ -17,8 +17,18 @@ namespace _game.Scripts.Controllers_Managers
         private Unity.Services.Lobbies.Models.Lobby _lobby;
         private Coroutine _heartBeatCoroutine;
         private Coroutine _refreshCoroutine;
+        private List<string> _joinedLobbies;
 
         public string GetLobbyCode() { return _lobby?.LobbyCode; }
+        public string GetHostId() { return _lobby.HostId; }
+
+        public async Task<bool> HasActiveLobbies()
+        {
+            _joinedLobbies = await LobbyService.Instance.GetJoinedLobbiesAsync();
+
+            return _joinedLobbies.Count > 0;
+        }
+
 
         public async Task<bool> CreateLobby(int maxPlayers, bool isPrivate, Dictionary<string, string> lobbyPlayerData, Dictionary<string, string> lobbyData)
         {
@@ -176,6 +186,40 @@ namespace _game.Scripts.Controllers_Managers
 
             return true;
         }
-        public string GetHostId() { return _lobby.HostId; }
+
+        public async Task<bool> RejoinGame()
+        {
+            try
+            {
+                _lobby = await LobbyService.Instance.ReconnectToLobbyAsync(_joinedLobbies[0]);
+                LobbyEvents.OnLobbyUpdated(_lobby);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            _refreshCoroutine = StartCoroutine(RefreshLobbyCoroutine(_joinedLobbies[0], 1f));
+            return true;
+        }
+
+        public async Task<bool> LeaveAllLobbies()
+        {
+            string playerId = AuthenticationService.Instance.PlayerId;
+            foreach (string joinedLobbyId in _joinedLobbies)
+            {
+                try
+                {
+                    await LobbyService.Instance.RemovePlayerAsync(joinedLobbyId, playerId);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+            }
+            
+            return true;
+        }
     }
 }
