@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class KillFeedLog : MonoBehaviour
 {
+	public RectTransform rect;
 	public TextMeshProUGUI killerName_txt;
 	public TextMeshProUGUI victimName_txt;
 	public Image killIcon;
@@ -14,6 +15,7 @@ public class KillFeedLog : MonoBehaviour
 		killerName_txt.text = killerName;
 		victimName_txt.text = victimName;
 		killIcon.sprite = icon;
+		ResizeRect(icon);
 		StopAllCoroutines();
 		StartCoroutine(TurnOff());
 	}
@@ -22,6 +24,17 @@ public class KillFeedLog : MonoBehaviour
 	{
 		yield return new WaitForSeconds(4);
 		gameObject.SetActive(false);
+	}
+	
+	void ResizeRect(Sprite sprite)
+	{
+		float w = sprite.textureRect.width;
+		float h = sprite.textureRect.height;
+		float aspectRatio = w / h;
+		float heigth = 50;
+		float width = heigth * aspectRatio;
+	    rect.sizeDelta = new Vector2(width, heigth);
+	    
 	}
 	
 }

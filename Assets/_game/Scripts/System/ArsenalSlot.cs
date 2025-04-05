@@ -10,6 +10,7 @@ public class ArsenalSlot : MonoBehaviour
 	[SerializeField] Sprite selected_sprite;
 	[SerializeField] Sprite base_sprite;
 	[SerializeField] Color baseColor;
+	[SerializeField] Color selectedColor;
 	[SerializeField] Color noAmmoColor;
 	
 	[SerializeField] Vector2 defaultSize;
@@ -17,7 +18,7 @@ public class ArsenalSlot : MonoBehaviour
 	[SerializeField] RectTransform parentRect;
 	
 	private void Start() {
-		selectedSize = new Vector2(defaultSize.x * 2, defaultSize.y * 2);
+		//selectedSize = new Vector2(defaultSize.x * 2, defaultSize.y * 2);
 	}
 	
 	public void SetAmmoGraphics(bool hasAmmo)
@@ -32,13 +33,15 @@ public class ArsenalSlot : MonoBehaviour
 		else slotImage.sprite = base_sprite; */
 		if(picked)
 		{
-			slotImage.rectTransform.sizeDelta = selectedSize;
-			parentRect.sizeDelta = new Vector2(selectedSize.x, parentRect.sizeDelta.y);
+			//slotImage.rectTransform.sizeDelta = selectedSize;
+			//parentRect.sizeDelta = new Vector2(selectedSize.x, parentRect.sizeDelta.y);
+			slotImage.color = selectedColor;
 		} 
 		else
 		{
-			slotImage.rectTransform.sizeDelta = defaultSize;
-			if(!alreadySelectedColumn) parentRect.sizeDelta = new Vector2(defaultSize.x, parentRect.sizeDelta.y);
+			//slotImage.rectTransform.sizeDelta = defaultSize;
+			//if(!alreadySelectedColumn) parentRect.sizeDelta = new Vector2(defaultSize.x, parentRect.sizeDelta.y);
+			slotImage.color = baseColor;
 		} 
 		
 		pickedColumn = typeColumn;

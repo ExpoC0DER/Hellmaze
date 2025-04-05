@@ -39,6 +39,7 @@ public class MapManager : MonoBehaviour
 	[SerializeField] ParticleSystem[] ambientParticles;
 	[SerializeField] Material[] skyboxMats;
 	[SerializeField] Light[] dir_lights;
+	[SerializeField] GameObject[] _3D_Skyboxes;
 	
 	private MapSettings _mapSettings;
 
@@ -96,7 +97,7 @@ public class MapManager : MonoBehaviour
 			if(i == _mapSettings.AmbientParticleIndex) ambientParticles[i].Play();
 			else ambientParticles[i].Stop();
 		}
-		
+		Set3DSkybox(_mapSettings.MapPreset);
 		RenderSettings.skybox = skyboxMats[_mapSettings.SkyboxIndex];
 		RenderSettings.fog = _mapSettings.Fog;
 		RenderSettings.fogMode = FogMode.Linear;
@@ -201,7 +202,13 @@ public class MapManager : MonoBehaviour
 		return pos;
 	}
 	
-	
+	void Set3DSkybox(int index)
+	{
+	    for (int i = 0; i < _3D_Skyboxes.Length; i++)
+		{
+			_3D_Skyboxes[i].SetActive(i == index);
+		}
+	}
 	
 	//respawn remake -> to find floor that is solid (y = _settingsSetter.floorheight +0.3f)
 

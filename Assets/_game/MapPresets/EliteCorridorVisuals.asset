@@ -63,7 +63,7 @@ MonoBehaviour:
     <Gravity>k__BackingField: -9.81
     <Objective>k__BackingField: <b>Objective</b>\n Kill as many enemies as possible
       within time limit in ever changing maze
-    <TextureIndex>k__BackingField: 4
+    <TextureIndex>k__BackingField: 3
     <SkyboxIndex>k__BackingField: 6
     <AmbientParticleIndex>k__BackingField: 0
     <Fog>k__BackingField: 0
