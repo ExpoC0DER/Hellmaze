@@ -110,7 +110,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7943845286266308908
 CanvasRenderer:
@@ -142,7 +142,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: a6aa44bd79ad79247a8cf2f78a3b4016, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -203,7 +203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f38602015b4fd4384128ef61ecdf2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rect: {fileID: 604888607596805495}
   _killerNameText: {fileID: 8354415184555752044}
   _killedNameText: {fileID: 6223383372006203968}
   _deathIcon: {fileID: 5553880482318775711}
@@ -288,8 +287,7 @@ MonoBehaviour:
   m_text: Killed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
-  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3,
-    type: 2}
+  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -425,8 +423,7 @@ MonoBehaviour:
   m_text: Killer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
-  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3,
-    type: 2}
+  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
