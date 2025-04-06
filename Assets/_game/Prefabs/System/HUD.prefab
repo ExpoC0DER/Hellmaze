@@ -1358,7 +1358,7 @@ MonoBehaviour:
   - {fileID: 963345044, guid: 350da36ca88efd5419801e817ad0b341, type: 3}
   - {fileID: -517451996, guid: c7007ef9ee257f040b540120ed385227, type: 3}
   - {fileID: 427503305, guid: d50a63002a6e2854882c5f0fd21050f1, type: 3}
-  - {fileID: -1540071927, guid: 5412c8e873357b248b5aad04b9529012, type: 3}
+  - {fileID: -1109033458, guid: 1125afa883912e949a5e6b9a527ee16a, type: 3}
   - {fileID: -109491720, guid: 162857510ee157c409e9745331a07f16, type: 3}
   - {fileID: 1863876802, guid: bc2a4670ffdd0304692fe3a646d15398, type: 3}
   - {fileID: -867156478, guid: f8c18f4e434ead5488f5e654db14b153, type: 3}
@@ -3984,7 +3984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1540071927, guid: 5412c8e873357b248b5aad04b9529012, type: 3}
+  m_Sprite: {fileID: -1109033458, guid: 1125afa883912e949a5e6b9a527ee16a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4008,7 +4008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeColumn: 4
   slotImage: {fileID: 5767674549253298825}
-  selected_sprite: {fileID: -1540071927, guid: 5412c8e873357b248b5aad04b9529012, type: 3}
+  selected_sprite: {fileID: -1109033458, guid: 1125afa883912e949a5e6b9a527ee16a, type: 3}
   base_sprite: {fileID: 963345044, guid: 350da36ca88efd5419801e817ad0b341, type: 3}
   baseColor: {r: 1, g: 1, b: 1, a: 0.6313726}
   selectedColor: {r: 1, g: 0.8816934, b: 0, a: 1}
