@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f38602015b4fd4384128ef61ecdf2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rect: {fileID: 604888607596805495}
   _killerNameText: {fileID: 8354415184555752044}
   _killedNameText: {fileID: 6223383372006203968}
   _deathIcon: {fileID: 5553880482318775711}
@@ -287,7 +288,8 @@ MonoBehaviour:
   m_text: Killed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
-  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
+  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -423,7 +425,8 @@ MonoBehaviour:
   m_text: Killer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
-  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3, type: 2}
+  m_sharedMaterial: {fileID: 5067291300584562861, guid: 512a4844b4dcbbe48aa297a14e2650c3,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
