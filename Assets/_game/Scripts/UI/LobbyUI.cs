@@ -95,8 +95,11 @@ namespace _game.Scripts.UI
                 _startBtn.onClick.AddListener(OnStartClicked);
                 GameLobbyEvents.OnGameLobbyReady += OnGameLobbyReady;
             }
-
+            
             LobbyEvents.OnLobbyUpdated += OnLobbyUpdated;
+            
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         private void OnDisable()

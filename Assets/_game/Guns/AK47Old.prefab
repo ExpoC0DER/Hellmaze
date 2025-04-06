@@ -167,6 +167,7 @@ MonoBehaviour:
   _gunSettings: {fileID: 11400000, guid: b1d37ea536383a34fa153c7d3af987c1, type: 2}
   _hitPoint: {fileID: 7517474029545342395}
   <Ammo>k__BackingField: 30
+  <MaxAmmo>k__BackingField: 300
   <Damage>k__BackingField: 5
 --- !u!1001 &108464908615719251
 PrefabInstance:

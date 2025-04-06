@@ -1,5 +1,7 @@
 using System;
 using System.Numerics;
+using _game.Scripts.Definitions;
+using _game.Scripts.UI;
 using AYellowpaper;
 using DG.Tweening;
 using EditorAttributes;
@@ -21,6 +23,7 @@ namespace _game.Scripts.Player
         [SerializeField] private InterfaceReference<IGunOld, MonoBehaviour> _gun1;
         [SerializeField] private InterfaceReference<IGunOld, MonoBehaviour> _gun2;
 
+        [SerializeField] private PlayerHUDController _playerHUDController;
         [SerializeField] private Vector2 _minMaxRotationX;
         [SerializeField] private Transform _camTransform;
         [SerializeField] private NetworkPlayerMovement _networkMovement;
@@ -29,10 +32,8 @@ namespace _game.Scripts.Player
         [SerializeField] private NetworkObject _hitPoint;
         [SerializeField] private NetworkObject _gunPrefab;
         [SerializeField] private Transform _hand;
-        [SerializeField] private TMP_Text _killFeed;
 
-        public IGunOld _equippedGun;
-        public string test;
+        private IGunOld _equippedGun;
         private PlayerInput _playerInput;
         private float _cameraAngle;
 
@@ -56,11 +57,13 @@ namespace _game.Scripts.Player
                 };
 
                 vCam.Priority = 100;
+                _playerHUDController.gameObject.SetActive(true);
                 SpawnGunServerRpc();
             }
             else
             {
                 vCam.Priority = 0;
+                _playerHUDController.gameObject.SetActive(false);
             }
         }
 
@@ -85,6 +88,7 @@ namespace _game.Scripts.Player
                 return;
 
             _equippedGun = NetworkManager.SpawnManager.SpawnedObjects[id].GetComponent<IGunOld>();
+            _playerHUDController.SetCurrentGun(_equippedGun);
         }
 
 
@@ -112,7 +116,11 @@ namespace _game.Scripts.Player
 
             if (_health.Value <= 0)
             {
-                BroadcastKillFeedRpc($"Player{OwnerClientId}", $"Player{_lastHitById}");
+                string deadPlayer = $"Player{OwnerClientId}";
+                string killerPlayer = $"Player{_lastHitById}";
+
+                BroadcastKillFeedRpc(deadPlayer, killerPlayer);
+
                 _networkMovement.TeleportPlayer(new TransformState
                 {
                     HasStartedMoving = true,
@@ -127,10 +135,15 @@ namespace _game.Scripts.Player
         [Rpc(SendTo.ClientsAndHost)]
         private void BroadcastKillFeedRpc(string deadPlayer, string killerPlayer)
         {
-            print($"Player {deadPlayer} was killed by {killerPlayer}!");
-            _killFeed.alpha = 1f;
-            _killFeed.text = $"Player {deadPlayer} was killed by {killerPlayer}!";
-            _killFeed.DOFade(0, 10f);
+            UIEvents.OnPlayerKill?.Invoke(killerPlayer, deadPlayer, 0); // Invoke player kill event so all HUDs get updated
+        }
+
+        private void DisplayKill(string killerPlayer, string deadPlayer, int weaponId)
+        {
+            if(!IsOwner)
+                return;
+            
+            _playerHUDController.DisplayKill(killerPlayer, deadPlayer, weaponId);
         }
 
         private Vector3 GenerateMazeEdgePosition()
@@ -174,6 +187,20 @@ namespace _game.Scripts.Player
 
             _lastHitById = otherPlayerId;
             _health.Value -= damage;
+        }
+
+        private void UpdateHealth(float oldHealth, float newHealth) { _playerHUDController.SetHealthText(newHealth); }
+
+        private void OnEnable()
+        {
+            _health.OnValueChanged += UpdateHealth;
+            UIEvents.OnPlayerKill += DisplayKill;
+        }
+
+        private void OnDisable()
+        {
+            _health.OnValueChanged -= UpdateHealth;
+            UIEvents.OnPlayerKill -= DisplayKill;
         }
 
         // private void RotateCamera(Vector2 lookInput)

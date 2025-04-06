@@ -10,6 +10,12 @@ namespace _game.Scripts.Lobby
     {
         [SerializeField] private List<LobbyPlayer> _players;
 
+
+        private void Start()
+        {
+            OnLobbyUpdated();
+        }
+
         private void OnLobbyUpdated()
         {
             List<LobbyPlayerData> playerDatas = GameLobbyManager.Instance.GetPlayers();

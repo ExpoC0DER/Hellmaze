@@ -1,40 +1,34 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using EditorAttributes;
 
-public class KillFeedLog : MonoBehaviour
+namespace _game.Scripts.System
 {
-	public RectTransform rect;
-	public TextMeshProUGUI killerName_txt;
-	public TextMeshProUGUI victimName_txt;
-	public Image killIcon;
-	
-	public void Setup(string killerName, string victimName, Sprite icon)
-	{
-		killerName_txt.text = killerName;
-		victimName_txt.text = victimName;
-		killIcon.sprite = icon;
-		ResizeRect(icon);
-		StopAllCoroutines();
-		StartCoroutine(TurnOff());
-	}
-	
-	IEnumerator TurnOff()
-	{
-		yield return new WaitForSeconds(4);
-		gameObject.SetActive(false);
-	}
-	
-	void ResizeRect(Sprite sprite)
-	{
-		float w = sprite.textureRect.width;
-		float h = sprite.textureRect.height;
-		float aspectRatio = w / h;
-		float heigth = 50;
-		float width = heigth * aspectRatio;
-	    rect.sizeDelta = new Vector2(width, heigth);
-	    
-	}
-	
+    public class KillFeedLog : MonoBehaviour
+    {
+        [FormerlySerializedAs("killerName_txt")]
+        [SerializeField] private TextMeshProUGUI _killerNameText;
+        [FormerlySerializedAs("victimName_txt")]
+        [SerializeField] private TextMeshProUGUI _killedNameText;
+        [FormerlySerializedAs("killIcon")]
+        [SerializeField] private Image _deathIcon;
+        [SerializeField] private CanvasGroup _canvasGroup;
+
+        [Button]
+        public void Spawn(string killerName, string victimName, Sprite icon)
+        {
+            _killerNameText.text = killerName;
+            _killedNameText.text = victimName;
+            _deathIcon.sprite = icon;
+
+            gameObject.SetActive(true);
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.DOKill();
+            _canvasGroup.DOFade(0, 2f).SetDelay(3f).OnComplete(() => gameObject.SetActive(false));
+        }
+    }
 }

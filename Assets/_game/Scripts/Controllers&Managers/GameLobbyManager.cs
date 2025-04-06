@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using _game.Scripts.Definitions;
 using _game.Scripts.Lobby;
+using EditorAttributes;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -16,12 +18,17 @@ namespace _game.Scripts.Controllers_Managers
         private LobbyPlayerData _localLobbyPlayerData;
         private LobbyData _lobbyData;
         private const int MAX_NUMBER_OF_PLAYERS = 4;
-        private bool _inGame = false;
+        private const string LOBBY_SCENE = "GameLobby";
+        private bool _inGame;
+        private bool _wasDisconnected;
+        private string _previousRelayCode;
 
         public bool IsHost => _localLobbyPlayerData.Id == LobbyManager.Instance.GetHostId();
         public string GetLobbyCode() { return LobbyManager.Instance.GetLobbyCode(); }
         public List<LobbyPlayerData> GetPlayers() { return _lobbyPlayerDatas; }
         public int GetMapIndex() { return _lobbyData.MapIndex; }
+
+        public async Task<bool> HasActiveLobbies() { return await LobbyManager.Instance.HasActiveLobbies(); }
 
         public async Task<bool> CreateLobby()
         {
@@ -74,8 +81,20 @@ namespace _game.Scripts.Controllers_Managers
             // Join Lobby
             if (_lobbyData.RelayJoinCode != default && !_inGame)
             {
-                await JoinRelayServer(_lobbyData.RelayJoinCode);
-                SceneManager.LoadSceneAsync(_lobbyData.SceneName);
+                if (_wasDisconnected)
+                {
+                    if (_lobbyData.RelayJoinCode != _previousRelayCode)
+                    {
+                        await JoinRelayServer(_lobbyData.RelayJoinCode);
+                        SceneManager.LoadSceneAsync(_lobbyData.SceneName);
+                    }
+                }
+                else
+                {
+                    await JoinRelayServer(_lobbyData.RelayJoinCode);
+                    SceneManager.LoadSceneAsync(_lobbyData.SceneName);
+                }
+
             }
         }
 
@@ -89,6 +108,8 @@ namespace _game.Scripts.Controllers_Managers
 
             string allocationId = RelayManager.Instance.GetAllocationId();
             string connectionData = RelayManager.Instance.GetConnectionData();
+
+            _localLobbyPlayerData.IsReady = false;
 
             await LobbyManager.Instance.UpdatePlayerData(_localLobbyPlayerData.Id, _localLobbyPlayerData.Serialize(), allocationId, connectionData);
 
@@ -117,9 +138,30 @@ namespace _game.Scripts.Controllers_Managers
             string allocationId = RelayManager.Instance.GetAllocationId();
             string connectionData = RelayManager.Instance.GetConnectionData();
 
+            _localLobbyPlayerData.IsReady = false;
+
             await LobbyManager.Instance.UpdatePlayerData(_localLobbyPlayerData.Id, _localLobbyPlayerData.Serialize(), allocationId, connectionData);
 
             return true;
+        }
+
+        public async Task<bool> RejoinGame() { return await LobbyManager.Instance.RejoinGame(); }
+
+        public async Task<bool> LeaveAllLobbies() { return await LobbyManager.Instance.LeaveAllLobbies(); }
+
+        public async void GoBackToLobby(bool wasDisconnected)
+        {
+            _inGame = false;
+            _wasDisconnected = wasDisconnected;
+
+            if (_wasDisconnected)
+            {
+                _previousRelayCode = _lobbyData.RelayJoinCode;
+            }
+
+            _localLobbyPlayerData.IsReady = false;
+            await LobbyManager.Instance.UpdatePlayerData(_localLobbyPlayerData.Id, _localLobbyPlayerData.Serialize());
+            SceneManager.LoadSceneAsync(LOBBY_SCENE);
         }
 
         private void OnEnable() { LobbyEvents.OnLobbyUpdated += OnLobbyUpdated; }
