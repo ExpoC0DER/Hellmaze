@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _game.Scripts.Definitions;
 using _game.Scripts.Player;
 using _game.Scripts.Utils;
 using DG.Tweening;
@@ -15,7 +16,8 @@ namespace _game.Scripts
     {
         [SerializeField] private GunSettings _gunSettings;
         [SerializeField] private Transform _hitPoint;
-        [field: SerializeField] public int Ammo { get; set; } = 30;
+        [field: SerializeField] public int Ammo { get; set; }
+        [field: SerializeField] public int MaxAmmo { get; set; } = 30;
         [field: SerializeField] public float Damage { get; set; } = 5f;
 
         private bool _fired;
@@ -34,6 +36,8 @@ namespace _game.Scripts
             // Store the initial position and rotation
             _originalPosition = transform.localPosition;
             _originalRotation = transform.localRotation;
+
+            Ammo = MaxAmmo;
         }
 
         private void Update()
@@ -70,13 +74,16 @@ namespace _game.Scripts
         {
             if (keyDown)
             {
+                if (Ammo <= 0 && Ammo != -1) // Do nothing if out of ammo and ammo isn't set to infinite
+                    return;
+
                 if (_gunSettings.FiringMode == GunSettings.FiringModeSetting.Manual && _fired == false)
                 {
                     _fired = true;
                     FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
 
-                    if (Ammo > 0)
-                        Ammo--;
+                    Ammo--;
+                    PlayerEvents.OnPlayerShot?.Invoke(Ammo);
 
                     if (IsLocalPlayer)
                         ApplyRecoil();
@@ -95,8 +102,8 @@ namespace _game.Scripts
 
                     _fireDelay = _gunSettings.FiringSpeed;
 
-                    if (Ammo > 0)
-                        Ammo--;
+                    Ammo--;
+                    PlayerEvents.OnPlayerShot?.Invoke(Ammo);
 
                     // If local player play recoil animation instantly
                     if (IsLocalPlayer)

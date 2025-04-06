@@ -1,9 +1,9 @@
-﻿using System;
-using EditorAttributes;
+﻿using EditorAttributes;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityUtils;
 
 namespace _game.Scripts.Controllers_Managers
 {
@@ -54,6 +54,13 @@ namespace _game.Scripts.Controllers_Managers
                 NetworkManager.Singleton.Shutdown();
                 SceneManager.LoadSceneAsync(MENU_SCENE);
             }
+        }
+
+        public void DisconnectClient()
+        {
+            print(NetworkManager.Singleton.LocalClientId + " disconnected");
+            NetworkManager.Singleton.Shutdown();
+            SceneManager.LoadSceneAsync(MENU_SCENE);
         }
 
         private void OnEnable()

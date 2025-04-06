@@ -15,7 +15,7 @@ public class PlayerDatabase : MonoBehaviour
 	} */
 	/* void Start()
 	{
-		GameManager.main.OnSceneLoad += Setup;
+		GameManager.main.OnSceneLoad += Spawn;
 		PickRandomBotNames();
 	} */
 	

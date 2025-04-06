@@ -50,10 +50,10 @@ public class AcidSplash : MonoBehaviour, IProjectile
 		{
 			if(other.CompareTag("Player") || other.CompareTag("Bot") && onTrigger)
 			{
-				Setup(other.GetComponent<PlayerStats>(), Vector3.zero);
+				Spawn(other.GetComponent<PlayerStats>(), Vector3.zero);
 			}else
 			{
-				Setup(null, other.ClosestPoint(transform.position));
+				Spawn(null, other.ClosestPoint(transform.position));
 			}
 			Debug.Log("by trigger " + other.gameObject.name);
 			setup = true;

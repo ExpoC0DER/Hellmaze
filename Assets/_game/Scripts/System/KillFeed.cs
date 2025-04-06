@@ -1,47 +1,47 @@
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using _game.Scripts.System;
+using UnityEngine.Serialization;
 
 public class KillFeed : MonoBehaviour
 {
-	[SerializeField] private Sprite[] weaponIcons;
-	[SerializeField] private Sprite suicideIcon;
-	[SerializeField] private KillFeedLog[] killLogs;
-	int currentLog_index = 0;
-	
-	
-	public void AddKillLog(string killerName, int weaponIndex, string victimName)
-	{
-		//Debug.Log("killer: " + killerName + " wepIndex: " + weaponIndex + " victim: " + victimName + " currentLogIndex: " + currentLog_index);
-		
-		KillFeedLog killLog = killLogs[currentLog_index];
-		Sprite weaponIcon;
-		
-		if(killerName == "")
-		{
-			weaponIcon = suicideIcon;
-		}else
-		{
-			weaponIcon = weaponIcons[weaponIndex];
-		}
-		killLog.gameObject.SetActive(true);
-		killLog.Setup(killerName, victimName, weaponIcon);
-		
-		killLog.transform.SetSiblingIndex(killLogs.Length - 1);
-		
-		currentLog_index++;
-		if(currentLog_index >= killLogs.Length) currentLog_index = 0;
-	}
-	
-	private void OnEnable()
-	{
-		PlayerStats.UpdateKillFeed += AddKillLog;
-	}
-	
-	private void OnDisable()
-	{
-		PlayerStats.UpdateKillFeed -= AddKillLog;
-	}
+    [FormerlySerializedAs("weaponIcons")]
+    [SerializeField] private Sprite[] _weaponIcons;
+    [FormerlySerializedAs("suicideIcon")]
+    [SerializeField] private Sprite _suicideIcon;
+    [FormerlySerializedAs("killLogs")]
+    [SerializeField] private KillFeedLog[] _killLogs;
+
+    private int _currentLogIndex;
+
+
+    public void AddKillLog(string killerName, int weaponIndex, string victimName)
+    {
+        //Debug.Log("killer: " + killerName + " wepIndex: " + weaponIndex + " victim: " + victimName + " currentLogIndex: " + _currentLogIndex);
+
+        KillFeedLog killLog = _killLogs[_currentLogIndex];
+        Sprite weaponIcon;
+
+        if (killerName == "")
+        {
+            weaponIcon = _suicideIcon;
+        }
+        else
+        {
+            weaponIcon = _weaponIcons[weaponIndex];
+        }
+
+        killLog.Spawn(killerName, victimName, weaponIcon);
+
+        killLog.transform.SetAsLastSibling();
+
+        _currentLogIndex++;
+        if (_currentLogIndex >= _killLogs.Length)
+            _currentLogIndex = 0;
+    }
+
+    private void OnEnable() { PlayerStats.UpdateKillFeed += AddKillLog; }
+
+    private void OnDisable() { PlayerStats.UpdateKillFeed -= AddKillLog; }
 }
-
-
