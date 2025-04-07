@@ -11,30 +11,28 @@ namespace _game.Scripts.Lobby
         [SerializeField] private List<LobbyPlayer> _players;
 
 
-        private void Start()
-        {
-            OnLobbyUpdated();
-        }
+        private void Start() { OnLobbyUpdated(); }
 
         private void OnLobbyUpdated()
         {
             List<LobbyPlayerData> playerDatas = GameLobbyManager.Instance.GetPlayers();
 
-            for(int i = 0; i < playerDatas.Count; i++)
+            for(int i = 0; i < _players.Count; i++)
             {
-                LobbyPlayerData data = playerDatas[i];
-                _players[i].SetData(data);
+                if (i < playerDatas.Count)
+                {
+                    LobbyPlayerData data = playerDatas[i];
+                    _players[i].SetData(data);
+                }
+                else
+                {
+                    _players[i].SetData(null);
+                }
             }
         }
-        
-        private void OnEnable()
-        {
-            GameLobbyEvents.OnGameLobbyUpdated += OnLobbyUpdated;
-        }
-        
-        private void OnDisable()
-        {
-            GameLobbyEvents.OnGameLobbyUpdated -= OnLobbyUpdated;
-        }
+
+        private void OnEnable() { GameLobbyEvents.OnGameLobbyUpdated += OnLobbyUpdated; }
+
+        private void OnDisable() { GameLobbyEvents.OnGameLobbyUpdated -= OnLobbyUpdated; }
     }
 }

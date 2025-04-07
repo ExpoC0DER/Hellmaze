@@ -12,6 +12,12 @@ namespace _game.Scripts.Lobby
 
         public void SetData(LobbyPlayerData data)
         {
+            if (data == null)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+            
             _data = data;
             _playerName.text = _data.Gamertag;
 
