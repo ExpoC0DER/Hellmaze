@@ -76,6 +76,14 @@ namespace _game.Scripts.Controllers_Managers
                 // Debug.Log("RefreshLobby");
                 Task<Unity.Services.Lobbies.Models.Lobby> task = LobbyService.Instance.GetLobbyAsync(lobbyId);
                 yield return new WaitUntil(() => task.IsCompleted);
+
+                // If host closes lobby, task fails
+                if (task.IsFaulted)
+                {
+                    LobbyEvents.OnLobbyDestroyed?.Invoke();
+                    break;
+                }
+                
                 Unity.Services.Lobbies.Models.Lobby newLobby = task.Result;
                 if (newLobby.LastUpdated > _lobby.LastUpdated)
                 {
@@ -203,6 +211,34 @@ namespace _game.Scripts.Controllers_Managers
             return true;
         }
 
+        public async Task<bool> LeaveCurrentLobby()
+        {
+            if (_lobby == null)
+                return false;
+
+            string playerId = AuthenticationService.Instance.PlayerId;
+
+            // If host close lobby
+            if (_lobby.HostId == playerId)
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(_lobby.Id);
+                StopAllCoroutines();
+                return true;
+            }
+
+            // If client leave lobby
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(_lobby.Id, playerId);
+                StopAllCoroutines();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public async Task<bool> LeaveAllLobbies()
         {
             string playerId = AuthenticationService.Instance.PlayerId;
@@ -218,7 +254,9 @@ namespace _game.Scripts.Controllers_Managers
                 }
 
             }
-            
+
+            StopAllCoroutines();
+
             return true;
         }
     }

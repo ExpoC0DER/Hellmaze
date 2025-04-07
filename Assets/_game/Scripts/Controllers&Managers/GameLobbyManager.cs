@@ -19,6 +19,7 @@ namespace _game.Scripts.Controllers_Managers
         private LobbyData _lobbyData;
         private const int MAX_NUMBER_OF_PLAYERS = 4;
         private const string LOBBY_SCENE = "GameLobby";
+        private const string MENU_SCENE = "MainMenu";
         private bool _inGame;
         private bool _wasDisconnected;
         private string _previousRelayCode;
@@ -147,6 +148,8 @@ namespace _game.Scripts.Controllers_Managers
 
         public async Task<bool> RejoinGame() { return await LobbyManager.Instance.RejoinGame(); }
 
+        public async Task<bool> LeaveCurrentLobby() { return await LobbyManager.Instance.LeaveCurrentLobby(); }
+
         public async Task<bool> LeaveAllLobbies() { return await LobbyManager.Instance.LeaveAllLobbies(); }
 
         public async void GoBackToLobby(bool wasDisconnected)
@@ -164,8 +167,21 @@ namespace _game.Scripts.Controllers_Managers
             SceneManager.LoadSceneAsync(LOBBY_SCENE);
         }
 
-        private void OnEnable() { LobbyEvents.OnLobbyUpdated += OnLobbyUpdated; }
+        private void GoBackToMenu()
+        {
+            SceneManager.LoadSceneAsync(MENU_SCENE);
+        }
 
-        private void OnDisable() { LobbyEvents.OnLobbyUpdated -= OnLobbyUpdated; }
+        private void OnEnable()
+        {
+            LobbyEvents.OnLobbyUpdated += OnLobbyUpdated;
+            LobbyEvents.OnLobbyDestroyed += GoBackToMenu;
+        }
+
+        private void OnDisable()
+        {
+            LobbyEvents.OnLobbyUpdated -= OnLobbyUpdated;
+            LobbyEvents.OnLobbyDestroyed -= GoBackToMenu;
+        }
     }
 }

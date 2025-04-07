@@ -5,15 +5,18 @@ using _game.Scripts.Lobby;
 using EditorAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _game.Scripts.UI
 {
     public class LobbyUI : MonoBehaviour
     {
+        [SerializeField, SceneDropdown] private string _menuSceneName;
         [SerializeField] private TMP_Text _lobbyCodeText;
         [SerializeField] private Button _startBtn;
         [SerializeField] private Button _readyBtn;
+        [SerializeField] private Button _leaveBtn;
         [SerializeField] private Image _mapImage;
         [SerializeField] private Button _prevButton;
         [SerializeField] private Button _nextButton;
@@ -33,7 +36,7 @@ namespace _game.Scripts.UI
             }
             else
             {
-                GameLobbyManager.Instance.SetSelectedMap(_currentMapIndex,_mapSelectionData.Maps[_currentMapIndex].SceneName);
+                GameLobbyManager.Instance.SetSelectedMap(_currentMapIndex, _mapSelectionData.Maps[_currentMapIndex].SceneName);
             }
         }
 
@@ -51,7 +54,7 @@ namespace _game.Scripts.UI
                 _currentMapIndex = 0;
 
             UpdateMap();
-            await GameLobbyManager.Instance.SetSelectedMap(_currentMapIndex,_mapSelectionData.Maps[_currentMapIndex].SceneName);
+            await GameLobbyManager.Instance.SetSelectedMap(_currentMapIndex, _mapSelectionData.Maps[_currentMapIndex].SceneName);
         }
 
         private async void OnPrevClicked()
@@ -61,7 +64,7 @@ namespace _game.Scripts.UI
                 _currentMapIndex = _mapSelectionData.Maps.Count - 1;
 
             UpdateMap();
-            await GameLobbyManager.Instance.SetSelectedMap(_currentMapIndex,_mapSelectionData.Maps[_currentMapIndex].SceneName);
+            await GameLobbyManager.Instance.SetSelectedMap(_currentMapIndex, _mapSelectionData.Maps[_currentMapIndex].SceneName);
         }
 
         private async void OnStartClicked()
@@ -84,9 +87,18 @@ namespace _game.Scripts.UI
 
         private void OnGameLobbyReady() { _startBtn.gameObject.SetActive(true); }
 
+        private async void OnLeavePressed()
+        {
+            bool succeeded = await GameLobbyManager.Instance.LeaveCurrentLobby();
+            
+            if (succeeded)
+                SceneManager.LoadSceneAsync(_menuSceneName);
+        }
+
         private void OnEnable()
         {
             _readyBtn.onClick.AddListener(OnReadyPressed);
+            _leaveBtn.onClick.AddListener(OnLeavePressed);
 
             if (GameLobbyManager.Instance.IsHost)
             {
@@ -95,9 +107,9 @@ namespace _game.Scripts.UI
                 _startBtn.onClick.AddListener(OnStartClicked);
                 GameLobbyEvents.OnGameLobbyReady += OnGameLobbyReady;
             }
-            
+
             LobbyEvents.OnLobbyUpdated += OnLobbyUpdated;
-            
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -105,6 +117,7 @@ namespace _game.Scripts.UI
         private void OnDisable()
         {
             _readyBtn.onClick.RemoveListener(OnReadyPressed);
+            _leaveBtn.onClick.RemoveListener(OnLeavePressed);
             _prevButton.onClick.RemoveListener(OnPrevClicked);
             _nextButton.onClick.RemoveListener(OnNextClicked);
             _startBtn.onClick.RemoveListener(OnStartClicked);
