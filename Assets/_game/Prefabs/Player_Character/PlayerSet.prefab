@@ -208,6 +208,7 @@ MonoBehaviour:
   playerName: Player
   playerProfilePic: {fileID: 1785187375, guid: e49109051766ae349b0118a8ba94c980, type: 3}
   enemyAI: {fileID: 0}
+  hitScreenVolume: {fileID: 3164453207724548685}
   animatorFunctions: {fileID: 5362786966040844230}
   respawnTime: 5
   playerController: {fileID: 1246210167618490971}
@@ -347,6 +348,7 @@ Transform:
   - {fileID: 1415255831185668635}
   - {fileID: 2156843676948513203}
   - {fileID: 636177287370524087}
+  - {fileID: 8442144724135756641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3914796706442619327
@@ -878,6 +880,55 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: -0.33, z: 0}
+--- !u!1 &7432038613758646359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8442144724135756641}
+  - component: {fileID: 3164453207724548685}
+  m_Layer: 0
+  m_Name: HitScreenVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8442144724135756641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7432038613758646359}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7814519600229609300}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3164453207724548685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7432038613758646359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 1
+  blendDistance: 0
+  weight: 0.101
+  sharedProfile: {fileID: 11400000, guid: 144b424435f7a1b4186d6460800691d3, type: 2}
 --- !u!1 &8015707410125795193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1093,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
