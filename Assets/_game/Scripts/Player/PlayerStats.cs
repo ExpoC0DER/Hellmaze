@@ -218,6 +218,7 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	
 	void HitScreenVolume()
 	{
+		if(hitScreenVolume == null) return;
 		if(hitScreenCooldown <= 0)
 		{
 		    hitScreenVolume.weight = 0;
