@@ -24,16 +24,14 @@ namespace _game.Scripts.Player
         [SerializeField] private InterfaceReference<IGunOld, MonoBehaviour> _gun2;
 
         [SerializeField] private PlayerHUDController _playerHUDController;
-        [SerializeField] private Vector2 _minMaxRotationX;
+        [SerializeField] private NetworkPlayerAnimations _playerAnimations;
         [SerializeField] private Transform _camTransform;
         [SerializeField] private NetworkPlayerMovement _networkMovement;
-        [SerializeField] private float _shootDistance;
-        [SerializeField] private LayerMask _shootLayerMask;
-        [SerializeField] private NetworkObject _hitPoint;
         [SerializeField] private NetworkObject _gunPrefab;
         [SerializeField] private Transform _hand;
 
         private IGunOld _equippedGun;
+        private Transform _equippedGunTransform;
         private PlayerInput _playerInput;
         private float _cameraAngle;
 
@@ -59,11 +57,15 @@ namespace _game.Scripts.Player
                 vCam.Priority = 100;
                 _playerHUDController.gameObject.SetActive(true);
                 SpawnGunServerRpc();
+                _playerAnimations.SetAvatar(-1);
+                _playerAnimations.SetWeapon(3);
             }
             else
             {
                 vCam.Priority = 0;
                 _playerHUDController.gameObject.SetActive(false);
+                _playerAnimations.SetAvatar(0);
+                _playerAnimations.SetWeapon(3);
             }
         }
 
@@ -88,6 +90,7 @@ namespace _game.Scripts.Player
                 return;
 
             _equippedGun = NetworkManager.SpawnManager.SpawnedObjects[id].GetComponent<IGunOld>();
+            _equippedGunTransform = NetworkManager.SpawnManager.SpawnedObjects[id].GetComponent<Transform>();
             _playerHUDController.SetCurrentGun(_equippedGun);
         }
 
@@ -106,6 +109,8 @@ namespace _game.Scripts.Player
         {
             HandleMovement();
             HandleShooting();
+            if (IsOwner)
+                _equippedGunTransform.SetPositionAndRotation(_hand.position, _hand.rotation);
             HandleDeath();
         }
 
@@ -116,10 +121,10 @@ namespace _game.Scripts.Player
 
             if (_health.Value <= 0)
             {
-                string deadPlayer = $"Player{OwnerClientId}";
-                string killerPlayer = $"Player{_lastHitById}";
+                string deadPlayerId = OwnerClientId.ToString();
+                string killerPlayerId = _lastHitById.ToString();
 
-                BroadcastKillFeedRpc(deadPlayer, killerPlayer);
+                BroadcastKillFeedRpc(deadPlayerId, killerPlayerId);
 
                 _networkMovement.TeleportPlayer(new TransformState
                 {
@@ -133,17 +138,17 @@ namespace _game.Scripts.Player
         }
 
         [Rpc(SendTo.ClientsAndHost)]
-        private void BroadcastKillFeedRpc(string deadPlayer, string killerPlayer)
+        private void BroadcastKillFeedRpc(string deadPlayerId, string killerPlayerId)
         {
-            UIEvents.OnPlayerKill?.Invoke(killerPlayer, deadPlayer, 0); // Invoke player kill event so all HUDs get updated
+            UIEvents.OnPlayerKill?.Invoke(killerPlayerId, deadPlayerId, 0); // Invoke player kill event so all HUDs get updated
         }
 
-        private void DisplayKill(string killerPlayer, string deadPlayer, int weaponId)
+        private void DisplayKill(string killerPlayerId, string deadPlayerId, int weaponId)
         {
-            if(!IsOwner)
+            if (!IsOwner)
                 return;
-            
-            _playerHUDController.DisplayKill(killerPlayer, deadPlayer, weaponId);
+
+            _playerHUDController.DisplayKill($"Player {killerPlayerId}", $"Player {deadPlayerId}", weaponId);
         }
 
         private Vector3 GenerateMazeEdgePosition()

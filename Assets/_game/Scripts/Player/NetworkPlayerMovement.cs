@@ -10,7 +10,7 @@ namespace _game.Scripts.Player
     public class NetworkPlayerMovement : NetworkBehaviour
     {
         [SerializeField] private CharacterController _cc;
-        [SerializeField] private Animator _animator;
+        [SerializeField] private NetworkPlayerAnimations _playerAnimator;
 
         [SerializeField] private float _speed = 10f;
         [SerializeField] private float _sprintSpeed = 15f;
@@ -40,10 +40,8 @@ namespace _game.Scripts.Player
 
         private Vector3 _playerVelocity;
 
-        private int _lastProcessedTick = -0;
+        private int _lastProcessedTick;
         
-        private static readonly int AnimatorSpeedX = Animator.StringToHash("SpeedX");
-        private static readonly int AnimatorSpeedY = Animator.StringToHash("SpeedY");
 
         private void OnEnable() { _serverTransformState.OnValueChanged += OnServerStateChanged; }
 
@@ -157,8 +155,7 @@ namespace _game.Scripts.Player
 
         private void AnimateMovement(Vector2 movementInput)
         {
-            _animator.SetFloat(AnimatorSpeedX, movementInput.x);
-            _animator.SetFloat(AnimatorSpeedY, movementInput.y);
+            _playerAnimator.AnimateMovement(movementInput);
         }
 
         public void ProcessSimulatedPlayerMovement()
