@@ -1,0 +1,12 @@
+{
+  "foldouts": {
+    "KillLog (_game.Scripts.System.KillFeedLog)_Spawn_String_String_Sprite": true
+  },
+  "parameterValues": {
+    "KillLog (_game.Scripts.System.KillFeedLog)_Spawn_String_String_Sprite": [
+      "gg",
+      "ggg",
+      null
+    ]
+  }
+}

@@ -6,12 +6,14 @@ using _game.Scripts;
 using UnityEngine.UI;
 using System.Collections;
 using FMODUnity;
+using UnityEngine.Rendering;
 
 public class PlayerStats : MonoBehaviour, IDestructable
 {
 	public string playerName = "Player";
 	public Sprite playerProfilePic;
 	[SerializeField] EnemyAI enemyAI;
+	[SerializeField] Volume hitScreenVolume;
 	[SerializeField] PlayerAnimatorFunctions animatorFunctions;
 	[SerializeField] float respawnTime = 5;
 	[SerializeField] PlayerController playerController;
@@ -28,6 +30,8 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	
 	int mapCellScale = 4;
 	int mapCellCount = 20;
+	
+	float hitScreenCooldown;
 	
 	int[] instaGibWeaponIndexes = {2, 8, 9, 10, 11, 12, 13, 14};
 	
@@ -55,6 +59,7 @@ public class PlayerStats : MonoBehaviour, IDestructable
 		Health -= amount;
 		if(!IsDead) blood_part.Play();
 		
+		hitScreenCooldown = 1;
 		//Debug.Log(playerName + " was hit by " + source.playerName + " for damage of:" + amount);
 		
 		if(Health <= 0 && !IsDead)
@@ -200,6 +205,28 @@ public class PlayerStats : MonoBehaviour, IDestructable
 	{
 		if(!isPlayer) return;
 		playerController.gravity = gravity_y;
+	}
+	
+	private void Update()
+	{
+		if(hitScreenCooldown >= 0)
+		{
+		    hitScreenCooldown -= Time.deltaTime * 2;
+		    HitScreenVolume();
+		}
+	}
+	
+	void HitScreenVolume()
+	{
+		if(hitScreenVolume == null) return;
+		if(hitScreenCooldown <= 0)
+		{
+		    hitScreenVolume.weight = 0;
+		}else
+		{
+		    hitScreenVolume.weight = hitScreenCooldown;
+		}
+	    
 	}
 	
 	
