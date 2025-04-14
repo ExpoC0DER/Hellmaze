@@ -11,6 +11,7 @@ namespace _game.Scripts.UI
 {
     public class PlayerHUDController : MonoBehaviour
     {
+        [SerializeField] private Scoreboard _scoreboard;
         [SerializeField] private KillFeed _killFeed;
         [SerializeField] private TMP_Text _healthText;
         [SerializeField] private Gradient _healthColorGrad;
@@ -29,7 +30,13 @@ namespace _game.Scripts.UI
 
         private bool _showMenu;
 
-        private void Start() { _restartBtn.onClick.AddListener(OnClickRestart); }
+        private void Start()
+        {
+            _restartBtn.onClick.AddListener(OnClickRestart);
+            
+            // Enable scoreboard as for some fucking reason it disables itself by default
+            _scoreboard.enabled = true;
+        }
 
         private void Update()
         {
@@ -37,6 +44,8 @@ namespace _game.Scripts.UI
             {
                 ShowMenu(!_showMenu);
             }
+            
+            ShowResults(Keyboard.current[Key.Tab].isPressed);
         }
 
         private void ShowMenu(bool value)
@@ -54,6 +63,11 @@ namespace _game.Scripts.UI
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
+        }
+
+        private void ShowResults(bool value)
+        {
+            _scoreboard.ShowScoreboard(value);
         }
 
         private void OnClickRestart() { NetworkManager.Singleton.Shutdown(); }

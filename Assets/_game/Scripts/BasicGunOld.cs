@@ -44,6 +44,16 @@ namespace _game.Scripts
         {
             if (_fireDelay > 0)
                 _fireDelay -= Time.deltaTime;
+
+            ShowGun(IsOwner);
+        }
+
+        private void ShowGun(bool value)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(value);
+            }
         }
 
         public void ApplyRecoil()
@@ -82,7 +92,8 @@ namespace _game.Scripts
                     _fired = true;
                     FMODHelper.PlayNewInstance(_gunSettings.ManualSound);
 
-                    Ammo--;
+                    if (Ammo != -1)
+                        Ammo--;
                     PlayerEvents.OnPlayerShot?.Invoke(Ammo);
 
                     if (IsLocalPlayer)
@@ -101,8 +112,9 @@ namespace _game.Scripts
                     }
 
                     _fireDelay = _gunSettings.FiringSpeed;
-
-                    Ammo--;
+                    
+                    if (Ammo != -1)
+                        Ammo--;
                     PlayerEvents.OnPlayerShot?.Invoke(Ammo);
 
                     // If local player play recoil animation instantly
