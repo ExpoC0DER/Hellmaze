@@ -92,6 +92,6 @@ crashlytics-build.properties
 # Log files can be ignored.
 fmod_editor.log
 
-/FMODFiles/**/.cache/
-/FMODFiles/**/.user/
-/FMODFiles/**/.unsaved/
+/FMOD/**/.cache/
+/FMOD/**/.user/
+/FMOD/**/.unsaved/
